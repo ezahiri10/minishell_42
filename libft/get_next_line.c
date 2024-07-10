@@ -3,101 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/21 19:16:12 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/10 20:25:19 by alafdili         ###   ########.fr       */
+/*   Created: 2023/12/12 15:05:18 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/07/10 21:10:52 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_strchr(char *s, int c)
+static char	*del_line(char *all)
 {
-	size_t	counter;
+	char	*del;
+	int		len;
+	int		i;
 
-	counter = 0;
-	while (counter <= ft_strlen(s))
+	len = 0;
+	while (all[len] != '\n' && all[len] != '\0')
+		len++;
+	if (all[len] == '\n')
+		len++;
+	if (all[len] == '\0')
 	{
-		if (s[counter] == (char)c)
-			return ((char *)&s[counter]);
-		counter++;
+		free(all);
+		return (NULL);
 	}
-	return (NULL);
+	del = (char *)malloc(sizeof(char) * (ft_strlen(all) - len) + 1);
+	if (!del)
+		return (NULL);
+	i = 0;
+	while (all[len] != '\0')
+		del[i++] = all[len++];
+	del[i] = '\0';
+	free(all);
+	return (del);
 }
 
-static char	*buffer_update(char *buffer)
-{
-	char	*updated;
-	int		start;
-
-	start = 0;
-	while (buffer[start] != '\n' && buffer[start])
-		start++;
-	if (buffer[start] == '\n')
-		start++;
-	else if (buffer[start] == '\0')
-		return (free(buffer), NULL);
-	updated = ft_substr(buffer, start, ft_strlen(buffer) - start);
-	free(buffer);
-	return (updated);
-}
-
-static char	*cut_nl(char *buffer)
+static char	*red_line(char *all)
 {
 	char	*line;
 	int		len;
+	int		i;
 
 	len = 0;
-	if (!buffer[0])
-		return (NULL);
-	while (buffer[len] != '\n' && buffer[len])
+	while (all[len] != '\0' && all[len] != '\n')
 		len++;
-	if (buffer[len] == '\n')
+	if (all[len] == '\n')
 		len++;
-	line = ft_substr(buffer, 0, len);
-	return (line);
-}
-
-static char	*read_lines(int fd, char *buffer)
-{
-	int		r_value;
-	char	*read_buffer;
-
-	read_buffer = malloc(((size_t)BUFFER_SIZE + 1) * sizeof(char));
-	if (!read_buffer)
+	line = (char *)malloc(sizeof(char) * len + 1);
+	if (!line)
 		return (NULL);
-	while (1)
+	i = 0;
+	while (i < len)
 	{
-		r_value = read(fd, read_buffer, BUFFER_SIZE);
-		if (r_value == -1)
-		{
-			free(buffer);
-			free(read_buffer);
-			return (NULL);
-		}
-		else if (r_value == 0)
-			break ;
-		read_buffer[r_value] = '\0';
-		buffer = ft_strjoin(buffer, read_buffer);
-		if (ft_strchr(read_buffer, '\n') != NULL)
-			break ;
+		line[i] = all[i];
+		i++;
 	}
-	free(read_buffer);
-	return (buffer);
+	line[len] = '\0';
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	char		*line;
+	static char		*all;
+	char			*buffer;
+	char			*line;
+	int				red;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
-		return (free(buffer), buffer = NULL, NULL);
-	buffer = read_lines(fd, buffer);
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = (char *)malloc ((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	line = cut_nl(buffer);
-	buffer = buffer_update(buffer);
+	red = 1;
+	while (red != 0 && !ft_strchr(all, '\n'))
+	{
+		red = read (fd, buffer, BUFFER_SIZE);
+		if (red == -1)
+			return (free(buffer), free(all), buffer = NULL, all = NULL, NULL);
+		buffer[red] = '\0';
+		all = ft_strjoin (all, buffer);
+		if (!all || !all[0])
+			return (free(buffer), free(all), buffer = NULL, all = NULL, NULL);
+	}
+	free(buffer);
+	line = red_line(all);
+	all = del_line(all);
 	return (line);
 }
