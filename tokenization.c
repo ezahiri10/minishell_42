@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:15:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/11 18:39:09 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/11 21:56:52 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ void quote_delemiter(char *token, int *i, t_token **head, t_state state)
 	else
 		c = '\"';
 	while (token[*i] != c && token[*i] != '\0')
-	{
-		// prntf ("%c\n", token[*i]);
-		// sleep(2);i
 		*i += 1;
-	}
 	if (token[*i] == c)
 		*i += 1;
 	else if (!token[*i])
@@ -49,17 +45,20 @@ void quote_delemiter(char *token, int *i, t_token **head, t_state state)
 		write (2, "Enclosed quote!\n", 16);
 		return ;
 	}
-	add_lst(ft_substr(token, start, *i - 2), head, state);
+	add_lst(ft_substr(token, start, *i - start - 1), head, state);
 }
+
 void dollar_delemiter(char *token, int *i, t_token **head, t_state state)
 {
-	int start;
-
-	*i += 1;
+	int	start;
+	int	end; 
+	
 	start = *i;
-	while (ft_isalnum(token[*i]) && token[*i] == '_' && token[*i])
-		*i += 1;
-	add_lst(ft_substr(token, start, *i), head, state);
+	end = *i + 1;
+	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_')) 
+		end++;
+	*i = end;
+	add_lst(ft_substr(token + start, 0, end), head, state);
 }
 
 void word_delemiter(char *token, int *i, t_token **head, t_state state)
@@ -69,7 +68,7 @@ void word_delemiter(char *token, int *i, t_token **head, t_state state)
 	start = *i;
 	while (!is_special(token[*i]) && token[*i] != ' ' && token[*i])
 		*i = *i + 1;
-	add_lst(ft_substr(token, start, *i), head, state);
+	add_lst(ft_substr(token, start, *i - start), head, state);
 }
 
 void opertor_delemiter(char *token, int *i, t_token **head, t_state state)
@@ -102,7 +101,6 @@ void ft_tokenize(char *line, t_token **head)
 		line++;
 	while (line[end])
 	{
-		printf("line[%d] = %c\n", end, line[end]);
 		if (is_special(line[end]) == IN_SINGALE)
 			quote_delemiter(line, &end, head, IN_SINGALE);
 		else if (is_special(line[end]) == IN_DOUBLE)

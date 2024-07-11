@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/11 18:17:31 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/11 21:43:52 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	check_type(char *str)
 {
 	if (!ft_strncmp(str, "|", 1))
 		return (PIPE);
-	if (!ft_strncmp(str, "<", 1))
-		return (REDIR_IN);
-	if (!ft_strncmp(str, ">", 1))
-		return (REDIR_OUT);
 	if (!ft_strncmp(str, ">>", 2))
 		return (REDIR_APPEND);
 	if (!ft_strncmp(str, "<<", 2))
 		return (REDIR_HERE);
+	if (!ft_strncmp(str, "<", 1))
+		return (REDIR_IN);
+	if (!ft_strncmp(str, ">", 1))
+		return (REDIR_OUT);
 	else
 		return (WORD);
 }
@@ -31,16 +31,16 @@ int	check_type(char *str)
 static t_token	*ft_new_token(char *content, t_state s)
 {
 	t_token	*new_node;
-
+	printf("s = %d\n", s);
 	new_node = malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
 	new_node->data = content;
 	new_node->state = s;
 	if (s == DEFAULT)
-		new_node->type = -1;
-	else
 		new_node->type = check_type(content);
+	else
+		new_node->type = -1;
 	new_node -> next = NULL;
 	return (new_node);
 }
