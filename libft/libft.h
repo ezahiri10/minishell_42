@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:49:05 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/10 21:09:14 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 14:18:00 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1337
+#  define BUFFER_SIZE 1
 # endif
 
 typedef struct s_list
@@ -81,5 +81,6 @@ void	ft_putnbr(int nb, int *counter);
 void	ft_puthexa(unsigned int decimal, int *counter, short boll);
 void	ft_putaddress(unsigned long decimal, int *counter);
 int		ft_printf(const char *format, ...);
+void	*ft_malloc(size_t size, int mod);
 
 #endif
