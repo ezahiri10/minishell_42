@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:05:18 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/10 21:10:52 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 14:24:35 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*del_line(char *all)
 		free(all);
 		return (NULL);
 	}
-	del = (char *)malloc(sizeof(char) * (ft_strlen(all) - len) + 1);
+	del = (char *)ft_malloc(sizeof(char) * (ft_strlen(all) - len) + 1, 1);
 	if (!del)
 		return (NULL);
 	i = 0;
