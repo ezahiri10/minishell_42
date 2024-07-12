@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 16:24:57 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 18:52:33 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void print_line(t_token *head)
-// {
-// 	while (head)
-// 	{
-// 		printf("[data: %s]\t [type: %d]\t [state: %d]\n",
-// head->data, head->type, head->state);
-// 		head = head -> next;
-// 	}
-// }
-	// print_line(token);
+void print_line(t_token *head)
+{
+	while (head)
+	{
+		printf("[data: %s]\t [type: %d]\t [state: %d]\n",
+			head->data, head->type, head->state);
+		head = head -> next;
+	}
+}
 
 void	new_prompt(int s)
 {

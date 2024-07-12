@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_dilemeter.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 16:17:49 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 18:47:34 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	quote_delemiter(char *token, int *i, t_token **head, t_state state)
+int	quote_delimiter(char *token, int *i, t_token **head, t_state state)
 {
 	char	c;
 	int		start;
@@ -38,7 +38,7 @@ int	quote_delemiter(char *token, int *i, t_token **head, t_state state)
 	return (0);
 }
 
-void	dollar_delemiter(char *token, int *i, t_token **head, t_state state)
+void	dollar_delimiter(char *token, int *i, t_token **head, t_state state)
 {
 	int	start;
 	int	end;
@@ -51,7 +51,7 @@ void	dollar_delemiter(char *token, int *i, t_token **head, t_state state)
 	add_lst(ft_substr(token, start, *i - start), head, state);
 }
 
-void	word_delemiter(char *token, int *i, t_token **head, t_state state)
+void	word_delimiter(char *token, int *i, t_token **head, t_state state)
 {
 	int	start;
 
@@ -65,7 +65,7 @@ void	word_delemiter(char *token, int *i, t_token **head, t_state state)
 	add_lst(ft_substr(token, start, *i - start), head, state);
 }
 
-void	opertor_delemiter(char *token, int *i, t_token **head, t_state state)
+void	opertor_delimiter(char *token, int *i, t_token **head, t_state state)
 {
 	if (token[*i] == '|')
 		add_lst(ft_strdup("|"), head, state);
