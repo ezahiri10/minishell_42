@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 09:45:13 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 09:51:31 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ void	add_lst(char *content, t_token **lst, t_state state)
 	{
 		write (2, "Malloc failed\n", 14);
 		return ;
-	}
+	}	
 	ft_add_token(lst, new);
 }

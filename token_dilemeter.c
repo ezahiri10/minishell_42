@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 09:32:55 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 10:15:09 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void quote_delemiter(char *token, int *i, t_token **head, t_state state)
 	while (token[*i] != c && token[*i] != '\0')
 		*i += 1;
 	if (token[*i] == c)
-		*i += 1;
+		*i += 1; 
 	else if (!token[*i])
 	{
 		write (2, "Enclosed quote!\n", 16);
@@ -53,7 +53,11 @@ void word_delemiter(char *token, int *i, t_token **head, t_state state)
 
 	start = *i;
 	while (!is_special(token[*i]) && token[*i] != ' ' && token[*i])
+	{
+		if (token[*i] == '\t')
+			break ;
 		*i = *i + 1;
+	}
 	add_lst(ft_substr(token, start, *i - start), head, state);
 }
 

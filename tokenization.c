@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:15:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 09:38:30 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 10:08:45 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void ft_tokenize(char *line, t_token **head)
 			dollar_delemiter(line, &end, head, DOLLAR);
 		else if (is_special(line[end]) == 4)
 			opertor_delemiter(line ,&end, head, DEFAULT);
-		else if (line[end] == ' ')
+		else if (line[end] == ' ' || line[end] == '\t')
 			end++;
 		else
 			word_delemiter(line, &end, head, DEFAULT);
