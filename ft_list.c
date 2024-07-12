@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/11 21:43:52 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 09:45:13 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_type(char *str)
 static t_token	*ft_new_token(char *content, t_state s)
 {
 	t_token	*new_node;
-	printf("s = %d\n", s);
+
 	new_node = malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
@@ -66,7 +66,6 @@ void	add_lst(char *content, t_token **lst, t_state state)
 {
 	t_token *new;
 
-	// printf("content %s\n", content);
 	new = ft_new_token(content, state);
 	if (!new)
 	{

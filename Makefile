@@ -6,7 +6,7 @@ RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = main.c tokenization.c ft_list.c
+SRC = main.c tokenization.c ft_list.c token_dilemeter.c
 
 OBG = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:22:59 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/11 21:37:33 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/12 08:44:55 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = 0;
 	else if (len > ft_strlen(s + start))
 		len = ft_strlen(s + start);
-	substr = (char *)malloc((len + 1) * sizeof(char));//70
+	substr = (char *)malloc((len + 1) * sizeof(char));
 	if (substr == NULL)
 		return (NULL);
-	// printf ("-->%d\n", start);
-	// printf ("-->%zu\n", len);
 	while (counter < len && s)
 	{
 		substr[counter] = s[start + counter];
-		// sleep(2);
-		// printf ("%c---> %zu-->AScii %d\n", substr[counter], counter, substr[counter]);
 		counter++;
 	}
 	substr[counter] = '\0';
-	// sleep(2);
 	return (substr);
 }
