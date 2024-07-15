@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 18:52:33 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:53:24 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,14 @@ int	read_line(void)
 		if (!line)
 		{
 			printf ("exit\n");
-			ft_malloc (0, 0);
-			free(line);
 			break ;
 		}
 		add_history(line);
 		ft_tokenize(line, &token);
+		print_line(token);
+		ft_parser(&token);
 		ft_malloc(0, 0);
 		token = NULL;
-		free(line);
 	}
 	return (0);
 }

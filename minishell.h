@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 18:50:57 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:11:26 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include <stdbool.h>
 # include <sys/wait.h>
 # include "libft/libft.h"
 # include <readline/readline.h>
@@ -49,6 +50,8 @@ typedef struct s_token
 }				t_token;
 
 int		is_special(char c);
+int		lstsize(t_token *lst);
+void	ft_parser(t_token **tokens);
 void	ft_tokenize(char *line, t_token **head);
 void	add_lst(char *content, t_token **lst, t_state state);
 void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/12 18:47:34 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:01:24 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	quote_delimiter(char *token, int *i, t_token **head, t_state state)
 	else if (!token[*i])
 	{
 		write (2, "Enclosed quote!\n", 16);
+		free(token);
 		ft_malloc (0, 0);
 		*head = NULL;
 		return (1);
