@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 09:12:57 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/15 11:51:29 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:52:54 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	ft_tokenize(char *line, t_token **head)
 		else
 			word_delimiter(line, &end, head, DEFAULT);
 	}
+	free(line);
 }
