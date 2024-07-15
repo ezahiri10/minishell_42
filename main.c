@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/15 11:53:24 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:41:02 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_line(t_token *head)
+void	print_line(t_token *head)
 {
 	while (head)
 	{
@@ -57,7 +57,8 @@ int	read_line(void)
 
 int	main(void)
 {
+	rl_catch_signals = 0;
 	signal(SIGINT, new_prompt);
-	signal(SIGQUIT, new_prompt);
+	signal(SIGQUIT, SIG_IGN);
 	read_line();
 }

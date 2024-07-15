@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:05:00 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/15 20:14:15 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:37:12 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool def_type(t_token *token, t_type type)
+bool	def_type(t_token *token, t_type type)
 {
 	if (token)
 	{
-    	if (token->type == type)
-        return (true);
+		if (token->type == type)
+			return (true);
 	}
-    return (false);
+	return (false);
 }
 
-void display_syntax_error(t_token **token, int *flag)
+void	display_syntax_error(t_token **token, int *flag)
 {
 	write(2, ""READ"minishell: syntax error"END"\n", 36);
 	*token = NULL;
 	*flag = 1;
 }
 
-void ft_parser(t_token **tokens)
+void	ft_parser(t_token **tokens)
 {
-	int i;
-	int flag;
-	int end_lst;
-	t_token *tmp;
+	int		i;
+	int		flag;
+	int		end_lst;
+	t_token	*tmp;
 
 	i = 0;
 	flag = 0;

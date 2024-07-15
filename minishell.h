@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/15 20:13:12 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:37:37 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-#define READ "\033[1;31m"
-#define END "\033[0m"
+# define READ "\033[1;31m"
+# define END "\033[0m"
 
 typedef enum e_type
 {
