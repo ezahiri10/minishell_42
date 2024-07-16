@@ -1,12 +1,12 @@
 NAME = minishell
 
-CC = cc
+CC =  cc -fsanitize=address -g
 
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = main.c tokenizer.c list_size.c ft_parser.c ft_list.c token_dilemeter.c
+SRC = minishell.c tokenizer.c list_size.c ft_parser.c ft_list.c token_dilemeter.c
 
 OBG = $(SRC:.c=.o)
 

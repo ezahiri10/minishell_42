@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:49:05 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/12 14:18:00 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/16 13:02:45 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdarg.h>
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
@@ -74,13 +73,6 @@ int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-void	ft_putstr(const char *str, int *counter);
-void	ft_putchar(int ch, int *counter);
-void	ft_putunbr(unsigned int nb, int *counter);
-void	ft_putnbr(int nb, int *counter);
-void	ft_puthexa(unsigned int decimal, int *counter, short boll);
-void	ft_putaddress(unsigned long decimal, int *counter);
-int		ft_printf(const char *format, ...);
 void	*ft_malloc(size_t size, int mod);
 
 #endif
