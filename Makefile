@@ -6,7 +6,17 @@ RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = main.c tokenizer.c list_size.c ft_parser.c ft_list.c token_dilemeter.c
+SRC = 	ft_env_lst.c \
+		ft_expand.c \
+		ft_get_env.c \
+		ft_list.c \
+		ft_parser.c \
+		ft_signal.c \
+		list_size.c \
+		main.c \
+		token_dilemeter.c \
+		tokenizer.c
+
 
 OBG = $(SRC:.c=.o)
 
