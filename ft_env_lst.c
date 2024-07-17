@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:12:54 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 14:15:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:47:35 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	add_env_front(t_env **lst, t_env *new)
 	new -> next = *lst;
 	*lst = new;
 }
-
 
 void	clair_env(t_env **head)
 {

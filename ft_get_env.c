@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:34:30 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 11:34:41 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:48:11 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_env	*ft_get_env(char **env)
 	{
 		find = equelchr(env[i]);
 		value = subenv(env[i] + find + 1, 0, ft_strlen (env[i]));
-		if (!add_env(subenv(env[i], 0 ,find), value, &lst))
+		if (!add_env(subenv(env[i], 0, find), value, &lst))
 			return (NULL);
 		i++;
 	}

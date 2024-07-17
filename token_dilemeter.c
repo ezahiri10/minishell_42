@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_dilemeter.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/16 19:33:42 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/17 19:48:46 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	dollar_delimiter(char *token, int *i, t_token **head, t_state state)
 	start = *i;
 	end = *i + 1;
 	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_'
-		|| token[end] == '?'))
+			|| token[end] == '?'))
 	{
 		end++;
 	}

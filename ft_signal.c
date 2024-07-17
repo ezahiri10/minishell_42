@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/16 17:27:38 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/17 19:48:28 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	new_prompt(int s)
 	rl_redisplay();
 }
 
-void	ft_signal()
+void	ft_signal(void)
 {
 	rl_catch_signals = 0;
 	signal(SIGINT, new_prompt);
