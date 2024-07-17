@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 09:12:57 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/16 09:32:26 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/17 19:09:57 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int	is_special(char c)
 	return (0);
 }
 
+bool	skiper(char *line, int i)
+{
+	if ((line[i] == '$' && (line[i + 1] == '\'' || line[i + 1] == '\"')))
+		return (true);
+	if (line[i] == ' ' || line[i] == '\t')
+		return (true);
+	return (false);
+}
+
 void	ft_tokenize(char *line, t_token **head)
 {
 	int	end;
@@ -32,7 +41,9 @@ void	ft_tokenize(char *line, t_token **head)
 	end = 0;
 	while (line[end])
 	{
-		if (is_special(line[end]) == IN_SINGALE)
+		if (skiper(line, end))
+			end++;
+		else if (is_special(line[end]) == IN_SINGALE)
 		{
 			if (quote_delimiter(line, &end, head, IN_SINGALE))
 				return ;
@@ -46,8 +57,6 @@ void	ft_tokenize(char *line, t_token **head)
 			dollar_delimiter(line, &end, head, DOLLAR);
 		else if (is_special(line[end]) == 4)
 			opertor_delimiter(line, &end, head, DEFAULT);
-		else if (line[end] == ' ' || line[end] == '\t')
-			end++;
 		else
 			word_delimiter(line, &end, head, DEFAULT);
 	}

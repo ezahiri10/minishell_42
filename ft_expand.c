@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 16:08:39 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:37:47 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ char	*set_value(char *__name, t_env *__env)
 
 char	*dollar_expansion(char *tmp, t_shell *shell)
 {
-	char *str;
-	
+	char	*str;
+
 	if (ft_strlen (tmp) == 1)
 		return (tmp);
 	else if (tmp[1] == '?')
@@ -44,38 +44,25 @@ char	*dollar_expansion(char *tmp, t_shell *shell)
 char	*limiter(int *i, char *token)
 {
 	int	start;
-	char *rvalue;
 	int	end;
 	int	id;
 
 	start = *i;
 	end = start + 1;
 	id = 0;
-	
 	if (token[end] == '?')
 		end++;
 	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_'))
 		end++;
 	*i = end;
-	rvalue = ft_substr(token, start, *i - start);
-	printf("rvalue = %s\n", rvalue);
-	return (rvalue);
-}
-
-char *char_to_string(char c)
-{
-	char *dest;
-
-	dest = ft_malloc(sizeof(char) * 2, 1);
-	dest[0] = c;
-	dest[1] = '\0';
-	return (dest);
+	return (ft_substr(token, start, *i - start));
 }
 
 char	*search_dollar(t_shell *shell, char *token)
 {
-	int end;
-	char *to_join;
+	int		end;
+	char	*to_join;
+	char	*expanded;
 
 	to_join = NULL;
 	end = 0;
@@ -83,10 +70,14 @@ char	*search_dollar(t_shell *shell, char *token)
 	{
 		if (token[end] == '$')
 		{
-			to_join = ft_strjoin(to_join, dollar_expansion(limiter(&end, token), shell));
+			expanded = dollar_expansion(limiter(&end, token), shell);
+			to_join = ft_strjoin(to_join, expanded);
 		}
 		else
-			to_join = ft_strjoin(to_join, char_to_string(token[end++]));
+		{
+			to_join = ft_strjoin(to_join, char_to_string(token[end]));
+			end++;
+		}
 	}
 	return (to_join);
 }
