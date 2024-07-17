@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/15 18:57:16 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:45:01 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_token	*ft_new_token(char *content, t_state s)
 		return (NULL);
 	new_node->data = content;
 	new_node->state = s;
+	new_node->err = 0;
 	if (s == DEFAULT)
 		new_node->type = check_type(content);
 	else

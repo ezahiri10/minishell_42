@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/15 22:23:33 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:09:32 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,43 +22,41 @@ void	print_line(t_token *head)
 	}
 }
 
-void	new_prompt(int s)
-{
-	if (s == SIGINT)
-		printf ("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-int	read_line(void)
+int	read_line(t_shell *shell)
 {
 	char	*line;
-	t_token	*token;
 
-	token = NULL;
 	while (1)
 	{
 		line = readline("minishell$ ");
 		if (!line)
 		{
+			ft_malloc(0, 0);
 			printf ("exit\n");
 			break ;
 		}
 		add_history(line);
-		ft_tokenize(line, &token);
-		print_line(token);
-		ft_parser(&token);
+		ft_tokenize(line, &shell->tokens);
+		ft_parser(shell);
+		ft_expand(shell);
+		print_line(shell->tokens);
 		ft_malloc(0, 0);
-		token = NULL;
+		shell->tokens = NULL;
 	}
 	return (0);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
-	rl_catch_signals = 0;
-	signal(SIGINT, new_prompt);
-	signal(SIGQUIT, SIG_IGN);
-	read_line();
+	t_shell	shell;
+
+	(void)ac;
+	(void)av;
+	ft_signal();
+	ft_memset(&shell, 0, sizeof(t_shell));
+	shell.env = env;
+	shell.env_lst = ft_get_env(env);
+	if (!shell.env_lst)
+		return (1);
+	read_line(&shell);
 }

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:05:00 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/15 21:48:35 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:32:12 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ bool	def_type(t_token *token, t_type type)
 	return (false);
 }
 
-void	display_syntax_error(t_token **token, int *flag)
+void	display_syntax_error(t_shell *shell, int *flag)
 {
 	write(2, ""READ"minishell: syntax error"END"\n", 36);
-	*token = NULL;
+	shell->exit_status = 258;
 	*flag = 1;
 }
 
-void	ft_parser(t_token **tokens)
+void	ft_parser(t_shell *shell)
 {
 	int		i;
 	int		flag;
@@ -38,19 +38,19 @@ void	ft_parser(t_token **tokens)
 
 	i = 0;
 	flag = 0;
-	tmp = *tokens;
+	tmp = shell->tokens;
 	end_lst = lstsize(tmp);
 	while (tmp)
 	{
 		if (def_type(tmp, PIPE) && i == 0)
-			display_syntax_error(tokens, &flag);
+			display_syntax_error(shell, &flag);
 		else if (def_type(tmp, PIPE) && def_type(tmp->next, PIPE))
-			display_syntax_error(tokens, &flag);
+			display_syntax_error(shell, &flag);
 		else if (!def_type(tmp, WORD) && i == end_lst - 1)
-			display_syntax_error(tokens, &flag);
+			display_syntax_error(shell, &flag);
 		else if (!def_type(tmp, PIPE) && !def_type(tmp, WORD)
 			&& !def_type(tmp->next, WORD))
-			display_syntax_error(tokens, &flag);
+			display_syntax_error(shell, &flag);
 		if (flag == 1)
 			return ;
 		i++;
