@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 20:49:20 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 23:08:24 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,27 @@ char	*set_value(char *__name, t_env *__env)
 char	*dollar_expansion(char *tmp, t_shell *shell)
 {
 	char	*str;
+	int		count;
+	int		i;
+	int		len;
 
-	if (ft_strlen (tmp) == 1)
+	i = -1;
+	len = ft_strlen(tmp);
+	count = ft_count(tmp, '$');
+	if (ft_strlen(tmp) == 1)
 		return (tmp);
 	else if (tmp[1] == '?')
 		return (ft_strjoin (ft_itoa(shell->exit_status), tmp + 2));
-	else
+	else if (count % 2 == 0 || count == len)
+		return (tmp);
+	else if (count % 2 != 0)
 	{
-		str = set_value(tmp + 1, shell->env_lst);
+		str = set_value(tmp + count, shell->env_lst);
+		while (++i < count)
+			str = ft_strjoin("$", str);
 		return (str);
 	}
+	return (NULL);
 }
 
 char	*limiter(int *i, char *token)
@@ -53,7 +64,11 @@ char	*limiter(int *i, char *token)
 	if (token[end] == '?')
 		end++;
 	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_'))
+	{
+		while (token[end] == '$')
+			end++;
 		end++;
+	}
 	*i = end;
 	return (ft_substr(token, start, *i - start));
 }

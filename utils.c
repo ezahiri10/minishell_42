@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/17 19:35:39 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:28:04 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,20 @@ char	*char_to_string(char c)
 	dest[0] = c;
 	dest[1] = '\0';
 	return (dest);
+}
+
+int	ft_count(char *str, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
 }
