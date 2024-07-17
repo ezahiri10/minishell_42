@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 09:12:57 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/17 19:09:57 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:43:46 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	skiper(char *line, int i)
 	return (false);
 }
 
-void	ft_tokenize(char *line, t_token **head)
+void	ft_tokenize(char *line, t_shell *shell)
 {
 	int	end;
 
@@ -45,20 +45,20 @@ void	ft_tokenize(char *line, t_token **head)
 			end++;
 		else if (is_special(line[end]) == IN_SINGALE)
 		{
-			if (quote_delimiter(line, &end, head, IN_SINGALE))
+			if (quote_delimiter(line, &end, shell, IN_SINGALE))
 				return ;
 		}
 		else if (is_special(line[end]) == IN_DOUBLE)
 		{
-			if (quote_delimiter(line, &end, head, IN_DOUBLE))
+			if (quote_delimiter(line, &end, shell, IN_DOUBLE))
 				return ;
 		}
 		else if (is_special(line[end]) == DOLLAR)
-			dollar_delimiter(line, &end, head, DOLLAR);
+			dollar_delimiter(line, &end, &shell->tokens, DOLLAR);
 		else if (is_special(line[end]) == 4)
-			opertor_delimiter(line, &end, head, DEFAULT);
+			opertor_delimiter(line, &end, &shell->tokens, DEFAULT);
 		else
-			word_delimiter(line, &end, head, DEFAULT);
+			word_delimiter(line, &end, &shell->tokens, DEFAULT);
 	}
 	free(line);
 }

@@ -6,13 +6,13 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 19:48:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:41:59 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	quote_delimiter(char *token, int *i, t_token **head, t_state state)
+int	quote_delimiter(char *token, int *i, t_shell *shell, t_state state)
 {
 	char	c;
 	int		start;
@@ -30,12 +30,13 @@ int	quote_delimiter(char *token, int *i, t_token **head, t_state state)
 	else if (!token[*i])
 	{
 		write (2, "Enclosed quote!\n", 16);
+		shell->exit_status = 258;
 		free(token);
 		ft_malloc (0, 0);
-		*head = NULL;
+		shell->tokens = NULL;
 		return (1);
 	}
-	add_lst(ft_substr(token, start, *i - start - 1), head, state);
+	add_lst(ft_substr(token, start, *i - start - 1), &shell->tokens, state);
 	return (0);
 }
 
@@ -46,11 +47,10 @@ void	dollar_delimiter(char *token, int *i, t_token **head, t_state state)
 
 	start = *i;
 	end = *i + 1;
-	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_'
-			|| token[end] == '?'))
-	{
+	if (token[end] == '?')
 		end++;
-	}
+	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_'))
+		end++;
 	*i = end;
 	add_lst(ft_substr(token, start, *i - start), head, state);
 }

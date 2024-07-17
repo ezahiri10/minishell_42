@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 19:37:47 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:49:20 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*search_dollar(t_shell *shell, char *token)
 
 	to_join = NULL;
 	end = 0;
+	if (!token[0])
+		return (token);
 	while (token[end])
 	{
 		if (token[end] == '$')

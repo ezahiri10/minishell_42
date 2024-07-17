@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 19:10:05 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:39:49 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	read_line(t_shell *shell)
 			break ;
 		}
 		add_history(line);
-		ft_tokenize(line, &shell->tokens);
+		ft_tokenize(line, shell);
 		ft_parser(shell);
 		ft_expand(shell);
 		print_line(shell->tokens);
