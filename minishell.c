@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 09:42:19 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/18 12:44:03 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	__ctrl_d(t_shell *shell)
+{
+	clair_env(&shell->env_lst);
+	ft_malloc(0, 0);
+	printf("exit\n");
+	exit(0);
+}
 
 void	print_line(t_token *head)
 {
@@ -22,7 +30,21 @@ void	print_line(t_token *head)
 	}
 }
 
-int	read_line(t_shell *shell)
+void	interpreter(t_shell *shell, char *line)
+{
+	if (g_recv_signal == 1)
+	{
+		shell->exit_status = 1;
+		g_recv_signal = 0;
+	}
+	add_history(line);
+	ft_tokenize(line, shell);
+	ft_parser(shell);
+	ft_expand(shell);
+	print_line(shell->tokens);
+}
+
+void	mini_shell(t_shell *shell)
 {
 	char	*line;
 
@@ -30,20 +52,11 @@ int	read_line(t_shell *shell)
 	{
 		line = readline("minishell$ ");
 		if (!line)
-		{
-			ft_malloc(0, 0);
-			printf ("exit\n");
-			break ;
-		}
-		add_history(line);
-		ft_tokenize(line, shell);
-		ft_parser(shell);
-		ft_expand(shell);
-		print_line(shell->tokens);
+			__ctrl_d(shell);
+		interpreter(shell, line);
 		ft_malloc(0, 0);
 		shell->tokens = NULL;
 	}
-	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -58,5 +71,5 @@ int	main(int ac, char **av, char **env)
 	shell.env_lst = ft_get_env(env);
 	if (!shell.env_lst)
 		return (1);
-	read_line(&shell);
+	mini_shell(&shell);
 }

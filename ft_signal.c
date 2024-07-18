@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 19:48:28 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/18 12:44:11 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	new_prompt(int s)
 {
 	if (s == SIGINT)
+	{
 		printf ("\n");
+		g_recv_signal = 1;
+	}
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

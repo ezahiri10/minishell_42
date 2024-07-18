@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:12:54 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 19:47:35 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/18 12:43:11 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*add_env(char *var, char *value, t_env **head)
 	t_env	*new;
 
 	new = new_env(var, value);
-	if (!new)
+	if (!var || !value || !new)
 	{
 		clair_env(head);
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/17 22:41:47 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/18 12:42:56 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define READ "\033[1;31m"
 # define YEL "\033[32m"
 # define END "\033[0m"
+
+int	g_recv_signal;
 
 typedef enum e_type
 {
