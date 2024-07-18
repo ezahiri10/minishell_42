@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:12:54 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 12:43:11 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/18 12:53:42 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,25 @@ t_env	*new_env(char *var, char *value)
 		return (NULL);
 	new->var = var;
 	new->value = value;
+	new->next = NULL;
 	return (new);
 }
 
-void	add_env_front(t_env **lst, t_env *new)
+void	env_add_back(t_env **lst, t_env *new)
 {
-	if (!lst || !new)
+	t_env	*temp;
+
+	if (!lst)
 		return ;
-	new -> next = *lst;
-	*lst = new;
+	if (!(*lst))
+		*lst = new;
+	else
+	{
+		temp = (*lst);
+		while (temp -> next)
+			temp = temp -> next;
+		temp -> next = new;
+	}
 }
 
 void	clair_env(t_env **head)
@@ -61,6 +71,6 @@ void	*add_env(char *var, char *value, t_env **head)
 		clair_env(head);
 		return (NULL);
 	}
-	add_env_front(head, new);
+	env_add_back(head, new);
 	return (new);
 }
