@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 12:55:24 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:11:55 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,44 @@ void	__ctrl_d(t_shell *shell)
 	exit(0);
 }
 
-void	print_line(t_token *head)
+void	print_sruct(t_cmd *cmd)
 {
-	while (head)
+	t_cmd	*tmp;
+	int		i;
+
+	tmp = cmd;
+	while (tmp)
 	{
-		printf("[data: %s]\t [type: %d]\t [state: %d]\n",
-			head->data, head->type, head->state);
-		head = head -> next;
+		printf("path: %s\n", tmp->path);
+		printf("args: ");
+		i = 0;
+		while (tmp->args[i])
+		{
+			printf("%s ", tmp->args[i]);
+			i++;
+		}
+		printf("\nredir: \n");
+		while (tmp->redir)
+		{
+			printf("[filename: %s]\t[type: %d]\n",
+				tmp->redir->file, tmp->redir->type);
+			tmp->redir = tmp->redir->next;
+		}
+		printf("-------------------------\n");
+		tmp = tmp->next;
 	}
 }
+
+// void	print_line(t_token *head)
+// {
+// 	while (head)
+// 	{
+// 		printf("[data: %s]\t [type: %d]\t [state: %d]\n",
+// 			head->data, head->type, head->state);
+// 		head = head -> next;
+// 	}
+// }
+// print_line(shell->tokens);
 
 void	interpreter(t_shell *shell, char *line)
 {
@@ -41,7 +70,8 @@ void	interpreter(t_shell *shell, char *line)
 	ft_tokenize(line, shell);
 	ft_parser(shell);
 	ft_expand(shell);
-	print_line(shell->tokens);
+	redirection(shell);
+	print_sruct(shell->cmd);
 }
 
 void	mini_shell(t_shell *shell)

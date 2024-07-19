@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 12:42:56 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:47:57 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,28 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_redir
+{
+	int				fd;
+	char			*file;
+	int				type;
+	struct s_redir	*next;
+}				t_redir;
+
+typedef struct s_cmd
+{
+	char			*path;
+	char			**args;
+	t_redir			*redir;
+	struct s_cmd	*next;
+}				t_cmd;
+
 typedef struct s_shell
 {
 	t_env	*env_lst;
 	char	**env;
 	t_token	*tokens;
+	t_cmd	*cmd;
 	int		exit_status;
 }				t_shell;
 
@@ -82,10 +99,14 @@ void	ft_parser(t_shell *shell);
 int		ft_count(char *str, char c);
 void	ft_tokenize(char *line, t_shell *shell);
 void	*add_env(char *var, char *value, t_env **head);
+void	add_redir(t_redir **lst, char *file, t_type type);
 void	add_lst(char *content, t_token **lst, t_state state);
 void	word_delimiter(char *token, int *i, t_token **head, t_state state);
 void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
 void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
 int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
+void	redirection(t_shell *shell);
+void	cmd_add_back(t_cmd **lst, t_cmd *new);
+t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
 
 #endif
