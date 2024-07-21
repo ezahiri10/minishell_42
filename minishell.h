@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 12:42:56 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:31:32 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/errno.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -31,6 +32,7 @@ int	g_recv_signal;
 
 typedef enum e_type
 {
+	ERROR,
 	WORD,
 	PIPE,
 	REDIR_IN,
@@ -51,6 +53,7 @@ typedef struct s_token
 {
 	t_type			type;
 	t_state			state;
+	
 	char			*data;
 	int				err;
 	struct s_token	*next;

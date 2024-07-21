@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 12:55:24 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:14:05 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	interpreter(t_shell *shell, char *line)
 	}
 	add_history(line);
 	ft_tokenize(line, shell);
-	ft_parser(shell);
-	ft_expand(shell);
+	// ft_parser(shell);
+	// ft_expand(shell);
 	print_line(shell->tokens);
 }
 
@@ -50,7 +50,7 @@ void	mini_shell(t_shell *shell)
 
 	while (1)
 	{
-		line = readline("minishell$ ");
+		line = readline("Minishell$ ");
 		if (!line)
 			__ctrl_d(shell);
 		interpreter(shell, line);

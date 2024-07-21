@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 20:08:11 by alafdili          #+#    #+#             */
-/*   Updated: 2023/11/27 16:43:30 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:57:39 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	size_t	counter;
 
 	counter = 0;
+	if (!s)
+		return (NULL);
 	while (counter <= ft_strlen(s))
 	{
 		if (s[counter] == (char)c)

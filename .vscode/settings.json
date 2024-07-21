@@ -72,6 +72,19 @@
     "history.h": "c",
     "algorithm": "c",
     "bitset": "c",
-    "chrono": "c"
+    "chrono": "c",
+    "__node_handle": "c",
+    "__functional_base": "c",
+    "atomic": "c",
+    "__memory": "c",
+    "functional": "c",
+    "limits": "c",
+    "locale": "c",
+    "memory": "c",
+    "optional": "c",
+    "ratio": "c",
+    "system_error": "c",
+    "tuple": "c",
+    "type_traits": "c"
   }
 }
