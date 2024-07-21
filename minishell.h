@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 12:07:54 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 16:27:48 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_env
 
 typedef struct s_redir
 {
-	int			fd;	
+	int				fd;	
 	char			*file;
 	int				type;
 	struct s_redir	*next;
@@ -115,5 +115,5 @@ void	redirection(t_shell *shell);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
 t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
 t_join	is_joinble(char c);
- 
+
 #endif

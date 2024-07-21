@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 13:18:00 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 16:27:07 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,22 @@ void	print_sruct(t_cmd *cmd)
 	}
 }
 
-void	print_line(t_token *head)
-{
-	t_token	*tmp;
+// void	print_line(t_token *head)
+// {
+// 	t_token	*tmp;
 
-	tmp = head;
-	while (tmp)
-	{
-		if (tmp->join == IS_JOINBLE)
-			printf("data: %s\tIS_JOINBLE\n", tmp->data);
-		else
-			printf("data: %s\ttype: %d\tstate: %d\tjoin: %d\n",
-				tmp->data, tmp->type, tmp->state, tmp->join);
-		tmp = tmp->next;
-	}
+// 	tmp = head;
+// 	while (tmp)
+// 	{
+// 		if (tmp->join == IS_JOINBLE)
+// 			printf("data: %s\tIS_JOINBLE\n", tmp->data);
+// 		else
+// 			printf("data: %s\ttype: %d\tstate: %d\tjoin: %d\n",
+// 				tmp->data, tmp->type, tmp->state, tmp->join);
+// 		tmp = tmp->next;
+// 	}
 
-}
+// }
 void	interpreter(t_shell *shell, char *line)
 {
 	if (g_recv_signal == 1)
@@ -74,7 +74,6 @@ void	interpreter(t_shell *shell, char *line)
 	}
 	add_history(line);
 	ft_tokenize(line, shell);
-	// print_line(shell->tokens);
 	ft_parser(shell);
 	ft_expand(shell);
 	redirection(shell);

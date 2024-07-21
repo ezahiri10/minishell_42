@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:47:09 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 13:30:11 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 16:26:21 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_cmd	*creat_cmd(t_cmd *cmd, char *to_join, t_redir *redir)
 {
 	char	**args;
+
 	if (to_join == NULL)
 	{
 		cmd = new_cmd(NULL, redir, NULL);

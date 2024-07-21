@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 13:53:40 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 16:19:13 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,19 @@ char	*search_dollar(t_shell *shell, char *token)
 void	ft_expand(t_shell *shell)
 {
 	t_token	*tmp;
+	char	*filter;
 
 	tmp = shell->tokens;
 	while (tmp)
 	{
 		if (tmp->state == DOLLAR)
-			tmp->data = dollar_expansion(tmp->data, shell);
+		{
+			filter = dollar_expansion(tmp->data, shell);
+			if (!*filter)
+				tmp->data = char_to_string(3);
+			else
+				tmp->data = filter;
+		}
 		else if (tmp->state == IN_DOUBLE)
 			tmp->data = search_dollar(shell, tmp->data);
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 11:42:36 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 16:19:37 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	quote_delimiter(char *token, int *i, t_shell *shell, t_state state)
 		return (1);
 	}
 	join = is_joinble(token[*i]);
-	add_lst(ft_substr(token, start, *i - start - 1), &shell->tokens, state, join);
+	if (token[*i - 2] == '\"')
+		add_lst(char_to_string(4) ,&shell->tokens, state, join);
+	else
+		add_lst(ft_substr(token, start, *i - start - 1), &shell->tokens, state, join);
 	return (0);
 }
 

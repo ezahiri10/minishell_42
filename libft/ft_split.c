@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:50:28 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/21 13:33:51 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 16:19:48 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char	**wlen(char **str, const char *s, char c)
 	str[c2] = NULL;
 	return (str);
 }
-#include <stdio.h>
+
 char	**ft_split(const char *s, char c)
 {
 	char	**ns;
@@ -87,7 +87,6 @@ char	**ft_split(const char *s, char c)
 	if (!s)
 		return (NULL);
 	nwords = cwords(s, c);
-	printf("nwords: %d\n", nwords);
 	ns = (char **)ft_malloc(sizeof(char *) * (nwords + 1), 1);
 	if (ns == NULL)
 		return (NULL);
