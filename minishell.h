@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/19 16:47:57 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 12:07:54 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,18 @@ typedef enum e_state
 	DOLLAR,
 }			t_state;
 
+typedef enum e_joinble
+{
+	IS_JOINBLE,
+	IS_NOT_JOINBLE,
+}			t_join;
+
 typedef struct s_token
 {
 	t_type			type;
 	t_state			state;
+	t_join			join;
 	char			*data;
-	int				err;
 	struct s_token	*next;
 }				t_token;
 
@@ -65,7 +71,7 @@ typedef struct s_env
 
 typedef struct s_redir
 {
-	int				fd;
+	int			fd;	
 	char			*file;
 	int				type;
 	struct s_redir	*next;
@@ -100,7 +106,7 @@ int		ft_count(char *str, char c);
 void	ft_tokenize(char *line, t_shell *shell);
 void	*add_env(char *var, char *value, t_env **head);
 void	add_redir(t_redir **lst, char *file, t_type type);
-void	add_lst(char *content, t_token **lst, t_state state);
+void	add_lst(char *content, t_token **lst, t_state state, t_join join);
 void	word_delimiter(char *token, int *i, t_token **head, t_state state);
 void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
 void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
@@ -108,5 +114,6 @@ int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
 void	redirection(t_shell *shell);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
 t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
-
+t_join	is_joinble(char c);
+ 
 #endif
