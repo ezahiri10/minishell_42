@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:05:00 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/21 16:43:57 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:46:52 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,6 @@ bool	def_type(t_token *token, t_type type)
 	return (false);
 }
 
-char *__remove_new_line(char *line)
-{
-	int i;
-	char *new_line;
-
-	i = 0;
-	new_line = ft_malloc(ft_strlen(line), 1);
-	while (line[i] != '\n' && line[i])
-	{
-		new_line[i] = line[i];
-		i++;
-	}
-	new_line[i] = '\0';
-	return (new_line);	
-}
-
 int __error_position(t_token *head, t_token *node)
 {
 	int position;
@@ -45,60 +29,18 @@ int __error_position(t_token *head, t_token *node)
 	position = 0;
 	while (head)
 	{
-		if (head->data == node->data && position == 0)
+		if (head->data.content == node->data.content && position == 0)
 			return (-1);
-		else if (head->data == node->data && head->next == NULL)
+		else if (head->data.content == node->data.content && head->next == NULL)
 			return (1);
-		else if (!ft_strcmp(head->data, "<<"))
+		else if (!ft_strcmp(head->data.content, "<<"))
 			position++;
 		head = head->next;
 	}
 	return (0);
 }
 
-bool open_here_doc(char *limiter)
-{
-	int fd;
-	int fd2;
-	char *line;
-	line = NULL;
-
-	fd = open(limiter, O_CREAT | O_TRUNC | O_RDWR, 0600);
-	if (fd == -1)
-		return (perror("open here_doc file"), false);
-	fd2 = open(limiter, O_RDONLY);
-	if (fd2 == -1)
-		return (perror("open here_doc file"), false);
-	unlink(limiter);
-	while (g_recv_signal != 1)
-	{
-		write(1, "> ", 2);
-		line = get_next_line(0);
-		if (!line || !ft_strcmp(__remove_new_line(line), limiter))
-			break ;
-		write(fd, line, ft_strlen(line));
-	}
-	return (true);
-}
-
-void here_doc(t_token *head)
-{
-
-	while (head)
-	{
-		if (head->type == ERROR)
-			return ;
-		if (!ft_strcmp(head->data, "<<"))
-		{
-			
-			if (open_here_doc(head->next->data) == false)	
-				return;
-		}
-		head = head->next;
-	}
-}
-
-void __syntax_error_def(t_shell *shell ,t_token *pst, int flag)
+void __syntax_error_check(t_shell *shell ,t_token *pst, int flag)
 {
 	int _error_location;
 
@@ -110,17 +52,18 @@ void __syntax_error_def(t_shell *shell ,t_token *pst, int flag)
 		{
 			write(2, ""READ"Minishell: syntax error"END"\n", 36);
 			shell->exit_status = 258;
-			here_doc(shell->tokens);
+			here_doc(shell);
 		}
 		else
 		{
-			here_doc(shell->tokens);
+			here_doc(shell);
 			write(2, ""READ"Minishell: syntax error"END"\n", 36);
 			shell->exit_status = 258;
+			shell = NULL;
 		}
 	}
-	else
-		here_doc(shell->tokens);
+	else if (here_doc(shell) == FAILURE)
+		shell = NULL;
 }
 
 void	ft_parser(t_shell *shell)
@@ -130,6 +73,8 @@ void	ft_parser(t_shell *shell)
 	int		end_lst;
 	t_token	*tmp;
 
+	if (!shell)
+		return ;
 	i = 0;
 	flag = 0;
 	tmp = shell->tokens;
@@ -150,5 +95,5 @@ void	ft_parser(t_shell *shell)
 		i++;
 		tmp = tmp->next;
 	}
-	__syntax_error_def(shell, tmp, flag);
+	__syntax_error_check(shell, tmp, flag);
 }

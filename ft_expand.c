@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 10:42:15 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/22 14:37:34 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,15 @@ void	ft_expand(t_shell *shell)
 {
 	t_token	*tmp;
 
+	if (!shell)
+		return ;
 	tmp = shell->tokens;
 	while (tmp)
 	{
 		if (tmp->state == DOLLAR)
-			tmp->data = dollar_expansion(tmp->data, shell);
+			tmp->data.content = dollar_expansion(tmp->data.content, shell);
 		else if (tmp->state == IN_DOUBLE)
-			tmp->data = search_dollar(shell, tmp->data);
+			tmp->data.content = search_dollar(shell, tmp->data.content);
 		tmp = tmp->next;
 	}
 }

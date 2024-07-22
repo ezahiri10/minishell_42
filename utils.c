@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/17 22:28:04 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 19:07:36 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,11 @@ int	ft_count(char *str, char c)
 		i++;
 	}
 	return (count);
+}
+
+t_join	is_joinble(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\0' || c == '|' || c == '>' || c == '<')
+		return (NON_JOINBLE);
+	return (JOINBLE);
 }

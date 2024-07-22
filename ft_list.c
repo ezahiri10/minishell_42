@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/16 14:45:01 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/21 19:52:58 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,22 @@ int	check_type(char *str)
 		return (WORD);
 }
 
-t_token	*ft_new_token(char *content, t_state s)
+t_token	*ft_new_token(char *content, t_state s, t_join join)
 {
 	t_token	*new_node;
 
 	new_node = ft_malloc(sizeof(t_token), 1);
 	if (!new_node)
 		return (NULL);
-	new_node->data = content;
+	new_node->data.content = content;
 	new_node->state = s;
-	new_node->err = 0;
+	new_node->join = join;
 	if (s == DEFAULT)
+	{
 		new_node->type = check_type(content);
+		if (new_node->type != REDIR_HERE)
+			new_node->data.fd = -1;	
+	}	
 	else
 		new_node->type = WORD;
 	new_node -> next = NULL;
@@ -63,10 +67,10 @@ void	ft_add_token(t_token **lst, t_token *new)
 	}
 }
 
-void	add_lst(char *content, t_token **lst, t_state state)
+void	add_lst(char *content, t_token **lst, t_state state, t_join join)
 {
 	t_token	*new;
 
-	new = ft_new_token(content, state);
+	new = ft_new_token(content, state, join);
 	ft_add_token(lst, new);
 }
