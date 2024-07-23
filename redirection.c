@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:47:09 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 19:56:13 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:43:42 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,21 @@
 t_cmd	*creat_cmd(t_cmd *cmd, char *to_join, t_redir *redir)
 {
 	char	**args;
-
+	
 	if (to_join == NULL)
-	{
 		cmd = new_cmd(NULL, redir, NULL);
-		return (cmd);
+	else if (!*to_join)
+	{
+		args = (char **)ft_malloc (sizeof(char *) * 2, 1);
+		args[0] = ft_strdup("");
+		args[1] = NULL;
+		cmd = new_cmd (args[0], redir, args);
 	}
-	args = ft_split(to_join, 127);
-	cmd = new_cmd(args[0], redir, args);
+	else
+	{
+		args = ft_split(to_join, 127);
+		cmd = new_cmd(args[0], redir, args);
+	}
 	return (cmd);
 }
 

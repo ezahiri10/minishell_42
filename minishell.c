@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/22 18:57:51 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:49:20 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void print_line(t_shell *shell)
 	
 	while (head)
 	{
-		printf("data [%s]\n", head->data.content);
+		printf("data [%s]\t\tjoin state [%d]\n", head->data.content, head->join);
 		head = head->next;
 	}
 }
@@ -101,12 +101,12 @@ void	interpreter(t_shell *shell, char *line)
 	}
 	add_history(line);
 	ft_tokenize(line, shell);
-	ft_parser(shell);
-	// print_line(shell);
-	// print_here_doc(shell);
+	print_line(shell);
+	// ft_parser(shell);
 	// ft_expand(shell);
 	// redirection(shell);
 	// print_sruct(shell->cmd);
+	// print_here_doc(shell);
 }
 
 void	mini_shell(t_shell *shell)
@@ -120,6 +120,7 @@ void	mini_shell(t_shell *shell)
 			__ctrl_d(shell);
 		interpreter(shell, line);
 		ft_malloc(0, 0);
+		// printf("exit status : %d\n", shell->exit_status);
 		shell->tokens = NULL;
 	}
 }

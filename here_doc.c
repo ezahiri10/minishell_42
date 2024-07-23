@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/22 23:53:59 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:33:41 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void child_handler(int signal)
 {
 	
 	(void)signal;
-		printf ("\n");
-		exit(1);
+	printf("\n");
+	exit(1);
 }
 
 
@@ -90,6 +90,7 @@ int open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
 	wait(NULL);
 	shell->exit_status = g_recv_signal;
 	g_recv_signal = 0;
+	// printf("exit status : %d\n", shell->exit_status);
 	return (SUCCESS);
 }
 
