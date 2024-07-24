@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/23 09:45:39 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/23 23:15:45 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,10 @@
 
 void	new_prompt(int s)
 {
-	int status;
-
-	if (wait(&status) != -1)
-		g_recv_signal = WEXITSTATUS(status);
-	else
-	{
 		g_recv_signal = s;
-		printf ("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		rl_redisplay();
-	}
+		close(0);
 }
 
 void	ft_signal(void)

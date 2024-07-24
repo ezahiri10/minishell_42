@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 20:47:30 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:51:06 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define YEL "\033[32m"
 # define END "\033[0m"
 
-int	g_recv_signal;
+extern int	g_recv_signal;
 
 typedef enum e_type
 {
@@ -42,7 +42,7 @@ typedef enum e_type
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_APPEND,
-	REDIR_HERE,
+	HERE_DOC,
 }			t_type;
 
 typedef enum e_state
@@ -62,7 +62,7 @@ typedef enum e_joinble
 typedef struct s_token_data
 {
 	char	*content;
-	int		fd;
+	int		fd; 
 }	t_data;
 
 typedef struct s_token
@@ -79,7 +79,7 @@ typedef struct s_env
 	char			*var;
 	char			*value;
 	struct s_env	*next;
-}				t_env;
+	}				t_env;
 
 typedef struct s_redir
 {
@@ -110,23 +110,32 @@ void	ft_signal(void);
 t_join	is_joinble(char c);
 int		is_special(char c);
 int		lstsize(t_token *lst);
-bool	here_doc(t_shell *shell);
-char	*char_to_string(char c);
 t_env	*ft_get_env(char **env);
 void	clair_env(t_env **head);
+char	*char_to_string(char c);
+bool	here_doc(t_shell *shell);
 void	ft_expand(t_shell *shell);
 void	ft_parser(t_shell *shell);
 void	redirection(t_shell *shell);
 int		ft_count(char *str, char c);
+char	*limiter(int *i, char *token);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
 void	ft_tokenize(char *line, t_shell *shell);
+char	*search_dollar(t_shell *shell, char *token);
+char	*dollar_expansion(char *tmp, t_shell *shell);
+void	heredoc_expansion(t_shell *shell, int *old_fd);
 void	*add_env(char *var, char *value, t_env **head);
 t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
-void	add_redir(t_redir **lst, char *file, t_type type);
+void	add_redir(t_redir **lst, char *file, t_type type, int fd);
 void	add_lst(char *content, t_token **lst, t_state state, t_join join);
 void	word_delimiter(char *token, int *i, t_token **head, t_state state);
-void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
-void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
 int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
+void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
+void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
+
+// printing functions
+void	print_sruct(t_shell *shell);
+void print_line(t_shell *shell);
+void print_here_doc(t_shell *shell);
 
 #endif

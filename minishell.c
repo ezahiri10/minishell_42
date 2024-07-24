@@ -6,90 +6,20 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/23 12:49:20 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:51:42 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int g_recv_signal = 0;
+
 void	__ctrl_d(t_shell *shell)
 {
 	clair_env(&shell->env_lst);
 	ft_malloc(0, 0);
-	printf("exit\n");
+	printf("\x1b[FMinishell$ exit\n");
 	exit(0);
-}
-
-void	print_sruct(t_shell *shell)
-{
-	t_cmd	*tmp;
-	int		i;
-
-	if (!shell)
-		return ;
-	tmp = shell->cmd;
-	while (tmp)
-	{
-		i = 0;
-		printf("cmd: %s\n", tmp->path);
-		write(1, "args: ", 6);
-		while (tmp->args && tmp->args[i])
-		{
-			write(1, tmp->args[i], ft_strlen(tmp->args[i]));
-			write(1, " ", 1);
-			i++;
-		}
-		printf("\n");
-		if (!tmp->args)
-			printf("args: NULL\n");
-		while (tmp->redir)
-		{
-			printf("redir: %s\n", tmp->redir->file);
-			tmp->redir = tmp->redir->next;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void print_line(t_shell *shell)
-{
-	t_token *head;
-
-	head = shell->tokens;
-	
-	while (head)
-	{
-		printf("data [%s]\t\tjoin state [%d]\n", head->data.content, head->join);
-		head = head->next;
-	}
-}
-
-void print_here_doc(t_shell *shell)
-{
-	t_token *token;
-	char 	*line;
-	int i;
-
-	if (!shell)
-		return ;
-	i = 0;
-	token = shell->tokens;
-	while (token)
-	{
-		if (!ft_strcmp(token->data.content, "<<"))
-		{
-			printf(""YEL"here_doc [%d]"END"\n", i + 1);
-			while (1)
-			{
-				line = get_next_line(token->data.fd);
-				if (!line)
-					break ;
-				printf("%s", line);
-			}
-			i++;
-		}
-		token = token->next;
-	}
 }
 
 void	interpreter(t_shell *shell, char *line)
@@ -101,26 +31,31 @@ void	interpreter(t_shell *shell, char *line)
 	}
 	add_history(line);
 	ft_tokenize(line, shell);
-	print_line(shell);
-	// ft_parser(shell);
-	// ft_expand(shell);
-	// redirection(shell);
-	// print_sruct(shell->cmd);
-	// print_here_doc(shell);
+	ft_parser(shell);
+	ft_expand(shell);
+	redirection(shell);
 }
 
 void	mini_shell(t_shell *shell)
 {
+	int		input;
 	char	*line;
 
+	input = dup(0);
 	while (1)
 	{
 		line = readline("Minishell$ ");
+		if (!line && g_recv_signal == SIGINT)
+		{
+			dup2(input, 0);
+			shell->exit_status = 1;
+			g_recv_signal = 0;
+			continue;
+		}
 		if (!line)
 			__ctrl_d(shell);
 		interpreter(shell, line);
 		ft_malloc(0, 0);
-		// printf("exit status : %d\n", shell->exit_status);
 		shell->tokens = NULL;
 	}
 }

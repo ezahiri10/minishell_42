@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lisrt_redir.c                                      :+:      :+:    :+:   */
+/*   list_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:28:52 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/19 18:10:43 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/24 15:59:30 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir	*new_redir(char *file, t_type type)
+t_redir	*new_redir(char *file, t_type type, int fd)
 {
 	t_redir	*new;
 
 	new = ft_malloc(sizeof(t_redir), 1);
+	new->fd = fd;
 	new->file = file;
 	new->type = type;
 	new->next = NULL;
@@ -40,10 +41,10 @@ void	redir_add_back(t_redir **lst, t_redir *new)
 	}
 }
 
-void	add_redir(t_redir **lst, char *file, t_type type)
+void	add_redir(t_redir **lst, char *file, t_type type, int fd)
 {
 	t_redir	*new;
 
-	new = new_redir(file, type);
+	new = new_redir(file, type, fd);
 	redir_add_back(lst, new);
 }

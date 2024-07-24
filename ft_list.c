@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/21 19:52:58 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/24 07:10:41 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_type(char *str)
 	if (!ft_strncmp(str, ">>", 2))
 		return (REDIR_APPEND);
 	if (!ft_strncmp(str, "<<", 2))
-		return (REDIR_HERE);
+		return (HERE_DOC);
 	if (!ft_strncmp(str, "<", 1))
 		return (REDIR_IN);
 	if (!ft_strncmp(str, ">", 1))
@@ -41,7 +41,7 @@ t_token	*ft_new_token(char *content, t_state s, t_join join)
 	if (s == DEFAULT)
 	{
 		new_node->type = check_type(content);
-		if (new_node->type != REDIR_HERE)
+		if (new_node->type != HERE_DOC)
 			new_node->data.fd = -1;	
 	}	
 	else

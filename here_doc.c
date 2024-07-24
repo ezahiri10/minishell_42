@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/23 11:33:41 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:07:20 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ char *remove_quote(char *token)
 	return (new_token);
 }
 
-char *__remove_new_line(char *line)
+char *_add_new_line(char *line)
 {
 	int i;
 	char *new_line;
 
 	i = 0;
 	new_line = ft_malloc(ft_strlen(line), 1);
-	while (line[i] != '\n' && line[i])
+	while (line[i] != '\n' &&  line[i])
 	{
 		new_line[i] = line[i];
 		i++;
@@ -48,22 +48,14 @@ char *__remove_new_line(char *line)
 	new_line[i] = '\0';
 	return (new_line);	
 }
-void child_handler(int signal)
-{
-	
-	(void)signal;
-	printf("\n");
-	exit(1);
-}
-
 
 int open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
 {
 	int fd;
-	pid_t pid;
 	char *line;
 	line = NULL;
 
+	(void)shell;
 	fd = open("here_doc", O_CREAT | O_RDWR, 0600);
 	if (fd == -1)
 		return (perror("open here_doc file"), FAILURE);
@@ -71,55 +63,58 @@ int open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
 	if (heredoc->data.fd == -1)
 		return (perror("open here_doc file"), FAILURE);
 	unlink("here_doc");
-	pid = fork();
-	if (pid == -1)
-		return (perror("fork"), FAILURE);
-	else if (pid == 0)
+	while (1)
 	{
-		rl_catch_signals = 1;
-		signal(SIGINT, child_handler);
-		while (1)
+		line = readline("> ");
+		if (!line && g_recv_signal == SIGINT)
 		{
-			line = readline("> ");
-			if (!line || !ft_strcmp(line, limiter))
-				exit(0);
-			write(fd, line, ft_strlen(line));
+			close(fd);
+			shell->exit_status = 1;
+			g_recv_signal = 0;
+			return (SUCCESS);
 		}
-		exit(0);
+		if (!line || !ft_strcmp(line, limiter))
+		{
+			close(fd);
+			shell->exit_status = 0;
+			return (SUCCESS);
+		}
+		line = ft_strjoin(line, "\n");
+		write(fd, line, ft_strlen(line));
 	}
-	wait(NULL);
-	shell->exit_status = g_recv_signal;
-	g_recv_signal = 0;
-	// printf("exit status : %d\n", shell->exit_status);
 	return (SUCCESS);
 }
 
 bool here_doc(t_shell *shell)
 {
+	int input;
 	char *join_limeter;
 	t_token *tmp;
 	t_token *head;
 
 	head = shell->tokens;
 	join_limeter = NULL;
+	input = dup(0);
 	while (head)
 	{
 		if (head->type == ERROR)
 			return (FAILURE);
-		if (!ft_strcmp(head->data.content, "<<"))
+		if (head->type == HERE_DOC && !ft_strcmp(head->data.content, "<<"))
 		{
 			tmp = head->next;
 			while (tmp->join == JOINBLE)
 			{
-				join_limeter = ft_strjoin(join_limeter, remove_quote(tmp->data.content));
+				join_limeter = ft_strjoin(join_limeter, tmp->data.content);
 				tmp = tmp->next;
 			}
-			join_limeter = ft_strjoin(join_limeter, remove_quote(tmp->data.content));
+			join_limeter = ft_strjoin(join_limeter, tmp->data.content);
 			if (open_here_doc(shell, head, join_limeter) == FAILURE)
 				return (FAILURE);
 			join_limeter = NULL;
 		}
 		head = head->next;
 	}
+	dup2(input, 0);
+	close(input);
     return (SUCCESS);
 }

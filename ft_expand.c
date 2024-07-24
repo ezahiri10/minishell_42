@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/23 12:59:06 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:07:16 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 char	*set_value(char *__name, t_env *__env)
 {
-	int	len;
-
 	while (__env)
 	{
-		len = ft_strlen(__env->var);
 		if (!ft_strcmp(__name, __env->var))
 			return (ft_strdup(__env->value));
 		__env = __env->next;
@@ -57,11 +54,9 @@ char	*limiter(int *i, char *token)
 {
 	int	start;
 	int	end;
-	int	id;
 
 	start = *i;
 	end = start + 1;
-	id = 0;
 	while (token[end] == '$')
 		end++;
 	if (token[end] == '?')
@@ -82,6 +77,7 @@ char	*search_dollar(t_shell *shell, char *token)
 	end = 0;
 	if (!token[0])
 		return (token);
+	
 	while (token[end])
 	{
 		if (token[end] == '$')
@@ -98,26 +94,42 @@ char	*search_dollar(t_shell *shell, char *token)
 	return (to_join);
 }
 
+bool check_is_double(t_token *tmp)
+{
+	while (tmp && tmp->join == JOINBLE)
+	{
+		if (tmp->state == IN_SINGALE || tmp->state == IN_DOUBLE)
+			return (true);
+		tmp = tmp->next;	
+	}
+	if (tmp->state == IN_SINGALE || tmp->state == IN_DOUBLE)
+			return (true);
+	return (false);
+}
+
 void	ft_expand(t_shell *shell)
 {
 	t_token	*tmp;
 	char	*to_check;
 
 	if (!shell)
-		return ;
-	tmp = shell->tokens;
+		return ;	tmp = shell->tokens;
 	while (tmp)
 	{
 		if (tmp->state == DOLLAR)
 		{
 			to_check = dollar_expansion(tmp->data.content, shell);
 			if (!*to_check)
+			{
 				tmp->data.content = NULL;
+			}
 			else
 				tmp->data.content = to_check;
 		}
 		else if (tmp->state == IN_DOUBLE)
 			tmp->data.content = search_dollar(shell, tmp->data.content);
+		else if (tmp->type == HERE_DOC && check_is_double(tmp->next) == false)
+			heredoc_expansion(shell, &tmp->data.fd);
 		tmp = tmp->next;
 	}
 }
