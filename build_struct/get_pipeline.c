@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_cmd.c                                          :+:      :+:    :+:   */
+/*   get_pipeline.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 20:36:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/19 18:11:16 by ezahiri          ###   ########.fr       */
+/*   Created: 2024/07/18 20:47:09 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/07/26 17:11:12 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args)
+void	get_pipeline(t_shell *shell)
 {
-	t_cmd	*new;
+	t_token	*end;
+	t_token	*start;
 
-	new = ft_malloc(sizeof(t_cmd), 1);
-	new->path = cmd;
-	new->redir = redir;
-	new->args = args;
-	new->next = NULL;
-	return (new);
-}
-
-void	cmd_add_back(t_cmd **lst, t_cmd *new)
-{
-	t_cmd	*temp;
-
-	if (!lst)
+	if (shell->stoped)
 		return ;
-	if (!(*lst))
-		*lst = new;
-	else
+	start = shell->tokens;
+	end = shell->tokens;
+	shell->cmd = NULL;
+	while (end)
 	{
-		temp = (*lst);
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new;
+		if (end->type == PIPE)
+		{
+			cmd_add_back(&shell->cmd, get_simple_cmd(start, end));
+			end = end->next;
+			start = end;
+		}
+		else
+			end = end->next;
 	}
+	if (end != start)
+		cmd_add_back(&shell->cmd, get_simple_cmd(start, end));
 }

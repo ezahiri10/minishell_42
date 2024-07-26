@@ -6,12 +6,13 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 12:04:39 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 17:09:40 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int g_recv_signal = 0;
 #include "minishell.h"
+
+int	g_recv_signal = 0;
 
 void	__ctrl_d(t_shell *shell)
 {
@@ -34,7 +35,7 @@ void	interpreter(t_shell *shell, char *line)
 	tokenizer(line, shell);
 	parser(shell, shell->tokens);
 	expander(shell);
-	redirection(shell);
+	get_pipeline(shell);
 	close_fd(shell);
 	print_sruct(shell);
 }

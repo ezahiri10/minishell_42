@@ -6,11 +6,15 @@ RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = 	ft_env_lst.c expander.c ft_get_env.c lst_cmd.c \
-		list_redir.c  minishell.c creat_cmd.c\
-		token_dilemeter.c ft_list.c parser.c \
-		ft_signal.c tokenizer.c utils.c redirection.c \
-		here_doc.c expand_herdoc.c printiing_func.c ft_exit.c \
+
+
+SRC = 	src/env_lst.c expanding/expander.c expanding/heredoc_expansion.c \
+		src/get_env.c build_struct/cmd_lst.c expanding/ft_expansion.c \
+		parsing/token_list.c build_struct/redirection_lst.c  src/minishell.c \
+		parsing/here_doc.c  printiing_func.c src/ft_exit.c \
+		parsing/token_dilemeter.c  parsing/parser.c src/utils.c \
+		src/ft_signal.c parsing/tokenizer.c build_struct/get_pipeline.c \
+		build_struct/create_cmd.c parsing/syntax_error.c \
 
 OBG = $(SRC:.c=.o)
 

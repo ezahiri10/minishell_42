@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 13:58:52 by ezahiri          ###   ########.fr       */
+/*   Created: 2024/07/26 15:56:31 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/07/26 15:56:54 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	check_is_double(t_token *tmp)
+{
+	while (tmp && tmp->join == JOINBLE)
+	{
+		if (tmp->state == IN_SINGALE || tmp->state == IN_DOUBLE)
+			return (true);
+		tmp = tmp->next;
+	}
+	if (tmp->state == IN_SINGALE || tmp->state == IN_DOUBLE)
+		return (true);
+	return (false);
+}
 
 char	*set_value(char *__name, t_env *__env)
 {
@@ -40,7 +53,7 @@ char	*dollar_expansion(char *tmp, t_shell *shell)
 			str = ft_strjoin("$", str);
 		return (str);
 	}
-	else if (count % 2 != 0)
+	else if (count % 2)
 	{
 		str = set_value(tmp + count, shell->env_lst);
 		while (--count)
@@ -91,43 +104,4 @@ char	*search_dollar(t_shell *shell, char *token)
 		}
 	}
 	return (to_join);
-}
-
-bool	check_is_double(t_token *tmp)
-{
-	while (tmp && tmp->join == JOINBLE)
-	{
-		if (tmp->state == IN_SINGALE || tmp->state == IN_DOUBLE)
-			return (true);
-		tmp = tmp->next;
-	}
-	if (tmp->state == IN_SINGALE || tmp->state == IN_DOUBLE)
-		return (true);
-	return (false);
-}
-
-void	expander(t_shell *shell)
-{
-	char	*to_check;
-	t_token	*tmp;
-
-	if (shell->stoped)
-		return ;
-	tmp = shell->tokens;
-	while (tmp)
-	{
-		if (tmp->state == DOLLAR)
-		{
-			to_check = dollar_expansion(tmp->data.content, shell);
-			if (!*to_check)
-				tmp->data.content = NULL;
-			else
-				tmp->data.content = to_check;
-		}
-		else if (tmp->state == IN_DOUBLE)
-			tmp->data.content = search_dollar(shell, tmp->data.content);
-		else if (tmp->type == HERE_DOC && !check_is_double(tmp->next))
-			heredoc_expansion(shell, &tmp->data.fd);
-		tmp = tmp->next;
-	}
 }

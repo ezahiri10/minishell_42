@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/26 14:05:28 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 15:40:35 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 		line = readline("> ");
 		if (!line && g_recv_signal == SIGINT)
 		{
-			printf ("------------------------------------\n");
 			shell->exit_status = 1;
 			break ;
 		}
@@ -55,22 +54,20 @@ int	open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
 
 	write_fd = open("here_doc", O_CREAT | O_RDWR, 0666);
 	if (write_fd == -1)
-		return (perror("open here_doc file"), FAILURE);
+		return (perror("open heredoc"), FAILURE);
 	heredoc->data.fd = open("here_doc", O_RDONLY);
 	if (heredoc->data.fd == -1)
-		return (close(write_fd), perror("open here_doc file"), FAILURE);
+		return (close(write_fd), perror("open heredoc"), FAILURE);
 	unlink("here_doc");
 	heredoc_loop(shell, limiter, write_fd);
 	close(write_fd);
 	return (SUCCESS);
 }
 
-bool	here_doc(t_shell *shell, t_token *head)
+bool	here_doc(t_shell *shell, t_token *head, int input)
 {
-	int		input;
 	char	*limiter;
 
-	input = dup(0);
 	while (head && g_recv_signal != SIGINT)
 	{
 		if (head->type == ERROR)
@@ -90,9 +87,7 @@ bool	here_doc(t_shell *shell, t_token *head)
 		head = head->next;
 	}
 	if (g_recv_signal == SIGINT)
-	{
-		(dup2(input, 0), close(input)); // this line fixed the bug : "open herdoc with ctrl + c the program finish"
-		return (close_fd(shell), g_recv_signal = 0, FAILURE); 
-	}
+		return (close_fd(shell), g_recv_signal = 0,
+			dup2(input, 0), close(input), FAILURE);
 	return (dup2(input, 0), close(input), SUCCESS);
 }

@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   cmd_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 11:46:30 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 11:49:35 by ezahiri          ###   ########.fr       */
+/*   Created: 2024/07/18 20:36:35 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/07/26 17:12:33 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <libc.h>
+#include "minishell.h"
 
-int	main(void)
+t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args)
 {
-	extern int	t;
-	int			x;
+	t_cmd	*new;
 
-	x = 10;
-	if (x == 10)
-	{
-		t = 20;
-	}
+	new = ft_malloc(sizeof(t_cmd), 1);
+	new->path = cmd;
+	new->redir = redir;
+	new->args = args;
+	new->next = NULL;
+	return (new);
+}
+
+void	cmd_add_back(t_cmd **lst, t_cmd *new)
+{
+	t_cmd	*temp;
+
+	if (!lst)
+		return ;
+	if (!(*lst))
+		*lst = new;
 	else
 	{
-		t = 100;
+		temp = (*lst);
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new;
 	}
-	printf("t = %d\n", t);
 }

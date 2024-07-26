@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 11:42:19 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 17:27:19 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,34 +114,34 @@ int		is_special(char c);
 t_env	*ft_get_env(char **env);
 void	clair_env(t_env **head);
 char	*char_to_string(char c);
+void	close_fd(t_shell *shell);
+void	clean_up(t_shell *shell);
 void	expander(t_shell *shell);
-void	redirection(t_shell *shell);
 int		ft_count(char *str, char c);
+void	get_pipeline(t_shell *shell);
 char	*limiter(int *i, char *token);
 void	display_error(t_shell *shell);
+char	*limiter(int *i, char *token);
+bool	check_is_double(t_token *tmp);
 void	tokenizer(char *line, t_shell *shell);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
-bool	here_doc(t_shell *shell, t_token *head);
+char	*set_value(char *__name, t_env *__env);
 void	parser(t_shell *shell, t_token *tokens);
 char	*search_dollar(t_shell *shell, char *token);
 char	*dollar_expansion(char *tmp, t_shell *shell);
+t_cmd	*get_simple_cmd(t_token *start, t_token *end);
 void	heredoc_expansion(t_shell *shell, int *old_fd);
 void	*add_env(char *var, char *value, t_env **head);
 t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
+bool	here_doc(t_shell *shell, t_token *head, int input);
 void	add_redir(t_redir **lst, char *file, t_type type, int fd);
+void	syntax_error_check(t_shell *shell, t_token *limiter, int flag);
 void	add_lst(char *content, t_token **lst, t_state state, t_join join);
 void	word_delimiter(char *token, int *i, t_token **head, t_state state);
 int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
 void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
 void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
-void	close_fd(t_shell *shell);
-void	clean_up(t_shell *shell);
 
-// creat_cmd.c
-t_cmd	*set_cmd(t_token *start, t_token *end);
-void	check_herdoc(t_token *start, int *fd);
-void	join_word(char **to_join, t_token **start);
-t_cmd	*creat_cmd(char *to_join, t_redir *redir);
 
 // printing functions
 void	print_sruct(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 11:04:06 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 15:36:00 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	quote_delimiter(char *token, int *i, t_shell *shell, t_state state)
 	if (token[*i] == c)
 		*i += 1;
 	else if (!token[*i])
-		return (display_error(shell), 1);
+		return (display_error(shell), FAILURE);
 	join = is_joinble(token[*i]);
 	sub = ft_substr(token, start, *i - start - 1);
 	add_lst(sub, &shell->tokens, state, join);
-	return (0);
+	return (SUCCESS);
 }
 
 void	dollar_delimiter(char *token, int *i, t_token **head, t_state state)
