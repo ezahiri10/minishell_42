@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/26 12:10:46 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 14:05:28 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ bool	here_doc(t_shell *shell, t_token *head)
 		head = head->next;
 	}
 	if (g_recv_signal == SIGINT)
-		return (close_fd(shell), g_recv_signal = 0, FAILURE); // PROBLEM1
+	{
+		(dup2(input, 0), close(input)); // this line fixed the bug : "open herdoc with ctrl + c the program finish"
+		return (close_fd(shell), g_recv_signal = 0, FAILURE); 
+	}
 	return (dup2(input, 0), close(input), SUCCESS);
 }
