@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/26 15:40:35 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:21:43 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	free(line);
 }
 
 int	open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)

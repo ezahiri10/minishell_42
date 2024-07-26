@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:33:53 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 11:07:51 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:21:23 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	close_fd(t_shell *shell)
 	token = shell->tokens;
 	while (token)
 	{
-		if (token->data.fd != -1)
+		if (token->data.fd != -1 && token->data.fd != 0)
 		{
 			close (token->data.fd);
 			token->data.fd = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 17:27:19 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:17:24 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,13 @@ typedef struct s_redir
 {
 	int				fd;	
 	char			*file;
-	int				type;
+	t_type			type;
 	struct s_redir	*next;
 }				t_redir;
 
 typedef struct s_cmd
 {
+	bool			type;
 	char			*path;
 	char			**args;
 	t_redir			*redir;
@@ -119,6 +120,7 @@ void	clean_up(t_shell *shell);
 void	expander(t_shell *shell);
 int		ft_count(char *str, char c);
 void	get_pipeline(t_shell *shell);
+void	cmd_type_def(t_shell *shell);
 char	*limiter(int *i, char *token);
 void	display_error(t_shell *shell);
 char	*limiter(int *i, char *token);

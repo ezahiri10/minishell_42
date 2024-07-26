@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_pipeline.c                                     :+:      :+:    :+:   */
+/*   def_cmd_type.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 20:47:09 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 23:41:02 by alafdili         ###   ########.fr       */
+/*   Created: 2024/07/26 18:38:30 by alafdili          #+#    #+#             */
+/*   Updated: 2024/07/26 23:47:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_pipeline(t_shell *shell)
+void	cmd_type_def(t_shell *shell)
 {
-	t_token	*end;
-	t_token	*start;
+	char	**builtins;
+	t_cmd	*cmd;
+	int		i;
 
-	if (shell->stoped)
-		return ;
-	start = shell->tokens;
-	end = shell->tokens;
-	shell->cmd = NULL;
-	while (end)
+	builtins = ft_split("cd pwd export unset env echo exit", ' ');
+	cmd = shell->cmd;
+	while (cmd)
 	{
-		if (end->type == PIPE)
+		i = 0;
+		
+		while (cmd->path && builtins[i])
 		{
-			cmd_add_back(&shell->cmd, get_simple_cmd(start, end));
-			end = end->next;
-			start = end;
+			cmd->type = false;
+			if (!ft_strcmp(cmd->path, builtins[i]))
+			{
+				cmd->type = true;
+				break;
+			}
+			i++;
 		}
-		else
-			end = end->next;
+		cmd = cmd->next;
 	}
-	if (end != start)
-		cmd_add_back(&shell->cmd, get_simple_cmd(start, end));
-	cmd_type_def(shell);
 }

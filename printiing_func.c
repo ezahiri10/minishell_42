@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printiing_func.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/26 11:53:57 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/27 00:03:13 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	print_sruct(t_shell *shell)
 	while (tmp)
 	{
 		i = 0;
+		if (tmp->type == true)
+			printf(""YEL"cmd is builtin"END"\n");
+		else
+			printf(""READ"cmd not builtin"END"\n");
 		printf("cmd: %s\n", tmp->path);
 		write(1, "args: ", 6);
 		while (tmp->args && tmp->args[i])
@@ -76,7 +80,7 @@ void	print_here_doc(t_shell *shell)
 				line = get_next_line(token->data.fd);
 				if (!line)
 					break ;
-				printf("%s", line);
+				printf("--- %s\n", line);
 			}
 			i++;
 		}
