@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/23 12:55:15 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:27:57 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,24 @@ t_join	is_joinble(char c)
 		return (NON_JOINBLE);
 	return (JOINBLE);
 }
+
+// char *remove_quote(char *token)
+// {
+// 	char *new_token;
+// 	char to_remove;
+// 	int i;
+
+// 	i = 0;
+// 	new_token = ft_strdup(token);
+// 	if (new_token[i] == '\"')
+// 		to_remove = '\"';
+// 	else if (new_token[i] == '\'')
+// 		to_remove = '\'';
+// 	else
+// 		return (token);
+// 	new_token++;
+// 	while (new_token[i] != to_remove)
+// 		i++;
+// 	new_token[i] = '\0';
+// 	return (new_token);
+// }

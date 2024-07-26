@@ -3,118 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/24 16:07:20 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:10:46 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *remove_quote(char *token)
+char	*join_limiter(t_token *nodes)
 {
-	char *new_token;
-	char to_remove;
-	int i;
+	char	*to_join;
 
-	i = 0;
-	new_token = ft_strdup(token);
-	if (new_token[i] == '\"')
-		to_remove = '\"';
-	else if (new_token[i] == '\'')
-		to_remove = '\'';
-	else
-		return (token);
-	new_token++;
-	while (new_token[i] != to_remove)
-		i++;
-	new_token[i] = '\0';
-	return (new_token);
-}
-
-char *_add_new_line(char *line)
-{
-	int i;
-	char *new_line;
-
-	i = 0;
-	new_line = ft_malloc(ft_strlen(line), 1);
-	while (line[i] != '\n' &&  line[i])
+	while (nodes->join == JOINBLE)
 	{
-		new_line[i] = line[i];
-		i++;
+		to_join = ft_strjoin(to_join, nodes->data.content);
+		nodes = nodes->next;
 	}
-	new_line[i] = '\0';
-	return (new_line);	
+	to_join = ft_strjoin(to_join, nodes->data.content);
+	return (to_join);
 }
 
-int open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
+void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 {
-	int fd;
-	char *line;
-	line = NULL;
+	char	*line;
 
-	(void)shell;
-	fd = open("here_doc", O_CREAT | O_RDWR, 0600);
-	if (fd == -1)
-		return (perror("open here_doc file"), FAILURE);
-	heredoc->data.fd = open("here_doc", O_RDONLY);
-	if (heredoc->data.fd == -1)
-		return (perror("open here_doc file"), FAILURE);
-	unlink("here_doc");
 	while (1)
 	{
 		line = readline("> ");
 		if (!line && g_recv_signal == SIGINT)
 		{
-			close(fd);
+			printf ("------------------------------------\n");
 			shell->exit_status = 1;
-			g_recv_signal = 0;
-			return (SUCCESS);
+			break ;
 		}
 		if (!line || !ft_strcmp(line, limiter))
 		{
-			close(fd);
-			shell->exit_status = 0;
-			return (SUCCESS);
+			if (shell->exit_status != 258)
+				shell->exit_status = 0;
+			break ;
 		}
-		line = ft_strjoin(line, "\n");
-		write(fd, line, ft_strlen(line));
+		ft_putendl_fd(line, fd);
+		free(line);
 	}
+}
+
+int	open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
+{
+	int		write_fd;
+
+	write_fd = open("here_doc", O_CREAT | O_RDWR, 0666);
+	if (write_fd == -1)
+		return (perror("open here_doc file"), FAILURE);
+	heredoc->data.fd = open("here_doc", O_RDONLY);
+	if (heredoc->data.fd == -1)
+		return (close(write_fd), perror("open here_doc file"), FAILURE);
+	unlink("here_doc");
+	heredoc_loop(shell, limiter, write_fd);
+	close(write_fd);
 	return (SUCCESS);
 }
 
-bool here_doc(t_shell *shell)
+bool	here_doc(t_shell *shell, t_token *head)
 {
-	int input;
-	char *join_limeter;
-	t_token *tmp;
-	t_token *head;
+	int		input;
+	char	*limiter;
 
-	head = shell->tokens;
-	join_limeter = NULL;
 	input = dup(0);
-	while (head)
+	while (head && g_recv_signal != SIGINT)
 	{
 		if (head->type == ERROR)
-			return (FAILURE);
+			return (close(input), FAILURE);
 		if (head->type == HERE_DOC && !ft_strcmp(head->data.content, "<<"))
 		{
-			tmp = head->next;
-			while (tmp->join == JOINBLE)
+			limiter = join_limiter(head->next);
+			if (shell->exit_status != 258)
 			{
-				join_limeter = ft_strjoin(join_limeter, tmp->data.content);
-				tmp = tmp->next;
+				if (open_here_doc(shell, head, limiter) == FAILURE)
+					return (close(input), clean_up(shell), FAILURE);
 			}
-			join_limeter = ft_strjoin(join_limeter, tmp->data.content);
-			if (open_here_doc(shell, head, join_limeter) == FAILURE)
-				return (FAILURE);
-			join_limeter = NULL;
+			else
+				heredoc_loop(shell, limiter, -1);
+			limiter = NULL;
 		}
 		head = head->next;
 	}
-	dup2(input, 0);
-	close(input);
-    return (SUCCESS);
+	if (g_recv_signal == SIGINT)
+		return (close_fd(shell), g_recv_signal = 0, FAILURE); // PROBLEM1
+	return (dup2(input, 0), close(input), SUCCESS);
 }

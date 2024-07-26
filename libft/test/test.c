@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_size.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 11:12:10 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/15 20:37:24 by ezahiri          ###   ########.fr       */
+/*   Created: 2024/07/26 11:46:30 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/07/26 11:49:35 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include <libc.h>
 
-int	lstsize(t_token *lst)
+int	main(void)
 {
-	int		counter;
-	t_token	*temp;
+	extern int	t;
+	int			x;
 
-	temp = lst;
-	counter = 0;
-	while (temp != NULL)
+	x = 10;
+	if (x == 10)
 	{
-		counter++;
-		temp = temp -> next;
+		t = 20;
 	}
-	return (counter);
+	else
+	{
+		t = 100;
+	}
+	printf("t = %d\n", t);
 }

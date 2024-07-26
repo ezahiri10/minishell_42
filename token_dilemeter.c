@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_dilemeter.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/23 18:04:49 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:04:06 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	quote_delimiter(char *token, int *i, t_shell *shell, t_state state)
 	char	c;
 	int		start;
 	t_join	join;
+	char	*sub;
 
 	*i += 1;
 	start = *i;
@@ -29,17 +30,10 @@ int	quote_delimiter(char *token, int *i, t_shell *shell, t_state state)
 	if (token[*i] == c)
 		*i += 1;
 	else if (!token[*i])
-	{
-		write(2, ""READ"Minishell: syntax error"END"\n", 36);
-		shell->exit_status = 258;
-		free(token);
-		ft_malloc (0, 0);
-		shell->tokens = NULL;
-		shell = NULL;
-		return (1);
-	}
+		return (display_error(shell), 1);
 	join = is_joinble(token[*i]);
-	add_lst(ft_substr(token, start, *i - start - 1), &shell->tokens, state, join);
+	sub = ft_substr(token, start, *i - start - 1);
+	add_lst(sub, &shell->tokens, state, join);
 	return (0);
 }
 

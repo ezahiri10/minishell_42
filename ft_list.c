@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/24 07:10:41 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:38:26 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_type(char *str)
+static int	check_type(char *str)
 {
 	if (!ft_strncmp(str, "|", 1))
 		return (PIPE);
@@ -42,8 +42,8 @@ t_token	*ft_new_token(char *content, t_state s, t_join join)
 	{
 		new_node->type = check_type(content);
 		if (new_node->type != HERE_DOC)
-			new_node->data.fd = -1;	
-	}	
+			new_node->data.fd = -1;
+	}
 	else
 		new_node->type = WORD;
 	new_node -> next = NULL;

@@ -6,11 +6,11 @@ RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = 	ft_env_lst.c ft_expand.c ft_get_env.c lst_cmd.c \
-		list_redir.c list_size.c minishell.c \
-		token_dilemeter.c ft_list.c ft_parser.c \
+SRC = 	ft_env_lst.c expander.c ft_get_env.c lst_cmd.c \
+		list_redir.c  minishell.c creat_cmd.c\
+		token_dilemeter.c ft_list.c parser.c \
 		ft_signal.c tokenizer.c utils.c redirection.c \
-		here_doc.c expand_herdoc.c printiing_func.c
+		here_doc.c expand_herdoc.c printiing_func.c ft_exit.c \
 
 OBG = $(SRC:.c=.o)
 
@@ -21,12 +21,12 @@ all : $(LIBFT) $(NAME)
 $(LIBFT) : 
 	@make -C libft/
 
-%.o : %.c minishell.h
-	$(CC) $(FLAGS) -c $< -o $@
 	
 $(NAME) : $(OBG)
 	$(CC) $(FLAGS) -lreadline $(OBG) $(LIBFT) -o $(NAME)
 
+%.o : %.c minishell.h
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	@make -C  libft/ clean

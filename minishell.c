@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/24 19:51:42 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:04:39 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
 int g_recv_signal = 0;
+#include "minishell.h"
 
 void	__ctrl_d(t_shell *shell)
 {
+	close(shell->input);
+	close_fd(shell);
 	clair_env(&shell->env_lst);
 	ft_malloc(0, 0);
 	printf("\x1b[FMinishell$ exit\n");
@@ -30,27 +31,29 @@ void	interpreter(t_shell *shell, char *line)
 		g_recv_signal = 0;
 	}
 	add_history(line);
-	ft_tokenize(line, shell);
-	ft_parser(shell);
-	ft_expand(shell);
+	tokenizer(line, shell);
+	parser(shell, shell->tokens);
+	expander(shell);
 	redirection(shell);
+	close_fd(shell);
+	print_sruct(shell);
 }
 
 void	mini_shell(t_shell *shell)
 {
-	int		input;
 	char	*line;
 
-	input = dup(0);
+	shell->input = dup(0);
 	while (1)
 	{
+		shell->stoped = 0;
 		line = readline("Minishell$ ");
 		if (!line && g_recv_signal == SIGINT)
 		{
-			dup2(input, 0);
+			dup2(shell->input, 0);
 			shell->exit_status = 1;
 			g_recv_signal = 0;
-			continue;
+			continue ;
 		}
 		if (!line)
 			__ctrl_d(shell);

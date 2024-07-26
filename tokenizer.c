@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 09:12:57 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/17 20:43:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:56:40 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	skiper(char *line, int i)
 	return (false);
 }
 
-void	ft_tokenize(char *line, t_shell *shell)
+void	tokenizer(char *line, t_shell *shell)
 {
 	int	end;
 
@@ -46,12 +46,12 @@ void	ft_tokenize(char *line, t_shell *shell)
 		else if (is_special(line[end]) == IN_SINGALE)
 		{
 			if (quote_delimiter(line, &end, shell, IN_SINGALE))
-				return ;
+				break ;
 		}
 		else if (is_special(line[end]) == IN_DOUBLE)
 		{
 			if (quote_delimiter(line, &end, shell, IN_DOUBLE))
-				return ;
+				break ;
 		}
 		else if (is_special(line[end]) == DOLLAR)
 			dollar_delimiter(line, &end, &shell->tokens, DOLLAR);

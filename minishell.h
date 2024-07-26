@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/24 19:51:06 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:42:19 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-#define FAILURE 1
-#define SUCCESS 0
+# define FAILURE 1
+# define SUCCESS 0
 
 # define READ "\033[1;31m"
 # define YEL "\033[32m"
@@ -36,13 +36,13 @@ extern int	g_recv_signal;
 
 typedef enum e_type
 {
-	ERROR,
-	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	HERE_DOC,
+	ERROR, // -1
+	WORD, // 0
+	PIPE, // |
+	REDIR_IN, // <
+	REDIR_OUT, // >
+	REDIR_APPEND, // >>
+	HERE_DOC, // <<	
 }			t_type;
 
 typedef enum e_state
@@ -62,7 +62,7 @@ typedef enum e_joinble
 typedef struct s_token_data
 {
 	char	*content;
-	int		fd; 
+	int		fd;
 }	t_data;
 
 typedef struct s_token
@@ -79,7 +79,7 @@ typedef struct s_env
 	char			*var;
 	char			*value;
 	struct s_env	*next;
-	}				t_env;
+}				t_env;
 
 typedef struct s_redir
 {
@@ -103,24 +103,26 @@ typedef struct s_shell
 	char	**env;
 	t_token	*tokens;
 	t_cmd	*cmd;
+	int		stoped;
+	int		input;
 	int		exit_status;
 }				t_shell;
 
 void	ft_signal(void);
 t_join	is_joinble(char c);
 int		is_special(char c);
-int		lstsize(t_token *lst);
 t_env	*ft_get_env(char **env);
 void	clair_env(t_env **head);
 char	*char_to_string(char c);
-bool	here_doc(t_shell *shell);
-void	ft_expand(t_shell *shell);
-void	ft_parser(t_shell *shell);
+void	expander(t_shell *shell);
 void	redirection(t_shell *shell);
 int		ft_count(char *str, char c);
 char	*limiter(int *i, char *token);
+void	display_error(t_shell *shell);
+void	tokenizer(char *line, t_shell *shell);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
-void	ft_tokenize(char *line, t_shell *shell);
+bool	here_doc(t_shell *shell, t_token *head);
+void	parser(t_shell *shell, t_token *tokens);
 char	*search_dollar(t_shell *shell, char *token);
 char	*dollar_expansion(char *tmp, t_shell *shell);
 void	heredoc_expansion(t_shell *shell, int *old_fd);
@@ -132,10 +134,18 @@ void	word_delimiter(char *token, int *i, t_token **head, t_state state);
 int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
 void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
 void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
+void	close_fd(t_shell *shell);
+void	clean_up(t_shell *shell);
+
+// creat_cmd.c
+t_cmd	*set_cmd(t_token *start, t_token *end);
+void	check_herdoc(t_token *start, int *fd);
+void	join_word(char **to_join, t_token **start);
+t_cmd	*creat_cmd(char *to_join, t_redir *redir);
 
 // printing functions
 void	print_sruct(t_shell *shell);
-void print_line(t_shell *shell);
-void print_here_doc(t_shell *shell);
+void	print_line(t_shell *shell);
+void	print_here_doc(t_shell *shell);
 
 #endif
