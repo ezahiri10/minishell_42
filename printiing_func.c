@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/27 00:03:13 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/27 22:22:09 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_sruct(t_shell *shell)
 			printf("args: NULL\n");
 		while (tmp->redir)
 		{
-			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->file, 
+			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->file,
 				tmp->redir->fd, tmp->redir->type);
 			tmp->redir = tmp->redir->next;
 		}
@@ -55,7 +55,7 @@ void	print_line(t_shell *shell)
 	head = shell->tokens;
 	while (head)
 	{
-		printf("data [%s]\n", head->data.content);
+		printf("data [%s]\t\tjoin state: {%d}\n", head->data.content, head->join);
 		head = head->next;
 	}
 }

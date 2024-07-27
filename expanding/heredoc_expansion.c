@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:21:53 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/26 23:36:10 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/27 22:19:30 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	heredoc_expansion(t_shell *shell, int *old_fd)
 		line = get_next_line(*old_fd);
 		if (!line)
 			break ;
-		// printf();
 		expanded = search_dollar(shell, line);
 		write(write_fd, expanded, ft_strlen(expanded));
 	}

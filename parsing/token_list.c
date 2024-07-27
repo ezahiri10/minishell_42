@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 16:06:36 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/27 11:17:28 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,9 @@ t_token	*ft_new_token(char *content, t_state s, t_join join)
 	new_node->data.content = content;
 	new_node->state = s;
 	new_node->join = join;
+	new_node->data.fd = -1;
 	if (s == DEFAULT)
-	{
 		new_node->type = check_type(content);
-		if (new_node->type != HERE_DOC)
-			new_node->data.fd = -1;
-	}
 	else
 		new_node->type = WORD;
 	new_node -> next = NULL;

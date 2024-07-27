@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 22:17:24 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/27 22:21:52 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ extern int	g_recv_signal;
 
 typedef enum e_type
 {
-	ERROR, // -1
-	WORD, // 0
-	PIPE, // |
-	REDIR_IN, // <
-	REDIR_OUT, // >
-	REDIR_APPEND, // >>
-	HERE_DOC, // <<	
+	ERROR,
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	HERE_DOC,
 }			t_type;
 
 typedef enum e_state
@@ -121,6 +121,7 @@ void	expander(t_shell *shell);
 int		ft_count(char *str, char c);
 void	get_pipeline(t_shell *shell);
 void	cmd_type_def(t_shell *shell);
+void	space_to_127(t_token *token);
 char	*limiter(int *i, char *token);
 void	display_error(t_shell *shell);
 char	*limiter(int *i, char *token);
@@ -143,7 +144,6 @@ void	word_delimiter(char *token, int *i, t_token **head, t_state state);
 int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
 void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
 void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
-
 
 // printing functions
 void	print_sruct(t_shell *shell);

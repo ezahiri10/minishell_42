@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/27 00:03:53 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/27 22:19:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	interpreter(t_shell *shell, char *line)
 	parser(shell, shell->tokens);
 	expander(shell);
 	get_pipeline(shell);
-	print_here_doc(shell);
+	print_line(shell);
+	print_sruct(shell);
 	close_fd(shell);
-	// print_sruct(shell);
 }
 
 void	mini_shell(t_shell *shell)

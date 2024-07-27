@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   creat_cmd.c                                        :+:      :+:    :+:   */
+/*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 17:01:26 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/07/27 22:21:23 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,6 @@ void	set_fd(t_token *start, int *fd)
 		*fd = start->data.fd;
 	else
 		*fd = -1;
-}
-
-void	join_word(char **to_join, t_token **start)
-{
-	while (*start && (*start)->join == JOINBLE)
-	{
-		if ((*start)->data.content != NULL)
-			*to_join = ft_strjoin(*to_join, (*start)->data.content);
-		*start = (*start)->next;
-	}
-	if ((*start)->data.content != NULL)
-		*to_join = ft_strjoin(*to_join, (*start)->data.content);
-	*start = (*start)->next;
 }
 
 t_cmd	*create_cmd(char *to_join, t_redir *redir)
@@ -55,6 +42,41 @@ t_cmd	*create_cmd(char *to_join, t_redir *redir)
 	return (cmd);
 }
 
+void	set_filename(char **to_join, t_token **start)
+{
+	*to_join = ft_strjoin(*to_join, char_to_string(127));
+	while (*start && (*start)->join == JOINBLE)
+	{
+		if ((*start)->data.content != NULL)
+			*to_join = ft_strjoin(*to_join, (*start)->data.content);
+		*start = (*start)->next;
+	}
+	if ((*start)->data.content != NULL)
+		*to_join = ft_strjoin(*to_join, (*start)->data.content);
+	*start = (*start)->next;
+}
+
+void	join_word(char **to_join, t_token **start)
+{
+	int	i;
+
+	i = 0;
+	*to_join = ft_strjoin(*to_join, char_to_string(127));
+	while (*start && (*start)->join == JOINBLE)
+	{
+		space_to_127(*start);
+		if ((*start)->data.content != NULL)
+			*to_join = ft_strjoin(*to_join, (*start)->data.content);
+		*start = (*start)->next;
+	}
+	if ((*start)->data.content != NULL)
+	{
+		space_to_127(*start);
+		*to_join = ft_strjoin(*to_join, (*start)->data.content);
+	}
+	*start = (*start)->next;
+}
+
 void	get_cmd_part(t_token **head, t_redir **redir, char **args)
 {
 	int		fd;
@@ -64,22 +86,13 @@ void	get_cmd_part(t_token **head, t_redir **redir, char **args)
 	if ((*head)->type != WORD)
 	{
 		set_fd(*head, &fd);
-		join_word(&filename, &(*head)->next);
+		set_filename(&filename, &(*head)->next);
 		add_redir(redir, filename, (*head)->type, fd);
 		*head = (*head)->next;
 		filename = NULL;
 	}
-	else if ((*head)->type == WORD && (*head)->join == JOINBLE)
+	else
 		join_word(args, head);
-	else if ((*head)->type == WORD && (*head)->join == NON_JOINBLE)
-	{
-		if ((*head)->data.content != NULL)
-		{
-			*args = ft_strjoin(*args, char_to_string(127));
-			*args = ft_strjoin(*args, (*head)->data.content);
-		}
-		*head = (*head)->next;
-	}
 }
 
 t_cmd	*get_simple_cmd(t_token *start, t_token *end)
