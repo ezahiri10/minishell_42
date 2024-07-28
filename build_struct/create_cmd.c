@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/27 22:21:23 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/27 23:56:07 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,32 @@ t_cmd	*create_cmd(char *to_join, t_redir *redir)
 	return (cmd);
 }
 
-void	set_filename(char **to_join, t_token **start)
+void	set_filename(char **filename, t_token **start)
 {
-	*to_join = ft_strjoin(*to_join, char_to_string(127));
+	int i;
+
+	*filename = ft_strjoin(*filename, char_to_string(127));
 	while (*start && (*start)->join == JOINBLE)
 	{
+		i = 0;
+		if ((*start)->state != IN_SINGALE && (*start)->state != IN_SINGALE)
+		{
+			while ((*start)->data.content[i])
+			{
+				if ((*start)->data.content[i] == ' ')
+				{
+					(*start)->type = ERROR;
+					break ;
+				}
+				i++;
+			}
+		}
 		if ((*start)->data.content != NULL)
-			*to_join = ft_strjoin(*to_join, (*start)->data.content);
+			*filename = ft_strjoin(*filename, (*start)->data.content);
 		*start = (*start)->next;
 	}
 	if ((*start)->data.content != NULL)
-		*to_join = ft_strjoin(*to_join, (*start)->data.content);
+		*filename = ft_strjoin(*filename, (*start)->data.content);
 	*start = (*start)->next;
 }
 
