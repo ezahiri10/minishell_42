@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/27 22:18:56 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:30:11 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_count(char *str, char c)
 
 	i = 0;
 	count = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] == c)
 			count++;
@@ -60,3 +60,65 @@ void	space_to_127(t_token *token)
 		}
 	}
 }
+
+// void	set_filename(char **filename, t_token **start, t_type *type)
+// {
+// 	*filename = ft_strjoin(*filename, char_to_string(127));
+// 	while (*start && (*start)->join == JOINBLE)
+// 	{
+// 		if ((*start)->state != IN_SINGALE && (*start)->state != IN_DOUBLE
+// 			&& ft_count((*start)->data.content, ' '))
+// 		{
+// 			*type = ERROR;
+// 			break ;
+// 		}
+// 		if ((*start)->data.content == NULL)
+// 			*filename = ft_strjoin(*filename, "");
+// 		else
+// 			*filename = ft_strjoin(*filename, (*start)->data.content);
+// 		*start = (*start)->next;
+// 	}
+// 	if ((*start)->data.content != NULL)
+// 	{
+// 		if ((*start)->state != IN_SINGALE && (*start)->state != IN_DOUBLE
+// 			&& ft_count((*start)->data.content, ' '))
+// 			*type = ERROR;
+// 		if (ft_strcmp((*start)->data.content))
+// 		*filename = ft_strjoin(*filename, (*start)->data.content);
+// 	}
+// 	else
+// 		*filename = ft_strjoin(*filename, "");
+// 	if (!ft_strcmp(*filename, char_to_string(**filename)))
+// 		*type = ERROR;
+// 	*start = (*start)->next;
+// }
+
+
+// void	set_filename(char **filename, t_token **start, t_type *type)
+// {
+// 	*filename = ft_strjoin(*filename, char_to_string(127));
+// 	if ((*start)->join == NON_JOINBLE)
+// 	{
+// 		if (!(*start)->data.content || ft_count((*start)->data.content, ' '))
+// 			*type = ERROR;
+// 		*filename = ft_strjoin(*filename, (*start)->data.content);
+// 		*start = (*start)->next;
+// 		return ;
+// 	}
+// 	while (*start && (*start)->join == JOINBLE)
+// 	{
+// 		if (check_space(*start, type))
+// 			break ;
+// 		if ((*start)->data.content != NULL)
+// 			*filename = ft_strjoin(*filename, (*start)->data.content);
+// 		*start = (*start)->next;
+// 	}
+// 	if ((*start)->data.content != NULL)
+// 	{
+// 		check_space(*start, type);
+// 		*filename = ft_strjoin(*filename, (*start)->data.content);
+// 	}
+// 	else
+// 		*type = ERROR;
+// 	*start = (*start)->next;
+// }

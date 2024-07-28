@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/27 23:56:07 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:07:47 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,54 @@ t_cmd	*create_cmd(char *to_join, t_redir *redir)
 	else
 	{
 		args = ft_split(to_join, 127);
+		for (int i = 0; args[i]; i++)
+			printf("arg[%d] = %s\n", i, args[i]);
 		cmd = new_cmd(args[0], redir, args);
 	}
 	return (cmd);
 }
 
-void	set_filename(char **filename, t_token **start)
+bool check_space(t_token *token, t_type *type)
 {
-	int i;
-
+	if (token->state != IN_SINGALE && token->state != IN_SINGALE)
+	{
+		if (ft_count(token->data.content, ' '))
+			*type = ERROR;
+		return (true);
+	}
+	return (false);
+	
+}
+void	set_filename(char **filename, t_token **start, t_type *type)
+{
 	*filename = ft_strjoin(*filename, char_to_string(127));
+	if ((*start)->join == NON_JOINBLE)
+	{
+		if ((*start)->state != IN_SINGALE && (*start)->state != IN_SINGALE
+			&& ft_count((*start)->data.content, ' ') && !(*start)->data.content)
+			*type = ERROR;
+		*filename = ft_strjoin(*filename, (*start)->data.content);
+		*start = (*start)->next;
+		return ;
+	}
 	while (*start && (*start)->join == JOINBLE)
 	{
-		i = 0;
-		if ((*start)->state != IN_SINGALE && (*start)->state != IN_SINGALE)
+		if ((*start)->state != IN_SINGALE && (*start)->state != IN_SINGALE
+			&& ft_count((*start)->data.content, ' '))
 		{
-			while ((*start)->data.content[i])
-			{
-				if ((*start)->data.content[i] == ' ')
-				{
-					(*start)->type = ERROR;
-					break ;
-				}
-				i++;
-			}
+			*type = ERROR;
+			break ;
 		}
 		if ((*start)->data.content != NULL)
 			*filename = ft_strjoin(*filename, (*start)->data.content);
 		*start = (*start)->next;
 	}
 	if ((*start)->data.content != NULL)
+	{
 		*filename = ft_strjoin(*filename, (*start)->data.content);
+	}
+	else
+		*type = ERROR;
 	*start = (*start)->next;
 }
 
@@ -96,13 +113,16 @@ void	get_cmd_part(t_token **head, t_redir **redir, char **args)
 {
 	int		fd;
 	char	*filename;
+	t_type 	rd_type;
 
 	filename = NULL;
 	if ((*head)->type != WORD)
 	{
 		set_fd(*head, &fd);
-		set_filename(&filename, &(*head)->next);
-		add_redir(redir, filename, (*head)->type, fd);
+		rd_type = (*head)->type;
+		set_filename(&filename, &(*head)->next, &rd_type);
+		printf ("rd_type %d\n", rd_type);
+		add_redir(redir, filename, rd_type, fd);
 		*head = (*head)->next;
 		filename = NULL;
 	}
