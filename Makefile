@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC =  cc  #-fsanitize=address -g
+CC =  cc  -fsanitize=address -g
 
 RM = rm -f
 
@@ -14,7 +14,7 @@ SRC = 	src/env_lst.c expanding/expander.c expanding/heredoc_expansion.c \
 		parsing/here_doc.c  printiing_func.c src/ft_exit.c build_struct/def_cmd_type.c\
 		parsing/token_dilemeter.c  parsing/parser.c src/utils.c \
 		src/ft_signal.c parsing/tokenizer.c build_struct/get_pipeline.c \
-		build_struct/create_cmd.c parsing/syntax_error.c \
+		build_struct/create_cmd.c parsing/syntax_error.c build_struct/join_words.c 
 
 OBG = $(SRC:%.c=obj/%.o)
 

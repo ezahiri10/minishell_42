@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:12:25 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/17 16:12:25 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/29 22:05:50 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_strcmp(char *s1, char *s2)
 {
+	if (!s1 || !s2)
+		return (1);
 	while (*s1 || *s2)
 	{
 		if (*s1 != *s2)

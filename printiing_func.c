@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/29 00:57:16 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:29:53 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	print_sruct(t_shell *shell)
 		else
 			printf(""READ"cmd not builtin"END"\n");
 		printf("cmd: %s\n", tmp->path);
+		if (!tmp->args)
+			printf("args: NULL\n");
 		write(1, "args: ", 6);
 		while (tmp->args && tmp->args[i])
 		{
@@ -36,8 +38,6 @@ void	print_sruct(t_shell *shell)
 			i++;
 		}
 		printf("\n");
-		if (!tmp->args)
-			printf("args: NULL\n");
 		while (tmp->redir)
 		{
 			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->file,

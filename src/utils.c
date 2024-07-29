@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/29 00:55:21 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:42:23 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ t_join	is_joinble(char c)
 	return (JOINBLE);
 }
 
-void	space_to_127(t_token *token)
+void	space_to_127(t_token *token, t_state check_with)
 {
 	int	i;
 
 	i = 0;
-	if (token->state != IN_SINGALE && token->state != IN_DOUBLE)
+	if (token->state == DOLLAR && check_with == DOLLAR)
 	{
 		while (token->data.content && token->data.content[i])
 		{
@@ -62,22 +62,22 @@ void	space_to_127(t_token *token)
 	}
 }
 
-int	check_and_add(char **filename, t_token *token, t_type *type)
+int	check_and_join(char **filename, t_token *token, t_type *type)
 {
 	if (!token->data.content)
 		*filename = ft_strjoin(*filename, char_to_string(127));
 	else if (!*token->data.content)
 	{
-		if (token->state != IN_SINGALE && token->state != IN_DOUBLE
-			&& ft_count(token->data.content, ' '))
-			*type = ERROR;
-		*filename = ft_strjoin(*filename, token->data.content);
+		if (type == NULL)
+			*filename = ft_strjoin(*filename, char_to_string(4));
+		else
+			*filename = ft_strjoin(*filename, token->data.content);
 		return (1);
 	}
 	else
 	{
 		if (token->state != IN_SINGALE && token->state != IN_DOUBLE
-			&& ft_count(token->data.content, ' '))
+			&& ft_count(token->data.content, ' ') && type)
 			*type = ERROR;
 		*filename = ft_strjoin(*filename, token->data.content);
 	}

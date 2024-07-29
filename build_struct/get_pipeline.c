@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:47:09 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/29 00:47:21 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:17:35 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_cmd	*get_simple_cmd(t_token *start, t_token *end)
 	redir = NULL;
 	while (start != end)
 		get_cmd_part(&start, &redir, &args);
+	get_cmd_part(NULL, NULL, NULL);
 	return (create_cmd(args, redir));
 }
 
