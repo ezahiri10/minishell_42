@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/27 22:21:52 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:49:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,16 @@ void	tokenizer(char *line, t_shell *shell);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
 char	*set_value(char *__name, t_env *__env);
 void	parser(t_shell *shell, t_token *tokens);
+t_cmd	*create_cmd(char *to_join, t_redir *redir);
 char	*search_dollar(t_shell *shell, char *token);
 char	*dollar_expansion(char *tmp, t_shell *shell);
-t_cmd	*get_simple_cmd(t_token *start, t_token *end);
 void	heredoc_expansion(t_shell *shell, int *old_fd);
 void	*add_env(char *var, char *value, t_env **head);
 t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
 bool	here_doc(t_shell *shell, t_token *head, int input);
 void	add_redir(t_redir **lst, char *file, t_type type, int fd);
+void	get_cmd_part(t_token **head, t_redir **redir, char **args);
+int		check_and_add(char **filename, t_token *token, t_type *type);
 void	syntax_error_check(t_shell *shell, t_token *limiter, int flag);
 void	add_lst(char *content, t_token **lst, t_state state, t_join join);
 void	word_delimiter(char *token, int *i, t_token **head, t_state state);

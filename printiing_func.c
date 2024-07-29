@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/27 22:22:09 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:57:16 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ void	print_sruct(t_shell *shell)
 		{
 			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->file,
 				tmp->redir->fd, tmp->redir->type);
+			if (tmp->redir->type == 0)
+				printf("----- type [ambigous\n");
+			else
+				printf("----- type [%d\n", tmp->redir->type);
 			tmp->redir = tmp->redir->next;
 		}
 		tmp = tmp->next;
@@ -55,7 +59,7 @@ void	print_line(t_shell *shell)
 	head = shell->tokens;
 	while (head)
 	{
-		printf("data [%s]\t\tjoin state: {%d}\n", head->data.content, head->join);
+		printf("data [%s]\n", head->data.content);
 		head = head->next;
 	}
 }

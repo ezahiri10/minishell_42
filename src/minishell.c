@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/28 17:09:29 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:58:48 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	interpreter(t_shell *shell, char *line)
 	}
 	add_history(line);
 	tokenizer(line, shell);
-	// print_line(shell);
 	parser(shell, shell->tokens);
 	expander(shell);
 	get_pipeline(shell);

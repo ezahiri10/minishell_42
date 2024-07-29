@@ -16,7 +16,7 @@ SRC = 	src/env_lst.c expanding/expander.c expanding/heredoc_expansion.c \
 		src/ft_signal.c parsing/tokenizer.c build_struct/get_pipeline.c \
 		build_struct/create_cmd.c parsing/syntax_error.c \
 
-OBG = $(SRC:.c=.o)
+OBG = $(SRC:%.c=obj/%.o)
 
 LIBFT = libft/libft.a
 
@@ -28,7 +28,7 @@ $(LIBFT) :
 $(NAME) : $(OBG)
 	$(CC) $(FLAGS) -lreadline $(OBG) $(LIBFT) -o $(NAME)
 
-%.o : %.c minishell.h
+obj/%.o : %.c minishell.h
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean :
