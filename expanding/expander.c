@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 23:37:00 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/30 15:09:04 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	expander(t_shell *shell)
 	{
 		if (tmp->state == DOLLAR)
 		{
+			tmp->data.origin = tmp->data.content;
 			to_check = dollar_expansion(tmp->data.content, shell);
 			if (!*to_check)
 				tmp->data.content = NULL;

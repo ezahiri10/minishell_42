@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/29 21:42:23 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 00:01:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void	space_to_127(t_token *token, t_state check_with)
 
 int	check_and_join(char **filename, t_token *token, t_type *type)
 {
-	if (!token->data.content)
+	if (!token->data.content && type != NULL)
 		*filename = ft_strjoin(*filename, char_to_string(127));
+	else if (!token->data.content && type == NULL)
+		*filename = ft_strjoin(*filename, token->data.content);
 	else if (!*token->data.content)
 	{
 		if (type == NULL)

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/29 21:54:43 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/30 20:07:52 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define READ "\033[1;31m"
 # define YEL "\033[32m"
 # define END "\033[0m"
+
+// export x="""ls"
 
 extern int	g_recv_signal;
 
@@ -61,8 +63,9 @@ typedef enum e_joinble
 
 typedef struct s_token_data
 {
-	char	*content;
 	int		fd;
+	char	*origin;
+	char	*content;
 }	t_data;
 
 typedef struct s_token

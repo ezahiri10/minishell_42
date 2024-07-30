@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/29 22:05:59 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 00:23:46 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,16 @@ void	set_fd(t_token *start, int *fd)
 t_cmd	*create_cmd(char *to_join, t_redir *redir)
 {
 	int		i;
-	int		j;
 	t_cmd	*cmd;
 	char	**args;
 
 	i = 0;
+	if (to_join == NULL)
+		return (new_cmd(NULL, redir, NULL));
 	args = ft_split(to_join, 127);
-	while (args[i])
+	while (args && args[i])
 	{
-		j = 0;
-		while (args[i][j])
-		{
-			if (args[i][j] == 4)
-				args[i][j] = '\0';
-			j++;
-		}
+		args[i] = ft_strtrim(args[i], char_to_string(4));
 		i++;
 	}
 	cmd = new_cmd(args[0], redir, args);
@@ -46,20 +41,25 @@ t_cmd	*create_cmd(char *to_join, t_redir *redir)
 
 void	set_filename(char **filename, t_token **start, t_type *type)
 {
-	int	empty;
+	int		empty;
+	char	*save;
 
 	empty = 0;
+	save = NULL;
 	while (*start && (*start)->join == JOINBLE)
 	{
 		empty += check_and_join(filename, *start, type);
+		save = ft_strjoin(save, (*start)->data.origin);
 		*start = (*start)->next;
 	}
-	if ((*start)->data.content != NULL)
-		empty += check_and_join(filename, *start, type);
-	else
-		check_and_join(filename, *start, type);
-	if (ft_count(*filename, 127) == (int)ft_strlen(*filename) && !empty)
+	empty += check_and_join(filename, *start, type);
+	save = ft_strjoin(save, (*start)->data.origin);
+	if ((ft_count(*filename, 127) == (int)ft_strlen(*filename)
+			&& !empty) || *type == ERROR)
+	{
 		*type = ERROR;
+		*filename = save;
+	}
 	*start = (*start)->next;
 }
 
