@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/26 22:21:43 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:35:59 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ bool	here_doc(t_shell *shell, t_token *head, int input)
 	{
 		if (head->type == ERROR)
 			return (close(input), FAILURE);
-		if (head->type == HERE_DOC && !ft_strcmp(head->data.content, "<<"))
+		if (head->type == HERE && !ft_strcmp(head->data.content, "<<"))
 		{
 			limiter = join_limiter(head->next);
 			if (shell->exit_status != 258)

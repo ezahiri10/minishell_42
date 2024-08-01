@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/30 15:28:02 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 23:30:01 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_sruct(t_shell *shell)
 			printf(""YEL"cmd is builtin"END"\n");
 		else
 			printf(""READ"cmd not builtin"END"\n");
-		printf("cmd: %s\n", tmp->path);
+		printf("cmd: %s\n", tmp->cmd);
 		if (!tmp->args)
 			printf("args: NULL\n");
 		write(1, "args: ", 6);
@@ -40,7 +40,7 @@ void	print_sruct(t_shell *shell)
 		printf("\n");
 		while (tmp->redir)
 		{
-			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->file,
+			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->filename,
 				tmp->redir->fd, tmp->redir->type);
 			if (tmp->redir->type == 0)
 				printf("----- type [ambigous\n");

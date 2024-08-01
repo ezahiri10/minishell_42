@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:38:30 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/27 22:19:56 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 23:30:01 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	cmd_type_def(t_shell *shell)
 	while (cmd)
 	{
 		i = 0;
-		while (cmd->path && builtins[i])
+		while (cmd->cmd && builtins[i])
 		{
 			cmd->type = false;
-			if (!ft_strcmp(cmd->path, builtins[i]))
+			if (!ft_strcmp(cmd->cmd, builtins[i]))
 			{
 				cmd->type = true;
 				break ;

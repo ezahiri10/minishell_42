@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/30 15:09:04 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:35:59 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	expander(t_shell *shell)
 		}
 		else if (tmp->state == IN_DOUBLE)
 			tmp->data.content = search_dollar(shell, tmp->data.content);
-		else if (tmp->type == HERE_DOC && !check_is_double(tmp->next))
+		else if (tmp->type == HERE && !check_is_double(tmp->next))
 			heredoc_expansion(shell, &tmp->data.fd);
 		tmp = tmp->next;
 	}

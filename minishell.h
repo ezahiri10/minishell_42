@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/30 20:07:52 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 23:30:01 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ extern int	g_recv_signal;
 
 typedef enum e_type
 {
+	IN,
+	OUT,
+	HERE,
+	APPEND,
 	ERROR,
 	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	HERE_DOC,
+	PIPE
 }			t_type;
 
 typedef enum e_state
@@ -87,7 +87,7 @@ typedef struct s_env
 typedef struct s_redir
 {
 	int				fd;	
-	char			*file;
+	char			*filename;
 	t_type			type;
 	struct s_redir	*next;
 }				t_redir;
@@ -95,7 +95,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	bool			type;
-	char			*path;
+	char			*cmd;
 	char			**args;
 	t_redir			*redir;
 	struct s_cmd	*next;
@@ -121,6 +121,8 @@ char	*char_to_string(char c);
 void	close_fd(t_shell *shell);
 void	clean_up(t_shell *shell);
 void	expander(t_shell *shell);
+void    executer(t_shell *shell);
+int		cmd_lstsize(t_cmd *head);
 int		ft_count(char *str, char c);
 void	get_pipeline(t_shell *shell);
 void	cmd_type_def(t_shell *shell);

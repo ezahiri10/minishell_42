@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/30 15:12:44 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:36:10 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static int	check_type(char *str)
 	if (!ft_strncmp(str, "|", 1))
 		return (PIPE);
 	if (!ft_strncmp(str, ">>", 2))
-		return (REDIR_APPEND);
+		return (APPEND);
 	if (!ft_strncmp(str, "<<", 2))
-		return (HERE_DOC);
+		return (HERE);
 	if (!ft_strncmp(str, "<", 1))
-		return (REDIR_IN);
+		return (IN);
 	if (!ft_strncmp(str, ">", 1))
-		return (REDIR_OUT);
+		return (OUT);
 	else
 		return (WORD);
 }

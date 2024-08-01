@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 00:23:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/07/31 20:35:59 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_fd(t_token *start, int *fd)
 {
-	if (start->type == HERE_DOC)
+	if (start->type == HERE)
 		*fd = start->data.fd;
 	else
 		*fd = -1;
