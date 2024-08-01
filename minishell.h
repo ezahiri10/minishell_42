@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 23:30:01 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/01 10:50:21 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,11 @@ void	display_error(t_shell *shell);
 char	*limiter(int *i, char *token);
 char	*limiter(int *i, char *token);
 bool	check_is_double(t_token *tmp);
+char	*check_cmd(char *path, char *cmd);
 void	tokenizer(char *line, t_shell *shell);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
 char	*set_value(char *__name, t_env *__env);
+char	*ft_get_env_key(t_env *env, char *key);
 void	parser(t_shell *shell, t_token *tokens);
 t_cmd	*create_cmd(char *to_join, t_redir *redir);
 void	join_word(char **to_join, t_token **start);

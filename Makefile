@@ -10,10 +10,10 @@ FLAGS = -Wall -Wextra -Werror
 
 SRC = 	src/env_lst.c expanding/expander.c expanding/heredoc_expansion.c \
 		src/get_env.c build_struct/cmd_lst.c expanding/ft_expansion.c \
-		parsing/token_list.c build_struct/redirection_lst.c  src/minishell.c \
+		parsing/token_list.c build_struct/redirection_lst.c  src/minishell.c utils/utils1.c\
 		parsing/here_doc.c  printiing_func.c src/ft_exit.c build_struct/def_cmd_type.c\
-		parsing/token_dilemeter.c  parsing/parser.c src/utils.c execution/executer.c \
-		src/ft_signal.c parsing/tokenizer.c build_struct/get_pipeline.c \
+		parsing/token_dilemeter.c  parsing/parser.c  execution/executer.c \
+		src/ft_signal.c parsing/tokenizer.c build_struct/get_pipeline.c utils/utils.c\
 		build_struct/create_cmd.c parsing/syntax_error.c build_struct/join_words.c 
 
 OBG = $(SRC:%.c=obj/%.o)

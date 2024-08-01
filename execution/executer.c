@@ -6,11 +6,32 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/31 23:30:57 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/01 10:58:12 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*check_cmd(char *path, char *cmd)
+{
+	int		i;
+	char	*cmd_path;
+	char	**sub_path;
+
+	cmd_path = NULL;
+	i = 0;
+	sub_path = ft_split(path, ':');
+	while (sub_path[i])
+	{
+		sub_path[i] = ft_strjoin(sub_path[i], "/");
+		cmd_path = ft_strjoin(sub_path[i], cmd);
+		if (access(cmd_path, X_OK) != -1)
+			return (cmd_path);
+		cmd_path = NULL;
+		i++;
+	}
+	return (NULL);
+}
 
 void ft_close(t_redir *head)
 {

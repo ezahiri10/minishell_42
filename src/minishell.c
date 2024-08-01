@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 19:33:05 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/01 11:01:37 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,5 @@ int	main(int ac, char **av, char **env)
 	shell.env_lst = ft_get_env(env);
 	if (!shell.env_lst)
 		return (1);
-	mini_shell(&shell);
+	// mini_shell(&shell);
 }
