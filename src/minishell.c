@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 00:19:58 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/03 14:43:41 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,31 @@ void	__ctrl_d(t_shell *shell)
 {
 	close(shell->input);
 	close_fd(shell);
-	clair_env(&shell->env_lst);
+	stock_addr(NULL, 0);
 	ft_malloc(0, 0);
 	printf("\x1b[FMinishell$ exit\n");
-	exit(0);
+	exit(shell->exit_status);
 }
 
+void	check_builtin(t_shell *shell)
+{
+	if(!shell->cmd)
+		return ;
+	if (shell->cmd->type == 1 && ft_strcmp(shell->cmd->path, "env") == 0)
+		ft_env(shell);
+	else if (shell->cmd->type == 1 && ft_strcmp(shell->cmd->path, "cd") == 0)
+		ft_cd(shell);
+	else if (shell->cmd->type == 1 && ft_strcmp(shell->cmd->path, "unset") == 0)
+		ft_unset(shell);
+	else if (shell->cmd->type == 1 && ft_strcmp(shell->cmd->path, "pwd") == 0)
+		ft_pwd(shell);
+	else if (shell->cmd->type == 1 && ft_strcmp(shell->cmd->path, "export") == 0)
+		ft_export(shell);
+	else if (shell->cmd->type == 1 && ft_strcmp(shell->cmd->path, "echo") == 0)
+		ft_echo(shell->cmd);
+	else if (shell->cmd->type == 1 && ft_strcmp(shell->cmd->path, "exit") == 0)
+		ft_exit(shell);
+}
 void	interpreter(t_shell *shell, char *line)
 {
 	if (g_recv_signal == SIGINT)
@@ -35,9 +54,8 @@ void	interpreter(t_shell *shell, char *line)
 	tokenizer(line, shell);
 	parser(shell, shell->tokens);
 	expander(shell);
-	print_line(shell);
 	get_pipeline(shell);
-	print_sruct(shell);
+	check_builtin(shell);
 	close_fd(shell);
 }
 
@@ -50,6 +68,7 @@ void	mini_shell(t_shell *shell)
 	{
 		shell->stoped = 0;
 		line = readline("Minishell$ ");
+		stock_addr(line, 2);
 		if (!line && g_recv_signal == SIGINT)
 		{
 			dup2(shell->input, 0);
@@ -73,9 +92,8 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	ft_signal();
 	ft_memset(&shell, 0, sizeof(t_shell));
+	shell.input = -1;
 	shell.env = env;
-	shell.env_lst = ft_get_env(env);
-	if (!shell.env_lst)
-		return (1);
+	inisailise_env(env, &shell);
 	mini_shell(&shell);
 }

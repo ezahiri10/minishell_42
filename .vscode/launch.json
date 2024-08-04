@@ -1,15 +1,21 @@
 {
   "version": "0.2.0",
   "configurations": [
-    
-
     {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "lldb",
+      "name": "(lldb) Launch",
+      "type": "cppdbg",
       "request": "launch",
-      "args": [],
-      "cwd": "/Users/alafdili/minishell/libft",
-      "program": "/Users/alafdili/minishell/libft/build/Debug/outDebug"
+      "program": "${workspaceFolder}/minishell_db",
+      "args": [
+        "arg1",
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "preLaunchTask": "C/C++: clang build active file",
+      "externalConsole": false,
+      "MIMode": "lldb"
     }
+    
   ]
 }

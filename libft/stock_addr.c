@@ -1,44 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
+/*   stock_addr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 10:27:28 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/03 12:00:46 by ezahiri          ###   ########.fr       */
+/*   Created: 2024/08/02 11:22:48 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/08/03 11:57:56 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	handle_error(char *str, void *to_free)
+void	stock_addr(void *addr, int mode)
 {
-	free(to_free);
-	ft_malloc(0, 0);
-	write(2, str, ft_strlen(str));
-	exit(1);
-}
-
-void	*ft_malloc(size_t size, int mod)
-{
-	static t_list	*head;
-	void			*ptr;
+	static t_list	*buffer;
+	static void		*tmp;
 	t_list			*new;
 
-	ptr = NULL;
-	if (mod == 1)
+	if (mode == 1)
 	{
-		ptr = malloc(size);
-		if (!ptr)
-			handle_error("Malloc failed\n", ptr);
-		new = ft_lstnew(ptr);
+		new = ft_lstnew(addr);
 		if (!new)
-			handle_error("Malloc failed\n", ptr);
-		ft_lstadd_back(&head, new);
-		return (ptr);
+			handle_error("Malloc failed\n", addr);
+		ft_lstadd_back(&buffer, new);
+	}
+	else if (mode == 2)
+	{
+		free(tmp);
+		tmp = addr;
 	}
 	else
-		ft_lstclear(&head, free);
-	return (NULL);
+	{
+		free(tmp);
+		ft_lstclear(&buffer, free);
+	}
 }

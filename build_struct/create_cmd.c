@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 00:23:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/03 09:46:58 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	set_filename(char **filename, t_token **start, t_type *type)
 	save = NULL;
 	while (*start && (*start)->join == JOINBLE)
 	{
+		printf("start->data.content [%s]\n", (*start)->data.content);
 		empty += check_and_join(filename, *start, type);
 		save = ft_strjoin(save, (*start)->data.origin);
 		*start = (*start)->next;
@@ -91,3 +92,4 @@ void	get_cmd_part(t_token **head, t_redir **redir, char **args)
 	else
 		join_word(args, head);
 }
+ 

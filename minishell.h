@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/30 20:07:52 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/03 15:42:53 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 # define READ "\033[1;31m"
 # define YEL "\033[32m"
 # define END "\033[0m"
-
-// export x="""ls"
 
 extern int	g_recv_signal;
 
@@ -115,7 +113,6 @@ typedef struct s_shell
 void	ft_signal(void);
 t_join	is_joinble(char c);
 int		is_special(char c);
-t_env	*ft_get_env(char **env);
 void	clair_env(t_env **head);
 char	*char_to_string(char c);
 void	close_fd(t_shell *shell);
@@ -126,12 +123,12 @@ void	get_pipeline(t_shell *shell);
 void	cmd_type_def(t_shell *shell);
 void	display_error(t_shell *shell);
 char	*limiter(int *i, char *token);
-char	*limiter(int *i, char *token);
 bool	check_is_double(t_token *tmp);
 void	tokenizer(char *line, t_shell *shell);
 void	cmd_add_back(t_cmd **lst, t_cmd *new);
 char	*set_value(char *__name, t_env *__env);
 void	parser(t_shell *shell, t_token *tokens);
+void	inisailise_env(char **env, t_shell *shell);
 t_cmd	*create_cmd(char *to_join, t_redir *redir);
 void	join_word(char **to_join, t_token **start);
 char	*search_dollar(t_shell *shell, char *token);
@@ -151,6 +148,28 @@ void	word_delimiter(char *token, int *i, t_token **head, t_state state);
 int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
 void	dollar_delimiter(char *token, int *i, t_token **head, t_state state);
 void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
+
+char	*subenv(char const *s, unsigned int start, size_t len);
+char	*join_env(char *s1, char *s2);
+int		researcher(char *s, char c);
+
+// built-in functions
+void	ft_echo(t_cmd *cmd);
+void	ft_exit(t_shell *shell);
+void	ft_env(t_shell *shell);
+void	ft_cd(t_shell *shell);
+void	ft_unset(t_shell *shell);
+void	ft_pwd(t_shell *shell);
+void	ft_export(t_shell *shell);
+
+// env functions
+void	set_env(t_shell *shell, char *arg);
+char	*_get_env(char *name, t_env *env);
+bool	exist_env(char *name, t_env *env);
+int		env_size(t_env *lst);
+void    print_env(t_env *env);
+void	ft_export_error(char *arg, t_shell *shell);
+char	*dup_env(char *s);
 
 // printing functions
 void	print_sruct(t_shell *shell);

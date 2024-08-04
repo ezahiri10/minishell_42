@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printiing_func.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/30 15:28:02 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/03 09:40:45 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_sruct(t_shell *shell)
 		while (tmp->args && tmp->args[i])
 		{
 			write(1, tmp->args[i], ft_strlen(tmp->args[i]));
-			write(1, " ", 1);
+			write(1, ", ", 1);
 			i++;
 		}
 		printf("\n");
