@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:02:07 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 16:02:37 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/05 22:11:43 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ void	syntax_error_check(t_shell *shell, t_token *limiter, int flag)
 			display_error(shell);
 		}
 	}
-	else if (here_doc(shell, shell->tokens, input) == FAILURE)
+	else if (here_doc(shell, shell->tokens, input) == FAIL)
 		shell->stoped = 1;
 }

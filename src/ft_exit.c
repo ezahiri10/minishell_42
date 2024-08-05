@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:33:53 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/27 11:21:51 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:37:16 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,30 @@
 
 void	display_error(t_shell *shell)
 {
-	write(2, ""READ"Minishell: syntax error"END"\n", 36);
+	ft_putstr_fd("Minishell: ", 2);
+	ft_putendl_fd("syntax error", 2);
 	shell->exit_status = 258;
 	shell->stoped = 1;
 }
 
-void	close_fd(t_shell *shell)
+void	close_rdir_fds(t_redir *head)
 {
-	t_token	*token;
+	t_redir	*tmp;
 
-	token = shell->tokens;
+	tmp = head;
+	while (tmp)
+	{
+		if (tmp->fd != -1 && tmp->fd != 0)
+		{
+			close (tmp->fd);
+			tmp->fd = -1;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	close_fd(t_token *token, t_cmd *head)
+{
 	while (token)
 	{
 		if (token->data.fd != -1 && token->data.fd != 0)
@@ -33,13 +47,18 @@ void	close_fd(t_shell *shell)
 		}
 		token = token->next;
 	}
+	while (head)
+	{
+		close_rdir_fds(head->redir);
+		head = head->next;
+	}
 }
 
 void	clean_up(t_shell *shell)
 {
 	ft_malloc(0, 0);
 	clair_env(&shell->env_lst);
-	close(shell->input);
-	close_fd (shell);
+	close(shell->input[0]);
+	close_fd (shell->tokens, NULL);
 	exit(1);
 }

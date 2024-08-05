@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/01 11:01:37 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:11:06 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	g_recv_signal = 0;
 
 void	__ctrl_d(t_shell *shell)
 {
-	close(shell->input);
-	close_fd(shell);
+	close(shell->input[0]);
+	close_fd(shell->tokens, NULL);
 	clair_env(&shell->env_lst);
 	ft_malloc(0, 0);
-	printf("\x1b[FMinishell$ exit\n");
+	printf("\x1b[F"YEL"Minishell$ exit"END"\n");
 	exit(0);
 }
 
@@ -36,23 +36,21 @@ void	interpreter(t_shell *shell, char *line)
 	parser(shell, shell->tokens);
 	expander(shell);
 	get_pipeline(shell);
-	print_sruct(shell);
-	// executer(shell);
-	close_fd(shell);
+	executer(shell);
 }
 
 void	mini_shell(t_shell *shell)
 {
 	char	*line;
 
-	shell->input = dup(0);
+	shell->input[0] = dup(0);
 	while (1)
 	{
 		shell->stoped = 0;
 		line = readline("Minishell$ ");
 		if (!line && g_recv_signal == SIGINT)
 		{
-			dup2(shell->input, 0);
+			dup2(shell->input[0], 0);
 			shell->exit_status = 1;
 			g_recv_signal = 0;
 			continue ;
@@ -77,5 +75,5 @@ int	main(int ac, char **av, char **env)
 	shell.env_lst = ft_get_env(env);
 	if (!shell.env_lst)
 		return (1);
-	// mini_shell(&shell);
+	mini_shell(&shell);
 }

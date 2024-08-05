@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/31 20:35:59 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:44:37 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 {
 	char	*line;
 
-	while (1)
+	while (true)
 	{
 		line = readline("> ");
 		if (!line && g_recv_signal == SIGINT)
@@ -51,14 +51,14 @@ void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 
 int	open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
 {
-	int		write_fd;
+	int	write_fd;
 
 	write_fd = open("here_doc", O_CREAT | O_RDWR, 0666);
 	if (write_fd == -1)
-		return (perror("open heredoc"), FAILURE);
+		return (perror("open heredoc"), FAIL);
 	heredoc->data.fd = open("here_doc", O_RDONLY);
 	if (heredoc->data.fd == -1)
-		return (close(write_fd), perror("open heredoc"), FAILURE);
+		return (close(write_fd), perror("open heredoc"), FAIL);
 	unlink("here_doc");
 	heredoc_loop(shell, limiter, write_fd);
 	close(write_fd);
@@ -72,15 +72,13 @@ bool	here_doc(t_shell *shell, t_token *head, int input)
 	while (head && g_recv_signal != SIGINT)
 	{
 		if (head->type == ERROR)
-			return (close(input), FAILURE);
+			return (close(input), FAIL);
 		if (head->type == HERE && !ft_strcmp(head->data.content, "<<"))
 		{
 			limiter = join_limiter(head->next);
-			if (shell->exit_status != 258)
-			{
-				if (open_here_doc(shell, head, limiter) == FAILURE)
-					return (close(input), clean_up(shell), FAILURE);
-			}
+			if (shell->exit_status != 258
+				&& open_here_doc(shell, head, limiter) == FAIL)
+				return (close(input), clean_up(shell), FAIL);
 			else
 				heredoc_loop(shell, limiter, -1);
 			limiter = NULL;
@@ -88,7 +86,9 @@ bool	here_doc(t_shell *shell, t_token *head, int input)
 		head = head->next;
 	}
 	if (g_recv_signal == SIGINT)
-		return (close_fd(shell), g_recv_signal = 0,
-			dup2(input, 0), close(input), FAILURE);
+	{
+		close_fd(shell->tokens, NULL);
+		return (g_recv_signal = 0, dup2(input, 0), close(input));
+	}
 	return (dup2(input, 0), close(input), SUCCESS);
 }

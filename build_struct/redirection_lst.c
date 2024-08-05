@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:28:52 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 16:04:05 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:50:12 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_redir	*new_redir(char *file, t_type type, int fd)
 
 	new = ft_malloc(sizeof(t_redir), 1);
 	new->fd = fd;
-	new->filename = file;
+	new->file = file;
 	new->type = type;
 	new->next = NULL;
 	return (new);

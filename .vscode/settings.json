@@ -88,6 +88,8 @@
     "type_traits": "c",
     "minishell.h": "c",
     "unistd.h": "c",
-    "ostream": "c"
+    "ostream": "c",
+    "__functional_03": "c",
+    "fcntl.h": "c"
   }
 }

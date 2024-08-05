@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/01 10:10:01 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:46:28 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	check_and_join(char **filename, t_token *token, t_type *type)
 	}
 	else
 	{
-		if (token->state != IN_SINGALE && token->state != IN_DOUBLE
-			&& ft_count(token->data.content, ' ') && type)
+		if (token->state == DOLLAR && ft_count(token->data.content, ' ')
+			&& type)
 			*type = ERROR;
 		*filename = ft_strjoin(*filename, token->data.content);
 	}

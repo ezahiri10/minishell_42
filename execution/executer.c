@@ -6,134 +6,81 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/01 10:58:12 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:37:39 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*check_cmd(char *path, char *cmd)
+void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 {
-	int		i;
 	char	*cmd_path;
-	char	**sub_path;
 
 	cmd_path = NULL;
-	i = 0;
-	sub_path = ft_split(path, ':');
-	while (sub_path[i])
+	if (redirection_check(shell->cmd, cmd->redir) == FAIL)
+		exit(1);
+	apply_redirections(cmd, ends, shell->input, last);
+	if (!cmd->cmd)
 	{
-		sub_path[i] = ft_strjoin(sub_path[i], "/");
-		cmd_path = ft_strjoin(sub_path[i], cmd);
-		if (access(cmd_path, X_OK) != -1)
-			return (cmd_path);
-		cmd_path = NULL;
-		i++;
+		close_fd(NULL, shell->cmd);
+		exit (0);
 	}
-	return (NULL);
+	if (cmd->cmd[0] == '\0')
+		print_error(shell->cmd, (char *[2]){CNF, cmd->cmd}, 127);
+	if ((cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' && cmd->cmd[1] == '/'))
+		&& check_executable(shell->cmd, cmd->cmd) == SUCCESS)
+		cmd_path = cmd->cmd;
+	else
+	{
+		cmd_path = check_cmd(ft_get_env_key(shell->env_lst, "PATH"), cmd->cmd);
+		if (!cmd_path)
+			print_error(shell->cmd, (char *[2]){CNF, cmd->cmd}, 127);
+	}
+	if (execve(cmd_path, cmd->args, shell->env) == -1)
+		print_error(shell->cmd, (char *[2]){strerror(errno), "execve"}, errno);
 }
 
-void ft_close(t_redir *head)
+int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)
 {
-	t_redir	*tmp;
+	pid_t	pid;
+	int		ends[2];
 
-	tmp = head;
-	while (tmp)
+	if (pipe(ends) == -1)
+		return (perror("minishell: pipe"), FAIL);
+	pid = fork();
+	if (pid == -1)
 	{
-		if (tmp->fd != -1 && tmp->fd != 0)
-		{
-			close (tmp->fd);
-			tmp->fd = -1;
-		}
-		tmp = tmp->next;
+		perror("minishell: fork");
+		return (close(ends[0]), close(ends[1]), FAIL);
 	}
+	else if (pid == 0)
+		exec_cmd(shell, cmd, ends, next_cmd);
+	dup2(ends[0], 0);
+	close(ends[0]);
+	close (ends[1]);
+	return (pid);
 }
 
-bool file_check(t_redir *file, char *erro_type)
+void	executer(t_shell *shell)
 {
-	if (file->type == IN)
-	{
-		file->fd = open(file->filename, O_RDONLY);
-		if (file->fd == -1)
-			return (erro_type = strerror(errno), FAILURE);
-	}
-	else if (file->type == OUT)
-	{
-		file->fd = open(file->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (file->fd == -1)
-			return (erro_type = strerror(errno), FAILURE);
-	}
-	else if (file->type == APPEND)
-	{
-		file->fd = open(file->filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (file->fd == -1)
-			return (erro_type = strerror(errno), FAILURE);
-	}
-	return (SUCCESS);
-}
+	t_cmd	*cmd;
+	t_cmd	*tmp;
+	pid_t	last_cmd;
 
-bool is_exist(t_redir *rdir, t_type type)
-{
-	t_redir *tmp;
-	t_type	opposite;
-
-	tmp = rdir;
-	opposite = (type + 2) % 4;
-	printf("type = %d opposite = %d\n", type, opposite);
-	while (tmp)
-	{
-		if (tmp->type == type || tmp->type == opposite)
-			return (true);
-		tmp = tmp->next;
-	}
-	return (false);
-}
-
-bool redireciton_check(t_redir *lst)
-{
-	t_redir *tmp;
-	char *err;
-
-	tmp = lst;
-	err = NULL;
-	while (tmp)
-	{
-		if (file_check(tmp, err) == FAILURE)
-		{
-			ft_close(lst);
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(tmp->filename, 2);
-			ft_putstr_fd(":", 2);
-			ft_putendl_fd(err, 2);	
-			return (FAILURE);
-		}
-		if (is_exist(tmp->next, tmp->type) == true)
-		{
-			close(tmp->fd);
-			tmp->fd = -1;
-		}
-		tmp = tmp->next;
-	}
-	return (SUCCESS);
-}
-
-void    one_cmd_exec(t_shell *shell)
-{
-	// pid_t	pid;
-
-	if (redireciton_check(shell->cmd->redir))
-	{
-		shell->exit_status = 1;
+	if (shell->stoped)
 		return ;
+	shell->input[1] = dup(0);
+	cmd = shell->cmd;
+	tmp = cmd;
+	while (cmd)
+	{
+		last_cmd = exec_pipeline(shell, cmd, cmd->next);
+		if (last_cmd == FAIL)
+			break ;
+		cmd = cmd->next;
 	}
-}
-
-void    executer(t_shell *shell)
-{
-	int cmds_nb;
-
-	cmds_nb = cmd_lstsize(shell->cmd);
-	if (cmds_nb == 1)
-		one_cmd_exec(shell);
-	
+	get_exit_status(shell, last_cmd);
+	dup2(shell->input[1], 0);
+	close(shell->input[1]);
+	close_fd(NULL, shell->cmd);
 }

@@ -6,26 +6,11 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:36:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 23:30:01 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:47:36 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	cmd_lstsize(t_cmd *head)
-{
-	t_cmd *tmp;
-	int size;
-
-	size = 0;
-	tmp = head;
-	while (tmp)
-	{
-		size++;	
-		tmp = tmp->next;
-	}
-	return (size);
-}
 
 t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args)
 {

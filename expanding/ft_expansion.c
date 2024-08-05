@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:56:31 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/26 15:56:54 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/05 15:03:49 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ char	*limiter(int *i, char *token)
 	while (token[end] == '$')
 		end++;
 	if (token[end] == '?')
-		end++;
+	{
+		*i = end + 1;
+		return (ft_substr(token, start, *i - start));
+	}
 	while (token[end] && (ft_isalnum(token[end]) || token[end] == '_'))
 		end++;
 	*i = end;

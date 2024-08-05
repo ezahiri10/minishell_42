@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/31 23:30:01 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:50:12 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	print_sruct(t_shell *shell)
 		printf("\n");
 		while (tmp->redir)
 		{
-			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->filename,
+			printf("redir: %s\tfd==%d\ttype[%d\n", tmp->redir->file,
 				tmp->redir->fd, tmp->redir->type);
-			if (tmp->redir->type == 0)
+			if (tmp->redir->type == ERROR)
 				printf("----- type [ambigous\n");
 			else
 				printf("----- type [%d\n", tmp->redir->type);
@@ -59,7 +59,10 @@ void	print_line(t_shell *shell)
 	head = shell->tokens;
 	while (head)
 	{
-		printf("data [%s]\n", head->data.content);
+		if ( head->join == JOINBLE)
+			printf("data [%s]is JOINABLE\n", head->data.content);
+		else
+			printf("data [%s]is NOT JOINABLE\n", head->data.content);
 		head = head->next;
 	}
 }
