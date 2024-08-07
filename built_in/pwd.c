@@ -1,44 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 22:11:49 by alafdili         ###   ########.fr       */
+/*   Created: 2024/07/30 17:13:58 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/08/06 22:06:38 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	quit_handler(int s)
+void	ft_pwd(t_shell *shell)
 {
-	int	status;
+	char	*pwd;
 
-	if (wait(&status) == -1)
-		g_recv_signal = s;
-	g_recv_signal = status;
-}
-
-void	new_prompt(int s)
-{
-	int	status;
-
-	if (wait(&status) == -1)
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
 	{
-		g_recv_signal = s;
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		close(0);
+		perror("pwd");
+		shell->exit_status = 1;
+		return ;
 	}
 	else
-		g_recv_signal = status;
-}
-
-void	ft_signal(void)
-{
-	rl_catch_signals = 0;
-	signal(SIGINT, new_prompt);
-	signal(SIGQUIT, quit_handler);
+		printf ("%s\n", pwd);
 }

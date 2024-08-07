@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/01 10:09:44 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/05 23:37:12 by alafdili         ###   ########.fr       */
+/*   Created: 2024/07/31 15:18:23 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/08/06 14:41:41 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-char	*ft_get_env_key(t_env *env, char *key)
+void	ft_export(t_shell *shell, t_cmd *cmd)
 {
-	t_env	*tmp;
+	char	**args;
+	int		i;
 
-	tmp = env;
-	while (tmp)
+	i = 1;
+	args = cmd->args;
+	if (!args[1])
 	{
-		if (!ft_strcmp(tmp->var, key))
-			return (tmp->value);
-		tmp = tmp->next;
+		print_env(shell->env_lst);
+		return ;
 	}
-	return (NULL);
+	while (args[i])
+	{
+		set_env(shell, args[i]);
+		i++;
+	}
+	return ;
 }

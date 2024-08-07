@@ -1,44 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal.c                                        :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 22:11:49 by alafdili         ###   ########.fr       */
+/*   Created: 2024/08/02 18:50:06 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/08/07 19:42:43 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	quit_handler(int s)
+bool	exist_env(char *name, t_env *env)
 {
-	int	status;
+	t_env	*tmp;
 
-	if (wait(&status) == -1)
-		g_recv_signal = s;
-	g_recv_signal = status;
-}
-
-void	new_prompt(int s)
-{
-	int	status;
-
-	if (wait(&status) == -1)
+	tmp = env;
+	while (tmp)
 	{
-		g_recv_signal = s;
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		close(0);
+		if (ft_strcmp(tmp->var, name) == 0)
+			return (true);
+		tmp = tmp->next;
 	}
-	else
-		g_recv_signal = status;
+	return (false);
 }
 
-void	ft_signal(void)
+char	*get_env_key(t_env *env, char *name)
 {
-	rl_catch_signals = 0;
-	signal(SIGINT, new_prompt);
-	signal(SIGQUIT, quit_handler);
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->var, name) == 0)
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

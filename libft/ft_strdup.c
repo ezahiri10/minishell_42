@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 19:39:16 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/17 19:25:29 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:52:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	int		counter;
 	int		slen;
 
+	if (!s1)
+		return (NULL);
 	slen = ft_strlen(s1);
 	counter = 0;
 	str = (char *)ft_malloc(slen * sizeof(char) + 1, 1);

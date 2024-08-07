@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:05:36 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/05 23:38:05 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:38:57 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ void	apply_redirections(t_cmd *head, int *ends, int *input, t_cmd *last)
 		dup2(fds[1], 1);
 		close(fds[1]);
 	}
-	else if (fds[1] == 1 && last)
+	else if (fds[1] == 1 && last && ends)
 		dup2(ends[1], 1);
-	close(ends[1]);
-	close(ends[0]);
-	close(input[0]);
-	close(input[1]);
+	if (ends)
+	{
+		close(ends[1]);
+		close(ends[0]);
+		close(input[0]);
+		close(input[1]);
+	}
 }

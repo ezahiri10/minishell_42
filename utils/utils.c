@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/05 23:46:28 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:21:47 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,17 @@ void	space_to_127(t_token *token, t_state check_with)
 	}
 }
 
-int	check_and_join(char **filename, t_token *token, t_type *type)
+void	check_and_join(char **filename, t_token *token, bool empty_str)
 {
-	if (!token->data.content && type != NULL)
-		*filename = ft_strjoin(*filename, char_to_string(127));
-	else if (!token->data.content && type == NULL)
+	if (!token->data.content)
 		*filename = ft_strjoin(*filename, token->data.content);
 	else if (!*token->data.content)
 	{
-		if (type == NULL)
+		if (empty_str == true)
 			*filename = ft_strjoin(*filename, char_to_string(4));
 		else
 			*filename = ft_strjoin(*filename, token->data.content);
-		return (1);
 	}
 	else
-	{
-		if (token->state == DOLLAR && ft_count(token->data.content, ' ')
-			&& type)
-			*type = ERROR;
 		*filename = ft_strjoin(*filename, token->data.content);
-	}
-	return (0);
 }

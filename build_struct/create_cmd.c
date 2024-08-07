@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/04 16:54:30 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:18:52 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,22 @@ t_cmd	*create_cmd(char *to_join, t_redir *redir)
 
 void	set_filename(char **filename, t_token **start, t_type *type)
 {
-	int		empty;
 	char	*save;
 
-	empty = 0;
 	save = NULL;
+	if (check_ambiguous(*start) == false)
+		*type = ERROR;
 	while (*start && (*start)->join == JOINBLE)
 	{
-		empty += check_and_join(filename, *start, type);
+		check_and_join(filename, *start, false);
 		save = ft_strjoin(save, (*start)->data.origin);
 		*start = (*start)->next;
 	}
-	empty += check_and_join(filename, *start, type);
+	check_and_join(filename, *start, false);
 	save = ft_strjoin(save, (*start)->data.origin);
-	if ((ft_count(*filename, 127) == (int)ft_strlen(*filename)
-			&& !empty) || *type == ERROR)
-	{
-		*type = ERROR;
+	if (*type == ERROR)
 		*filename = save;
-	}
+	*filename = ft_strtrim(*filename, " ");
 	*start = (*start)->next;
 }
 

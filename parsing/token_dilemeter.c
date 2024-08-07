@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/05 22:11:23 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:32:47 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	quote_delimiter(char *token, int *i, t_shell *shell, t_state state)
 	if (token[*i] == c)
 		*i += 1;
 	else if (!token[*i])
-		return (display_error(shell), FAIL);
+		return (display_syntax_error(shell), FAIL);
 	join = is_joinble(token[*i]);
 	sub = ft_substr(token, start, *i - start - 1);
 	add_lst(sub, &shell->tokens, state, join);

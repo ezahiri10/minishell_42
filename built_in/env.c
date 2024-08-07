@@ -1,44 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 22:11:49 by alafdili         ###   ########.fr       */
+/*   Created: 2024/07/30 16:34:48 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/08/06 14:50:50 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	quit_handler(int s)
+void	ft_env(t_shell *shell)
 {
-	int	status;
+	t_env	*tmp;
 
-	if (wait(&status) == -1)
-		g_recv_signal = s;
-	g_recv_signal = status;
-}
-
-void	new_prompt(int s)
-{
-	int	status;
-
-	if (wait(&status) == -1)
+	tmp = shell->env_lst;
+	while (tmp)
 	{
-		g_recv_signal = s;
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		close(0);
+		if (tmp->value)
+			printf("%s=%s\n", tmp->var, tmp->value);
+		tmp = tmp->next;
 	}
-	else
-		g_recv_signal = status;
-}
-
-void	ft_signal(void)
-{
-	rl_catch_signals = 0;
-	signal(SIGINT, new_prompt);
-	signal(SIGQUIT, quit_handler);
 }

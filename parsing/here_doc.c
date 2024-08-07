@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/05 23:44:37 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:44:44 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ bool	here_doc(t_shell *shell, t_token *head, int input)
 		if (head->type == HERE && !ft_strcmp(head->data.content, "<<"))
 		{
 			limiter = join_limiter(head->next);
-			if (shell->exit_status != 258
-				&& open_here_doc(shell, head, limiter) == FAIL)
-				return (close(input), clean_up(shell), FAIL);
+			if (shell->exit_status != 258)
+			{
+				if (open_here_doc(shell, head, limiter) == FAIL)
+					return (close(input), clean_up(shell), FAIL);
+			}
 			else
 				heredoc_loop(shell, limiter, -1);
 			limiter = NULL;
@@ -86,9 +88,6 @@ bool	here_doc(t_shell *shell, t_token *head, int input)
 		head = head->next;
 	}
 	if (g_recv_signal == SIGINT)
-	{
-		close_fd(shell->tokens, NULL);
-		return (g_recv_signal = 0, dup2(input, 0), close(input));
-	}
+		return (close_fd(shell->tokens, NULL), dup2(input, 0), close(input), FAIL);
 	return (dup2(input, 0), close(input), SUCCESS);
 }

@@ -1,57 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_lst.c                                          :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 20:36:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/06 15:22:22 by alafdili         ###   ########.fr       */
+/*   Created: 2024/08/01 13:42:18 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/08/06 14:42:23 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_lst_size(t_cmd *lst)
+void	remove_env(char *s, t_env **env)
 {
-	int		i;
-	t_cmd	*tmp;
+	t_env	*prev;
+	t_env	*tmp;
 
-	i = 0;
-	tmp = lst;
+	prev = *env;
+	tmp = *env;
+	if (!ft_strcmp(s, (*env)->var))
+	{
+		*env = (*env)->next;
+		return ;
+	}
 	while (tmp)
 	{
-		i++;
+		prev = tmp;
+		if (tmp->next && ft_strcmp(s, tmp->next->var) == 0)
+		{
+			prev->next = tmp->next->next;
+			return ;
+		}
 		tmp = tmp->next;
 	}
-	return (i);
 }
 
-t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args)
+void	ft_unset(t_shell *shell, t_cmd *cmd)
 {
-	t_cmd	*new;
+	char	**args;
+	int		i;
 
-	new = ft_malloc(sizeof(t_cmd), 1);
-	new->cmd = cmd;
-	new->redir = redir;
-	new->args = args;
-	new->next = NULL;
-	return (new);
-}
-
-void	cmd_add_back(t_cmd **lst, t_cmd *new)
-{
-	t_cmd	*temp;
-
-	if (!lst)
+	args = cmd->args;
+	i = 1;
+	if (!args[i])
 		return ;
-	if (!(*lst))
-		*lst = new;
-	else
+	while (args[i])
 	{
-		temp = (*lst);
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new;
+		remove_env(args[i], &shell->env_lst);
+		i++;
 	}
 }
