@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:26:31 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 19:43:41 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:25:52 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_exit(t_shell *shell, t_cmd *cmd)
 		len++;
 	if (len == 1)
 		exit(shell->exit_status);
-	if (check_argument(args[1]) == true && len >= 2)
+	if (check_argument(args[1]) == true && len > 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
 		shell->exit_status = 1;

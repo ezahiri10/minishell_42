@@ -3,15 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:01:47 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/06 22:07:15 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:53:17 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+void check_pwd(t_shell *shell, char *path)
+{
+	char *pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+	{
+		if (!ft_strcmp(path, ".."))
+			shell->old_pwd = join_env(shell->old_pwd, "/..");
+		else if (!ft_strcmp(path, "."))
+			shell->old_pwd = join_env(shell->old_pwd, "/.");
+	}
+	else
+	{
+		shell->old_pwd = pwd;
+		stock_addr(pwd, 1);
+	}
+}
 void	ft_cd(t_shell *shell, t_cmd *cmd)
 {
 	char	**args;
@@ -36,4 +55,5 @@ void	ft_cd(t_shell *shell, t_cmd *cmd)
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd("\n", 2);
 	}
+	check_pwd(shell, args[1]);
 }
