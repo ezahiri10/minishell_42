@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/08 12:59:44 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/09 18:38:44 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ char	*join_env(char *s1, char *s2);
 int		researcher(char *s, char c);
 
 // built-in functions
-void	ft_echo(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd, t_shell *shell);
 void	ft_exit(t_shell *shell, t_cmd *cmd);
 void	ft_env(t_shell *shell);
 void	ft_cd(t_shell *shell, t_cmd *cmd);

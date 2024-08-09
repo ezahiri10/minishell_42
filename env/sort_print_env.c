@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_print_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:15:16 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 19:40:40 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:40:26 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ void	print_env(t_env *env)
 	pid_t	pid;
 
 	pid = fork();
+
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(1);
+	}
 	if (pid == 0)
 	{
 		sort_env(env);

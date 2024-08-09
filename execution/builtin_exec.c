@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:29:31 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/07 19:39:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:47:40 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	get_builtin_cmd(t_shell *shell, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->cmd, "export"))
 		ft_export(shell, cmd);
 	else if (!ft_strcmp(cmd->cmd, "echo"))
-		ft_echo(cmd);
+		ft_echo(cmd,shell);
 	else if (!ft_strcmp(cmd->cmd, "exit"))
 		ft_exit(shell, cmd);
 }

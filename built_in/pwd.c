@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:13:58 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/08 13:58:29 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/09 15:58:20 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	ft_pwd(t_shell *shell)
 		free(pwd);
 		return ;
 	}
-	free(pwd);
+	// free(pwd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:34:48 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/06 14:50:50 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:39:46 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	ft_env(t_shell *shell)
 			printf("%s=%s\n", tmp->var, tmp->value);
 		tmp = tmp->next;
 	}
+	shell->exit_status = 0;
 }

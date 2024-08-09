@@ -6,12 +6,11 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:01:47 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/08 13:53:17 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/09 18:39:30 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void check_pwd(t_shell *shell, char *path)
 {
@@ -20,10 +19,14 @@ void check_pwd(t_shell *shell, char *path)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
+		shell->old_pwd = join_env(shell->old_pwd, "/");
+		path = dup_env(ft_strtrim(path, "/"));
 		if (!ft_strcmp(path, ".."))
-			shell->old_pwd = join_env(shell->old_pwd, "/..");
+			shell->old_pwd = join_env(shell->old_pwd, "..");
 		else if (!ft_strcmp(path, "."))
-			shell->old_pwd = join_env(shell->old_pwd, "/.");
+			shell->old_pwd = join_env(shell->old_pwd, ".");
+		else
+			shell->old_pwd = join_env(shell->old_pwd, path);
 	}
 	else
 	{
@@ -51,9 +54,8 @@ void	ft_cd(t_shell *shell, t_cmd *cmd)
 	else if (chdir(args[1]) == -1)
 	{
 		shell->exit_status = 1;
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putstr_fd("\n", 2);
+		perror("cd");
+		return ;
 	}
 	check_pwd(shell, args[1]);
 }

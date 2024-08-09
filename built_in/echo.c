@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 17:42:34 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 14:42:31 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:38:25 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	check_n(char *str)
 	return (false);
 }
 
-void	ft_echo(t_cmd *cmd)
+void	ft_echo(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
 	int	n;
@@ -51,4 +51,5 @@ void	ft_echo(t_cmd *cmd)
 	}
 	if (n == 0)
 		ft_putstr_fd("\n", 1);
+	shell->exit_status = 0;
 }

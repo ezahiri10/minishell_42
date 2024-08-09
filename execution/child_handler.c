@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:54:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/05 23:38:12 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:46:32 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,9 @@ void	get_exit_status(t_shell *shell, pid_t last_cmd)
 		shell->exit_status = WEXITSTATUS(shell->exit_status);
 	while (wait(NULL) != -1)
 		;
-	g_recv_signal = 0;
+	if (signal_nb == SIGINT)
+	{
+		dup2(shell->input[0], 0);	
+		g_recv_signal = 0;
+	}
 }
