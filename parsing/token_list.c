@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 10:38:06 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/31 20:36:10 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:05:02 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_token	*ft_new_token(char *content, t_state s, t_join join)
 	new_node->state = s;
 	new_node->join = join;
 	new_node->data.fd = -1;
-	new_node->data.origin = NULL;
+	new_node->data.origin = content;
 	if (s == DEFAULT)
 		new_node->type = check_type(content);
 	else

@@ -6,34 +6,45 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/05 23:45:40 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:52:41 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	catch_signal(int s, bool set_or_get)
+{
+	static int signal;
+	
+	if (set_or_get == SET)
+		signal = s;
+	return (signal);	
+}
+
+bool	child_exist(bool true_or_false, bool mode)
+{
+	static bool exist;
+
+	if (mode == SET)
+		exist = true_or_false;
+	return (exist);
+}
+
 void	quit_handler(int s)
 {
-	int	status;
-
-	if (wait(&status) == -1)
-		g_recv_signal = s;
-	g_recv_signal = status;
+	if (child_exist(0, GET) == false)
+		catch_signal(s, SET);
 }
 
 void	new_prompt(int s)
 {
-	int	status;
-
-	if (wait(&status) == -1)
+	if (child_exist(0, GET) == false)
 	{
-		g_recv_signal = s;
+		catch_signal(s, SET);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		close(0);
 	}
-	else
-		g_recv_signal = status;
 }
 
 void	ft_signal(void)

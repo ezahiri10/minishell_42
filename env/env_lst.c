@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_lst.c                                       :+:      :+:    :+:   */
+/*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:12:54 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/18 12:53:42 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:19:02 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	env_size(t_env *lst)
+{
+	int		i;
+	t_env	*tmp;
+
+	i = 0;
+	tmp = lst;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
 
 t_env	*new_env(char *var, char *value)
 {
 	t_env	*new;
 
 	new = malloc (sizeof(t_env));
+	stock_addr(new, 1);
 	if (!new)
 		return (NULL);
 	new->var = var;
@@ -42,35 +58,11 @@ void	env_add_back(t_env **lst, t_env *new)
 	}
 }
 
-void	clair_env(t_env **head)
-{
-	t_env	*tmp;
-	t_env	*next;
-
-	if (!head)
-		return ;
-	tmp = *head;
-	while (tmp)
-	{
-		next = tmp->next;
-		free(tmp->var);
-		free(tmp->value);
-		free(tmp);
-		tmp = next;
-	}
-	*head = NULL;
-}
-
 void	*add_env(char *var, char *value, t_env **head)
 {
 	t_env	*new;
 
 	new = new_env(var, value);
-	if (!var || !value || !new)
-	{
-		clair_env(head);
-		return (NULL);
-	}
 	env_add_back(head, new);
 	return (new);
 }

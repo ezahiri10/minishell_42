@@ -6,13 +6,13 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:50:28 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/23 12:36:55 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:15:34 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	cwords(const char *s, char c)
+int	count_words(const char *s, char c)
 {
 	int	nwords;
 	int	counter;
@@ -86,7 +86,7 @@ char	**ft_split(const char *s, char c)
 
 	if (!s)
 		return (NULL);
-	nwords = cwords(s, c);
+	nwords = count_words(s, c);
 	ns = (char **)ft_malloc(sizeof(char *) * (nwords + 1), 1);
 	if (ns == NULL)
 		return (NULL);

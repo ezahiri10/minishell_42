@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:49:21 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/05 19:50:12 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:46:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_sruct(t_shell *shell)
 		while (tmp->args && tmp->args[i])
 		{
 			write(1, tmp->args[i], ft_strlen(tmp->args[i]));
-			write(1, " ", 1);
+			write(1, ", ", 1);
 			i++;
 		}
 		printf("\n");

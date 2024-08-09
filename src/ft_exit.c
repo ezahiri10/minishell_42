@@ -6,14 +6,19 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:33:53 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/05 23:37:16 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:39:59 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	display_error(t_shell *shell)
+void	display_syntax_error(t_shell *shell)
 {
+	if (catch_signal(0, GET) == SIGINT)
+	{
+		shell->stoped = 1;
+		return ;
+	}
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putendl_fd("syntax error", 2);
 	shell->exit_status = 258;
@@ -57,8 +62,16 @@ void	close_fd(t_token *token, t_cmd *head)
 void	clean_up(t_shell *shell)
 {
 	ft_malloc(0, 0);
-	clair_env(&shell->env_lst);
+	stock_addr(NULL, 0);
 	close(shell->input[0]);
 	close_fd (shell->tokens, NULL);
 	exit(1);
+}
+
+void	ft_export_error(char *arg, t_shell *shell)
+{
+	shell->exit_status = 1;
+	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:49:05 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/20 12:22:56 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:38:33 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
+void	ft_swap(char **a, char **b);
+void	handle_error(char *str, void *to_free);
+void	stock_addr(void *addr, int mode);
 void	*ft_malloc(size_t size, int mod);
 int		ft_strcmp(char *s1, char *s2);
 char	*get_next_line(int fd);
+int		count_words(const char *s, char c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:02:07 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/05 22:11:43 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:46:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,17 @@ void	syntax_error_check(t_shell *shell, t_token *limiter, int flag)
 		error_location = get_error_position(shell->tokens, limiter);
 		if (error_location == -1 || !error_location)
 		{
-			display_error(shell);
+			display_syntax_error(shell);
 			here_doc(shell, shell->tokens, input);
 		}
 		else
 		{
 			shell->exit_status = 258;
 			here_doc(shell, shell->tokens, input);
-			display_error(shell);
+			display_syntax_error(shell);
 		}
 	}
 	else if (here_doc(shell, shell->tokens, input) == FAIL)
 		shell->stoped = 1;
+	catch_signal(0, SET);
 }

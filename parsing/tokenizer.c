@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 09:12:57 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/30 15:13:28 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/03 08:54:07 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,4 @@ void	tokenizer(char *line, t_shell *shell)
 		else
 			word_delimiter(line, &end, &shell->tokens, DEFAULT);
 	}
-	free(line);
 }

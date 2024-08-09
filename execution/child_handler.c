@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:54:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/05 23:38:12 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:21:36 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	get_exit_status(t_shell *shell, pid_t last_cmd)
 	int	signal_nb;
 	int	is_signaled;
 
+	child_exist(1, SET);
 	waitpid(last_cmd, &shell->exit_status, 0);
-	signal_nb = WTERMSIG(g_recv_signal);
-	is_signaled = WIFSIGNALED(g_recv_signal);
+	is_signaled = WIFSIGNALED(shell->exit_status);
+	signal_nb = WTERMSIG(shell->exit_status);
 	if (is_signaled && signal_nb == SIGINT)
 	{
 		printf("\n");
@@ -34,5 +35,5 @@ void	get_exit_status(t_shell *shell, pid_t last_cmd)
 		shell->exit_status = WEXITSTATUS(shell->exit_status);
 	while (wait(NULL) != -1)
 		;
-	g_recv_signal = 0;
+	child_exist(0, SET);
 }

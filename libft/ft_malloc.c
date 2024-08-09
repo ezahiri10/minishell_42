@@ -6,7 +6,7 @@
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 10:27:28 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/16 22:39:27 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/03 12:00:46 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,13 @@ void	handle_error(char *str, void *to_free)
 	exit(1);
 }
 
-void	clear_lst(t_list **lst)
-{
-	t_list	*temp;
-	t_list	*next;
-
-	if (!lst)
-		return ;
-	temp = *lst;
-	while (temp)
-	{
-		next = temp -> next;
-		free(temp -> content);
-		free(temp);
-		temp = next;
-	}
-	*lst = NULL;
-}
-
 void	*ft_malloc(size_t size, int mod)
 {
 	static t_list	*head;
 	void			*ptr;
 	t_list			*new;
 
+	ptr = NULL;
 	if (mod == 1)
 	{
 		ptr = malloc(size);
@@ -56,9 +39,6 @@ void	*ft_malloc(size_t size, int mod)
 		return (ptr);
 	}
 	else
-	{
-		clear_lst(&head);
-		head = NULL;
-		return (NULL);
-	}
+		ft_lstclear(&head, free);
+	return (NULL);
 }

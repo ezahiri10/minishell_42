@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_pipeline.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 20:47:09 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/07/29 21:17:35 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/03 15:20:43 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void	get_pipeline(t_shell *shell)
 	if (end != start)
 		cmd_add_back(&shell->cmd, get_simple_cmd(start, end));
 	cmd_type_def(shell);
+	shell->tokens = NULL;
 }
