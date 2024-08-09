@@ -6,9 +6,11 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:42:18 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/08 13:46:17 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:06:07 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 
@@ -41,6 +43,7 @@ void	ft_unset(t_shell *shell, t_cmd *cmd)
 	char	**args;
 	int		i;
 
+	args = cmd->args;
 	args = cmd->args;
 	i = 1;
 	if (!args[i])

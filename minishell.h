@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/09 18:42:19 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:12:36 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_shell
 	t_env	*env_lst;
 	char	**env;
 	t_token	*tokens;
+	char	*old_pwd;
 	t_cmd	*cmd;
 	int		stoped;
 	int		input[2];

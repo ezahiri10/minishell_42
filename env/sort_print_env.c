@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:15:16 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/08 13:46:17 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:06:44 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ void	print_env(t_env *env)
 	pid_t	pid;
 
 	pid = fork();
+
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(1);
+	}
 	if (pid == 0)
 	{
 		sort_env(env);

@@ -1,0 +1,5 @@
+ait ialdidi
+*.o
+minishell
+minishell_db.dSYM/
+.vscode/

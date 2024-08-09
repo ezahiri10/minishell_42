@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/09 18:52:53 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/09 19:02:24 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	interpreter(t_shell *shell, char *line)
 		shell->exit_status = 1;
 		catch_signal(0, SET);
 	}
+	if (!*line)
+		return ;
 	if (!*line)
 		return ;
 	add_history(line);
@@ -74,7 +76,10 @@ int	main(int ac, char **av, char **env)
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.input[0] = -1;
 	shell.input[1] = -1;
+	shell.input[0] = -1;
+	shell.input[1] = -1;
 	shell.env = env;
 	inisailise_env(env, &shell);
+	shell.old_pwd = get_env_key(shell.env_lst, "PWD");
 	mini_shell(&shell);
 }
