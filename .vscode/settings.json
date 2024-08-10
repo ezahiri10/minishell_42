@@ -58,6 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "ostream": "c",
-    "chrono": "c"
+    "chrono": "c",
+    "minishell.h": "c"
   }
 }

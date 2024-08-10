@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/09 19:10:50 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:17:04 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	catch_signal(int s, bool set_or_get)
 	
 	if (set_or_get == SET)
 		signal = s;
-	return (signal);	
+	return (signal);
 }
 
 bool	child_exist(bool true_or_false, bool mode)

@@ -6,11 +6,36 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 15:53:39 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/07 21:49:06 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 13:14:42 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	count_words(const char *s)
+{
+	int	nwords;
+	int	counter;
+
+	nwords = 0;
+	counter = 0;
+	if (s == NULL || *s == '\0')
+		return (1);
+	while (*s)
+	{
+		counter = 0;
+		while (*s == ' ' || *s == '\t')
+			s++;
+		if (*s)
+		{
+			while (s[counter] && s[counter] != ' ' && s[counter] != '\t')
+				counter++;
+			nwords++;
+		}
+		s += counter;
+	}
+	return (nwords);
+}
 
 bool	check_ambiguous(t_token *token)
 {
@@ -31,7 +56,9 @@ bool	check_ambiguous(t_token *token)
 		to_join = ft_strjoin(to_join, token->data.content);
 	else if (!*token->data.content)
 		to_join = ft_strjoin(to_join, token->data.content);
-	if (!to_join || count_words(to_join, ' ') > 1)
+	else
+		to_join = ft_strjoin(to_join, "X");
+	if (!to_join || count_words(to_join) != 1)
 		return (false);
 	return (true);
 }

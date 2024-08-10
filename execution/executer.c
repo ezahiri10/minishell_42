@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/09 19:19:13 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 17:18:54 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 		exit (0);
 	}
 	if (cmd->cmd[0] == '\0')
-		print_error(shell->cmd, (char *[2]){CNF, cmd->cmd}, 127);
+		print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	if ((cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' && cmd->cmd[1] == '/'))
 		&& check_executable(shell->cmd, cmd->cmd) == SUCCESS)
 		cmd_path = cmd->cmd;
@@ -34,10 +34,10 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 	{
 		cmd_path = check_cmd(get_env_key(shell->env_lst, "PATH"), cmd->cmd);
 		if (!cmd_path)
-			print_error(shell->cmd, (char *[2]){CNF, cmd->cmd}, 127);
+			print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	}
 	if (execve(cmd_path, cmd->args, shell->env) == -1)
-		print_error(shell->cmd, (char *[2]){strerror(errno), "execve"}, errno);
+		print_error(shell->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
 }
 
 int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)

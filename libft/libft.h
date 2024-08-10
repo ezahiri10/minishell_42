@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:49:05 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/07 19:38:33 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 12:18:00 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,5 @@ void	stock_addr(void *addr, int mode);
 void	*ft_malloc(size_t size, int mod);
 int		ft_strcmp(char *s1, char *s2);
 char	*get_next_line(int fd);
-int		count_words(const char *s, char c);
 
 #endif

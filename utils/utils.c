@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/07 19:21:47 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 11:20:47 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,4 @@ void	space_to_127(t_token *token, t_state check_with)
 	}
 }
 
-void	check_and_join(char **filename, t_token *token, bool empty_str)
-{
-	if (!token->data.content)
-		*filename = ft_strjoin(*filename, token->data.content);
-	else if (!*token->data.content)
-	{
-		if (empty_str == true)
-			*filename = ft_strjoin(*filename, char_to_string(4));
-		else
-			*filename = ft_strjoin(*filename, token->data.content);
-	}
-	else
-		*filename = ft_strjoin(*filename, token->data.content);
-}
+

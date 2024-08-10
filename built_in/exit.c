@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:26:31 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/09 19:04:19 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:50:31 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,26 @@
 bool	check_argument(char *arg)
 {
 	int	i;
-	int	skip;
 	int	sign;
 
 	i = 0;
-	skip = 0;
-	while (arg[i] == ' ')
-		i++;
-	if (arg[i] == '-' || arg[i] == '+')
-		sign = 1 - 2 * (arg[i++] == '-');
-	skip = i;
-	if (arg[i] == '\0')
+	sign = 1;
+	while (*arg == ' ')
+		arg++;
+	if (*arg == '-' || *arg == '+')
+		sign = 1 - 2 * (*(arg++) == '-');
+	if (*arg == '\0')
 		return (false);
 	while (arg[i])
 		if (!ft_isdigit(arg[i++]))
 			return (false);
-	while (arg[skip] == '0')
-		skip++;
-	if ((ft_strncmp(arg + skip, "9223372036854775807", 19) > 0 && sign == 1)
-		|| ft_strlen(arg + skip) > 19)
+	while (*arg == '0')
+		arg++;
+	if ((ft_strncmp(arg, "9223372036854775807", 19) > 0 && sign == 1)
+		|| ft_strlen(arg) > 19)
 		return (false);
-	if ((ft_strncmp(arg + skip, "9223372036854775808", 19) > 0 && sign == -1)
-		|| ft_strlen(arg + skip) > 19)
+	if ((ft_strncmp(arg, "9223372036854775808", 19) > 0 && sign == -1)
+		|| ft_strlen(arg) > 19)
 		return (false);
 	return (true);
 }
@@ -56,13 +54,13 @@ void	ft_exit(t_shell *shell, t_cmd *cmd)
 		exit(shell->exit_status);
 	if (check_argument(args[1]) == true && len > 2)
 	{
-		ft_putstr_fd("exit: too many arguments\n", 2);
+		print_error(NULL, (char *[3]){TMA, "exit", ""}, -1);
 		shell->exit_status = 1;
 		return ;
 	}
 	else if (check_argument(args[1]) == false)
 	{
-		ft_putstr_fd("exit: numeric argument required\n", 2);
+		print_error(NULL, (char *[3]){NAR, "exit", ""}, -1);
 		exit(255);
 	}
 	else if (check_argument(args[1]) == true && len >= 2)

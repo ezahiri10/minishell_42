@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/09 19:02:24 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 16:57:58 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	ft_signal();
 	ft_memset(&shell, 0, sizeof(t_shell));
-	shell.input[0] = -1;
-	shell.input[1] = -1;
 	shell.input[0] = -1;
 	shell.input[1] = -1;
 	shell.env = env;

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:53:08 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/09 19:32:02 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 17:58:10 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	print_error(t_cmd *head, char **err_msg, int exit_code)
 {
 	close_fd(NULL, head);
 	ft_putstr_fd("Minishell: ", 2);
+	ft_putstr_fd(err_msg[2], 2);
 	ft_putstr_fd(err_msg[1], 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(err_msg[0], 2);
@@ -48,16 +49,20 @@ char	*check_cmd(char *path, char *cmd)
 
 bool	*check_executable(t_cmd *head, char *path)
 {
-	int	fd;
+	DIR *dirp;
 
-	fd = open(path, O_RDWR);
-	if (fd == -1)
+	if (access(path, X_OK) != -1)
 	{
-		if (errno != 2)
-			print_error(head, (char *[2]){strerror(errno), path}, 126);
-		else
-			print_error(head, (char *[2]){strerror(errno), path}, 127);
+		dirp = opendir(path);
+		if (dirp != NULL)
+		{
+			closedir(dirp);
+			print_error(head, (char *[3]){ISDIR, path, ""}, 126);
+		}
 	}
-	close(fd);
+	else if (errno == ENOENT)
+		print_error(head, (char *[3]){strerror(errno), path, ""}, 127);
+	else
+		print_error(head, (char *[3]){strerror(errno), path, ""}, 126);
 	return (SUCCESS);
 }

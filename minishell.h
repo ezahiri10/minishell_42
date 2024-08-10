@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/09 19:12:36 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:35:20 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,17 @@
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
 
 # define SUCCESS 0
 # define FAIL 1
-
+ 
 # define AMBIGOUS "ambiguous redirect"
 # define CNF "command not found"
+# define ISDIR "is a directory"
+# define NAVI ": not a valid identifier"
+# define NAR "numeric argument required"
+# define TMA "too many arguments"
 
 # define SET 1
 # define GET 0
@@ -205,4 +210,7 @@ void	print_here_doc(t_shell *shell);
 bool	check_ambiguous(t_token *token);
 int		catch_signal(int s, bool set_or_get);
 bool	child_exist(bool true_or_false, bool mode);
+
+bool	is_valid(char *arg);
+
 #endif
