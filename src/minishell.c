@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 16:57:58 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 23:33:33 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int ac, char **av, char **env)
 	shell.input[1] = -1;
 	shell.env = env;
 	inisailise_env(env, &shell);
-	shell.old_pwd = get_env_key(shell.env_lst, "PWD");
+	shell.cpy_pwd = get_env_key(shell.env_lst, "PWD");
+	value_non_joinlble("OLDPWD", NULL, &shell, 1);
 	mini_shell(&shell);
 }

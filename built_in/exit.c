@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:26:31 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 18:50:31 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:11:29 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ bool	check_argument(char *arg)
 
 	i = 0;
 	sign = 1;
-	while (*arg == ' ')
-		arg++;
+	arg = ft_strtrim(arg, " ");
 	if (*arg == '-' || *arg == '+')
 		sign = 1 - 2 * (*(arg++) == '-');
 	if (*arg == '\0')

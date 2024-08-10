@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 18:35:20 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/10 22:49:27 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_shell
 	t_env	*env_lst;
 	char	**env;
 	t_token	*tokens;
+	char	*cpy_pwd;
 	char	*old_pwd;
 	t_cmd	*cmd;
 	int		stoped;
@@ -212,5 +213,6 @@ int		catch_signal(int s, bool set_or_get);
 bool	child_exist(bool true_or_false, bool mode);
 
 bool	is_valid(char *arg);
+void	value_non_joinlble(char *name, char *value, t_shell *shell, int flag);
 
 #endif
