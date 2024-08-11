@@ -22,7 +22,7 @@ void	ft_export(t_shell *shell, t_cmd *cmd)
 	args = cmd->args;
 	if (!args[1])
 	{
-		print_env(shell->env_lst);
+		print_env(shell, shell->env_lst);
 		return ;
 	}
 	while (args[i])

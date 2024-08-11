@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/10 17:18:54 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:46:05 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 {
 	char	*cmd_path;
+	int		len;
 
 	cmd_path = NULL;
+	len = ft_strlen(cmd->cmd) - 1;//
 	if (redirection_check(shell->cmd, cmd->redir) == FAIL)
 		exit(1);
 	apply_redirections(cmd, ends, shell->input, last);
@@ -27,8 +29,8 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 	}
 	if (cmd->cmd[0] == '\0')
 		print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
-	if ((cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' && cmd->cmd[1] == '/'))
-		&& check_executable(shell->cmd, cmd->cmd) == SUCCESS)
+	if ((cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' && cmd->cmd[1] == '/') || 
+		cmd->cmd[len] == '/') && check_executable(shell->cmd, cmd->cmd) == SUCCESS)
 		cmd_path = cmd->cmd;
 	else
 	{
@@ -63,7 +65,8 @@ int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)
 		else
 			exec_cmd(shell, cmd, ends, next_cmd);
 	}
-	return (dup2(ends[0], 0), close(ends[0]), close(ends[1]), pid);
+	dup2(ends[0], 0);
+	return (close(ends[0]), close(ends[1]), pid);
 }
 
 void	exec_one_cmd(t_shell *shell, int *save)
@@ -80,7 +83,7 @@ void	exec_one_cmd(t_shell *shell, int *save)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("minishell: fork");
+ 		perror("minishell: fork");
 		return ;
 	}
 	else if (pid == 0)
@@ -100,7 +103,10 @@ void	pipeline_loop(t_shell *shell)
 	{
 		last_id = exec_pipeline(shell, cmd, cmd->next);
 		if (last_id == FAIL)
+		{
+			kill(0, SIGINT);
 			break ;
+		}
 		cmd = cmd->next;
 	}
 	get_exit_status(shell, last_id);

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:32:25 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 13:32:47 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/11 17:13:55 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	word_delimiter(char *token, int *i, t_token **head, t_state state)
 	t_join	join;
 
 	start = *i;
-	while (!is_special(token[*i]) && token[*i] != ' ' && token[*i])
+	while (!is_spec(token[*i]) && token[*i] != ' ' && token[*i])
 	{
 		if (token[*i] == '\t')
 			break ;

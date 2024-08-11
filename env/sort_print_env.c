@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:15:16 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/09 19:06:44 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/11 11:34:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ void	sort_env(t_env *lst)
 	}
 }
 
-void	print_env(t_env *env)
+void	print_env(t_shell *shell, t_env *env)
 {
 	pid_t	pid;
 
 	pid = fork();
-
 	if (pid == -1)
 	{
-		perror("fork");
-		exit(1);
+		perror("minishell: fork");
+		shell->exit_status = 1;
+		return ;
 	}
 	if (pid == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 16:57:58 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:46:28 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	interpreter(t_shell *shell, char *line)
 	}
 	if (!*line)
 		return ;
-	if (!*line)
-		return ;
 	add_history(line);
 	tokenizer(line, shell);
 	parser(shell, shell->tokens);
@@ -43,11 +41,15 @@ void	interpreter(t_shell *shell, char *line)
 
 void	mini_shell(t_shell *shell)
 {
-	char	*line;
+	struct termios termios_p;
+	char			*line;
 
+	if (tcgetattr(STDOUT_FILENO, &termios_p) != 0)
+		perror("tcgetattr");
 	shell->input[0] = dup(0);
 	while (1)
 	{
+		tcsetattr(STDOUT_FILENO, TCSANOW, &termios_p);
 		shell->stoped = 0;
 		line = readline("Minishell$ ");
 		stock_addr(line, 2);
@@ -72,6 +74,9 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) 
+		|| !isatty(STDERR_FILENO))
+		return (perror("Minishell"), 1);
 	ft_signal();
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.input[0] = -1;

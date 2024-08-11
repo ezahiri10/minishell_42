@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 18:35:20 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:07:41 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/errno.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
@@ -25,6 +26,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
+# include <termios.h>
 
 # define SUCCESS 0
 # define FAIL 1
@@ -123,7 +125,7 @@ typedef struct s_shell
 
 void	ft_signal(void);
 t_join	is_joinble(char c);
-int		is_special(char c);
+int		is_spec(char c);
 char	*char_to_string(char c);
 void	clean_up(t_shell *shell);
 void	expander(t_shell *shell);
@@ -197,7 +199,7 @@ void	ft_export(t_shell *shell, t_cmd *cmd);
 void	set_env(t_shell *shell, char *arg);
 bool	exist_env(char *name, t_env *env);
 int		env_size(t_env *lst);
-void	print_env(t_env *env);
+void	print_env(t_shell *shell, t_env *env);
 void	ft_export_error(char *arg, t_shell *shell);
 char	*dup_env(char *s);
 void	print_error(t_cmd *head, char **err_msg, int exit_code);
@@ -212,5 +214,6 @@ int		catch_signal(int s, bool set_or_get);
 bool	child_exist(bool true_or_false, bool mode);
 
 bool	is_valid(char *arg);
+char 	*space_tab_trimer(char *str);
 
 #endif

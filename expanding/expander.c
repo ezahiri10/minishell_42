@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:13:21 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 19:05:44 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/11 16:36:06 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	expander(t_shell *shell)
 	char	*to_check;
 	t_token	*tmp;
 
+	tmp = shell->tokens;
 	if (shell->stoped)
 		return ;
-	tmp = shell->tokens;
 	while (tmp)
 	{
 		if (tmp->state == DOLLAR)

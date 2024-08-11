@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 09:12:57 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/03 08:54:07 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:13:00 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_special(char c)
+int	is_spec(char c)
 {
 	if (c == '\'')
 		return (IN_SINGALE);
@@ -34,30 +34,27 @@ bool	skiper(char *line, int i)
 	return (false);
 }
 
-void	tokenizer(char *line, t_shell *shell)
+void	tokenizer(char *ln, t_shell *shell)
 {
-	int	end;
+	int	i;
 
-	end = 0;
-	while (line[end])
+	i = 0;
+	while (ln[i])
 	{
-		if (skiper(line, end))
-			end++;
-		else if (is_special(line[end]) == IN_SINGALE)
+		if (skiper(ln, i))
+			i++;
+		else if (is_spec(ln[i]) == IN_SINGALE || is_spec(ln[i]) == IN_DOUBLE)
 		{
-			if (quote_delimiter(line, &end, shell, IN_SINGALE))
+			if (quote_delimiter(ln, &i, shell, is_spec(ln[i])))
 				break ;
 		}
-		else if (is_special(line[end]) == IN_DOUBLE)
-		{
-			if (quote_delimiter(line, &end, shell, IN_DOUBLE))
-				break ;
-		}
-		else if (is_special(line[end]) == DOLLAR)
-			dollar_delimiter(line, &end, &shell->tokens, DOLLAR);
-		else if (is_special(line[end]) == 4)
-			opertor_delimiter(line, &end, &shell->tokens, DEFAULT);
+		else if (is_spec(ln[i]) == DOLLAR)
+			dollar_delimiter(ln, &i, &shell->tokens, DOLLAR);
+		else if (is_spec(ln[i]) == 4)
+			opertor_delimiter(ln, &i, &shell->tokens, DEFAULT);
 		else
-			word_delimiter(line, &end, &shell->tokens, DEFAULT);
+			word_delimiter(ln, &i, &shell->tokens, DEFAULT);
 	}
+	if (!shell->tokens)
+		shell->stoped = 1;
 }
