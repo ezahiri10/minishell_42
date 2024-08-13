@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:30:51 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 18:06:01 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:30:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	set_env(t_shell *shell, char *arg)
 	}
 	else
 	{
-		print_error(NULL, (char *[3]){NAVI, arg, "export: `"}, -1);
+		_p_err(NULL, (char *[3]){NAVI, arg, "export: `"}, -1);
 		shell->exit_status = 1;
 		return ;
 	}

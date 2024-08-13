@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/13 09:36:27 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:24:47 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,27 @@ char	*join_limiter(t_token *nodes)
 	return (to_join);
 }
 
+int	open_here_fds(t_token *heredoc, int *write_fd)
+{
+	unlink("/tmp/.here_doc");
+	*write_fd = open("/tmp/.here_doc", O_CREAT | O_RDWR, 0666);
+	if (*write_fd == -1)
+		return (perror("open heredoc"), FAIL);
+	heredoc->data.fd = open("/tmp/.here_doc", O_RDONLY);
+	if (heredoc->data.fd == -1)
+		return (close(*write_fd), perror("open heredoc"), FAIL);
+	unlink("/tmp/.here_doc");
+	return (*write_fd);
+}
+
 void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 {
 	char	*line;
 
+	child_exist(2, SET);
 	while (true)
 	{
 		line = readline("> ");
-		if (!line && catch_signal(0, GET) == SIGINT)
-		{
-			shell->exit_status = 1;
-			break ;
-		}
 		if (!line || !ft_strcmp(line, limiter))
 		{
 			if (shell->exit_status != 258)
@@ -46,48 +55,54 @@ void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
-	free(line);
+	exit(0);
 }
 
 int	open_here_doc(t_shell *shell, t_token *heredoc, char *limiter)
 {
-	int	write_fd;
+	pid_t	pid;
+	int		fd;
 
-	write_fd = open("here_doc", O_CREAT | O_RDWR, 0666);
-	if (write_fd == -1)
-		return (perror("open heredoc"), FAIL);
-	heredoc->data.fd = open("here_doc", O_RDONLY);
-	if (heredoc->data.fd == -1)
-		return (close(write_fd), perror("open heredoc"), FAIL);
-	unlink("here_doc");
-	heredoc_loop(shell, limiter, write_fd);
-	close(write_fd);
+	fd = -1;
+	if (shell->exit_status != 258 && open_here_fds(heredoc, &fd) == FAIL)
+		return (FAIL);
+	child_exist(1, SET);
+	pid = fork();
+	if (pid == -1)
+	{
+		close(fd);
+		close (heredoc->data.fd);
+		return (perror("Minishell: fork"), FAIL);
+	}
+	else if (pid == 0)
+		heredoc_loop(shell, limiter, fd);
+	waitpid(pid, &shell->exit_status, 0);
+	shell->exit_status = WEXITSTATUS(shell->exit_status);
+	if (shell->exit_status)
+		catch_signal(SIGINT, SET);
+	close(fd);
+	child_exist(0, SET);
 	return (SUCCESS);
 }
 
-bool	here_doc(t_shell *shell, t_token *head, int input)
+bool	ft_here_doc(t_shell *shell, t_token *head)
 {
 	char	*limiter;
 
 	while (head && catch_signal(0, GET) != SIGINT)
 	{
 		if (head->type == ERROR)
-			return (close(input), FAIL);
+			return (FAIL);
 		if (head->type == HERE && !ft_strcmp(head->data.content, "<<"))
 		{
 			limiter = join_limiter(head->next);
-			if (shell->exit_status != 258)
-			{
-				if (open_here_doc(shell, head, limiter) == FAIL)
-					return (close(input), clean_up(shell), FAIL);
-			}
-			else
-				heredoc_loop(shell, limiter, -1);
+			if (open_here_doc(shell, head, limiter) == FAIL)
+				return (close_fd (shell->tokens, NULL), FAIL);
 			limiter = NULL;
 		}
 		head = head->next;
 	}
 	if (catch_signal(0, GET) == SIGINT)
-		return (close_fd(shell->tokens, NULL), dup2(input, 0), close(input), FAIL);
-	return (dup2(input, 0), close(input), SUCCESS);
+		return (close_fd(shell->tokens, NULL), FAIL);
+	return (SUCCESS);
 }

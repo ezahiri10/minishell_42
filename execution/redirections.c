@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:05:36 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/11 13:23:26 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:09:18 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_redirection_fds(t_redir *redir, t_type type)
 	return (1);
 }
 
-void	apply_redirections(t_cmd *head, int *ends, int *input, t_cmd *last)
+void	apply_redirections(t_cmd *head, int *ends, int input, t_cmd *last)
 {
 	int	fds[2];
 
@@ -54,7 +54,6 @@ void	apply_redirections(t_cmd *head, int *ends, int *input, t_cmd *last)
 	{
 		close(ends[1]);
 		close(ends[0]);
-		close(input[0]);
-		close(input[1]);
+		close(input);
 	}
 }

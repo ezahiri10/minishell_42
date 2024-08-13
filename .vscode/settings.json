@@ -64,6 +64,7 @@
     "locale": "c",
     "string": "c",
     "history.h": "c",
-    "typeinfo": "c"
+    "typeinfo": "c",
+    "utility": "c"
   }
 }

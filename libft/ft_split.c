@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:50:28 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/10 12:27:27 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:26:43 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	count_words(const char *s, char c)
 	int	nwords;
 	int	counter;
 
-	nwords = 0; 
+	nwords = 0;
 	counter = 0;
 	if (s == NULL || *s == '\0')
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/12 18:36:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:30:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define SUCCESS 0
 # define FAIL 1
- 
+
 # define AMBIGOUS "ambiguous redirect"
 # define CNF "command not found"
 # define ISDIR "is a directory"
@@ -44,7 +44,6 @@
 # define READ "\033[1;31m"
 # define YEL "\033[32m"
 # define END "\033[0m"
-
 
 typedef enum e_type
 {
@@ -119,8 +118,8 @@ typedef struct s_shell
 	char	*cpy_pwd;
 	char	*old_pwd;
 	t_cmd	*cmd;
+	int		input;
 	int		stoped;
-	int		input[2];
 	int		exit_status;
 }				t_shell;
 
@@ -169,14 +168,14 @@ t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
 
 void	space_to_127(t_token *token, t_state check_with);
 void	join_export_word(char **to_join, t_token **start);
-bool	here_doc(t_shell *shell, t_token *head, int input);
+bool	ft_here_doc(t_shell *shell, t_token *head);
 void	add_redir(t_redir **lst, char *file, t_type type, int fd);
 void	get_cmd_part(t_token **head, t_redir **redir, char **args);
 
 void	check_and_join(char **filename, t_token *token, bool empty_str);
 void	syntax_error_check(t_shell *shell, t_token *limiter, int flag);
 void	add_lst(char *content, t_token **lst, t_state state, t_join join);
-void	apply_redirections(t_cmd *head, int *ends, int *input, t_cmd *last);
+void	apply_redirections(t_cmd *head, int *ends, int input, t_cmd *last);
 
 void	word_delimiter(char *token, int *i, t_token **head, t_state state);
 int		quote_delimiter(char *token, int *i, t_shell *shell, t_state state);
@@ -203,16 +202,11 @@ int		env_size(t_env *lst);
 void	print_env(t_shell *shell, t_env *env);
 void	ft_export_error(char *arg, t_shell *shell);
 char	*dup_env(char *s);
-void	print_error(t_cmd *head, char **err_msg, int exit_code);
-
-// printing functions
-void	print_sruct(t_shell *shell);
-void	print_line(t_shell *shell);
-void	print_here_doc(t_shell *shell);
+void	_p_err(t_cmd *head, char **err_msg, int exit_code);
 
 bool	check_ambiguous(t_token *token);
 int		catch_signal(int s, bool set_or_get);
-bool	child_exist(bool true_or_false, bool mode);
+int		child_exist(int is_exist, bool mode);
 
 bool	is_valid(char *arg);
 char	*remove_char(char *str);

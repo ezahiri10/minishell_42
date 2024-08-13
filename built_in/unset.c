@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:42:18 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/12 19:09:51 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:30:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_unset(t_shell *shell, t_cmd *cmd)
 			remove_env(args[i], &shell->env_lst);
 		else
 		{
-			print_error(NULL, (char *[3]){NAVI, args[i], "unset: "}, -1);
+			_p_err(NULL, (char *[3]){NAVI, args[i], "unset: "}, -1);
 			shell->exit_status = 1;
 			return ;
 		}

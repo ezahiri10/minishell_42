@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/13 10:11:10 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 20:12:55 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	catch_signal(int s, bool set_or_get)
 	return (signal);
 }
 
-bool	child_exist(bool is_exist, bool mode)
+int	child_exist(int is_exist, bool mode)
 {
-	static bool	exist;
+	static int	exist;
 
 	if (mode == SET)
 		exist = is_exist;
@@ -40,9 +40,16 @@ void	new_prompt(int s)
 {
 	if (child_exist(0, GET) == false)
 	{
+		printf("\n");
 		catch_signal(s, SET);
 		rl_replace_line("", 0);
-		close(0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else if (child_exist(0, GET) == 2)
+	{
+		printf("\n");
+		exit (1);
 	}
 }
 

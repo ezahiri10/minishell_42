@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 10:21:53 by alafdili          #+#    #+#             */
-/*   Updated: 2024/07/27 22:19:30 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:06:50 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	heredoc_expansion(t_shell *shell, int *old_fd)
 	char	*expanded;
 
 	expanded = NULL;
-	write_fd = open("heredoc_expand", O_CREAT | O_WRONLY, 0666);
+	unlink("/tmp/.heredoc_expand");
+	write_fd = open("/tmp/.heredoc_expand", O_CREAT | O_WRONLY, 0666);
 	if (write_fd == -1)
 		return (clean_up(shell));
-	read_fd = open("heredoc_expand", O_RDONLY);
+	read_fd = open("/tmp/.heredoc_expand", O_RDONLY);
 	if (read_fd == -1)
 		return (close(write_fd), clean_up(shell));
-	unlink("heredoc_expand");
+	unlink("/tmp/.heredoc_expand");
 	while (1)
 	{
 		line = get_next_line(*old_fd);

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:33:53 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 17:16:03 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:27:21 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	clean_up(t_shell *shell)
 {
 	ft_malloc(0, 0);
 	stock_addr(NULL, 0);
-	close(shell->input[0]);
 	close_fd (shell->tokens, NULL);
 	exit(1);
 }

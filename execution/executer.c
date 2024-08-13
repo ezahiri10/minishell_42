@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/12 18:29:57 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:30:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 		exit (0);
 	}
 	if (cmd->cmd[0] == '\0')
-		print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
+		_p_err(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	if (check_executable(shell->cmd, cmd) == SUCCESS)
 		cmd_path = cmd->cmd;
 	else
 	{
 		cmd_path = check_cmd(get_env_key(shell->env_lst, "PATH"), cmd->cmd);
 		if (!cmd_path)
-			print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
+			_p_err(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	}
 	if (execve(cmd_path, cmd->args, shell->env) == -1)
-		print_error(shell->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
+		_p_err(shell->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
 }
 
 int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)
@@ -94,7 +94,7 @@ void	pipeline_loop(t_shell *shell)
 	t_cmd	*cmd;
 	pid_t	last_id;
 
-	shell->input[1] = dup(0);
+	shell->input = dup(0);
 	cmd = shell->cmd;
 	child_exist(1, SET);
 	while (cmd)
@@ -108,8 +108,8 @@ void	pipeline_loop(t_shell *shell)
 		cmd = cmd->next;
 	}
 	get_exit_status(shell, last_id);
-	dup2(shell->input[1], 0);
-	close(shell->input[1]);
+	dup2(shell->input, 0);
+	close(shell->input);
 	close_fd(NULL, shell->cmd);
 }
 
