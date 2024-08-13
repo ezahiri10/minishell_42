@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 16:51:43 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:05:39 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,6 @@ void	set_fd(t_token *start, int *fd)
 		*fd = start->data.fd;
 	else
 		*fd = -1;
-}
-
-
-char *space_tab_trimer(char *str)
-{
-	char *trimed;
-	int i;
-
-	i = 0;
-	if (!str)
-		return (NULL);
-	while ((*str == '\t' || *str == ' ') && *str)
-		str++;
-	while (str[i] != '\t' && str[i] != ' ' && str[i])
-		i++;
-	trimed = ft_substr(str, 0, i);	
-	return (trimed);
 }
 
 void	check_and_join(char **filename, t_token *token, bool empty_str)
@@ -50,32 +33,6 @@ void	check_and_join(char **filename, t_token *token, bool empty_str)
 	}
 	else
 		*filename = ft_strjoin(*filename, token->data.content);
-}
-
-char	*remove_char(char *str)
-{
-	char	*new_str;
-	int		char_nb;
-	int		i;
-
-	i = 0;
-	if (!str)
-		return (str);
-	char_nb = ft_count(str, 4);
-	if (char_nb == 0)
-		return (str);
-	new_str = ft_malloc(ft_strlen(str) - char_nb + 1, 1);
-	while (*str)
-	{
-		if (*str != 4)
-		{
-			new_str[i] = *str;
-			i++;
-		}
-		str++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
 }
 
 t_cmd	*create_cmd(char *to_join, t_redir *redir)
@@ -97,7 +54,6 @@ t_cmd	*create_cmd(char *to_join, t_redir *redir)
 	return (cmd);
 }
 
-
 void	set_filename(char **filename, t_token **start, t_type *type)
 {
 	char	*save;
@@ -114,12 +70,11 @@ void	set_filename(char **filename, t_token **start, t_type *type)
 		*start = (*start)->next;
 	}
 	if ((*start)->state == DOLLAR)
-			(*start)->data.content = space_tab_trimer((*start)->data.content);
+		(*start)->data.content = space_tab_trimer((*start)->data.content);
 	check_and_join(filename, *start, false);
 	save = ft_strjoin(save, (*start)->data.origin);
 	if (*type == ERROR)
 		*filename = save;
-	// *filename = space_tab_trimer(*filename);
 	*start = (*start)->next;
 }
 

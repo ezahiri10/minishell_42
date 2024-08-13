@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:53:08 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/10 17:58:10 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:13:11 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,27 @@ char	*check_cmd(char *path, char *cmd)
 	return (NULL);
 }
 
-bool	*check_executable(t_cmd *head, char *path)
+bool	check_executable(t_cmd *head, t_cmd *cmd)
 {
-	DIR *dirp;
+	DIR	*dirp;
+	int	len;
 
-	if (access(path, X_OK) != -1)
+	len = ft_strlen(cmd->cmd) - 1;
+	if (!(cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' || cmd->cmd[1] == '/')
+			|| cmd->cmd[len] == '/'))
+		return (FAIL);
+	if (access(cmd->cmd, X_OK) != -1)
 	{
-		dirp = opendir(path);
+		dirp = opendir(cmd->cmd);
 		if (dirp != NULL)
 		{
 			closedir(dirp);
-			print_error(head, (char *[3]){ISDIR, path, ""}, 126);
+			print_error(head, (char *[3]){ISDIR, cmd->cmd, ""}, 126);
 		}
 	}
 	else if (errno == ENOENT)
-		print_error(head, (char *[3]){strerror(errno), path, ""}, 127);
+		print_error(head, (char *[3]){strerror(errno), cmd->cmd, ""}, 127);
 	else
-		print_error(head, (char *[3]){strerror(errno), path, ""}, 126);
+		print_error(head, (char *[3]){strerror(errno), cmd->cmd, ""}, 126);
 	return (SUCCESS);
 }

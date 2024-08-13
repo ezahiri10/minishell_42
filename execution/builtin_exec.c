@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:29:31 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/10 15:54:12 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:11:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	get_builtin_cmd(t_shell *shell, t_cmd *cmd)
 int	builtin_exec(t_shell *shell, t_cmd *cmd, int *ends)
 {
 	if (redirection_check(shell->cmd, cmd->redir) == FAIL)
-		return (shell->exit_status =  1, FAIL);
+		return (shell->exit_status = 1, FAIL);
 	apply_redirections(cmd, ends, shell->input, cmd->next);
 	get_builtin_cmd(shell, cmd);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:26:31 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 18:50:31 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:18:07 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ bool	check_argument(char *arg)
 
 	i = 0;
 	sign = 1;
-	while (*arg == ' ')
-		arg++;
+	arg = ft_strtrim(arg, " ");
 	if (*arg == '-' || *arg == '+')
 		sign = 1 - 2 * (*(arg++) == '-');
 	if (*arg == '\0')
@@ -42,27 +41,27 @@ bool	check_argument(char *arg)
 void	ft_exit(t_shell *shell, t_cmd *cmd)
 {
 	int		len;
-	char	**args;
 	int		i;
 
-	args = cmd->args;
 	i = 1;
 	len = 1;
-	while (args[len])
+	while (cmd->args[len])
 		len++;
+	if (child_exist(0, GET) == false)
+		printf("exit\n");
 	if (len == 1)
 		exit(shell->exit_status);
-	if (check_argument(args[1]) == true && len > 2)
+	if (check_argument(cmd->args[1]) == true && len > 2)
 	{
 		print_error(NULL, (char *[3]){TMA, "exit", ""}, -1);
 		shell->exit_status = 1;
 		return ;
 	}
-	else if (check_argument(args[1]) == false)
+	else if (check_argument(cmd->args[1]) == false)
 	{
 		print_error(NULL, (char *[3]){NAR, "exit", ""}, -1);
 		exit(255);
 	}
-	else if (check_argument(args[1]) == true && len >= 2)
-		exit(ft_atoi(args[1]));
+	else if (check_argument(cmd->args[1]) == true && len >= 2)
+		exit(ft_atoi(cmd->args[1]));
 }

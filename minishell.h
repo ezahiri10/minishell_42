@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/11 18:07:41 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:36:46 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_shell
 	t_env	*env_lst;
 	char	**env;
 	t_token	*tokens;
+	char	*cpy_pwd;
 	char	*old_pwd;
 	t_cmd	*cmd;
 	int		stoped;
@@ -145,7 +146,7 @@ char	*limiter(int *i, char *token);
 bool	check_is_double(t_token *tmp);
 char	*check_cmd(char *path, char *cmd);
 
-bool	*check_executable(t_cmd *head, char *executable);
+bool	check_executable(t_cmd *head, t_cmd *cmd);
 void	get_exit_status(t_shell *shell, pid_t last_cmd);
 char	*check_cmd(char *path, char *cmd);
 
@@ -214,6 +215,7 @@ int		catch_signal(int s, bool set_or_get);
 bool	child_exist(bool true_or_false, bool mode);
 
 bool	is_valid(char *arg);
-char 	*space_tab_trimer(char *str);
-
+char	*remove_char(char *str);
+void	value_non_joinlble(char *name, char *value, t_shell *shell, int flag);
+char	*space_tab_trimer(char *str);
 #endif

@@ -6,34 +6,47 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:01:47 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/11 15:33:29 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:09:03 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void check_pwd(t_shell *shell, char *path)
+void	check_pwd(t_shell *shell, char *path)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		shell->old_pwd = join_env(shell->old_pwd, "/");
+		shell->cpy_pwd = join_env(shell->cpy_pwd, "/");
 		path = dup_env(ft_strtrim(path, "/"));
-		if (!ft_strcmp(path, ".."))
-			shell->old_pwd = join_env(shell->old_pwd, "..");
-		else if (!ft_strcmp(path, "."))
-			shell->old_pwd = join_env(shell->old_pwd, ".");
-		else
-			shell->old_pwd = join_env(shell->old_pwd, path);
+		shell->cpy_pwd = join_env(shell->cpy_pwd, path);
 	}
 	else
 	{
-		shell->old_pwd = pwd;
+		shell->cpy_pwd = pwd;
 		stock_addr(pwd, 1);
 	}
 }
+
+void	chang_dir(t_shell *shell, char *path)
+{
+	shell->old_pwd = getcwd(NULL, 0);
+	stock_addr(shell->old_pwd, 1);
+	if (!shell->old_pwd)
+		shell->old_pwd = shell->cpy_pwd;
+	if (chdir(path) == -1)
+	{
+		shell->exit_status = 1;
+		perror("cd");
+		return ;
+	}
+	check_pwd(shell, path);
+	value_non_joinlble("OLDPWD", shell->old_pwd, shell, 1);
+	value_non_joinlble("PWD", shell->cpy_pwd, shell, 1);
+}
+
 void	ft_cd(t_shell *shell, t_cmd *cmd)
 {
 	char	**args;
@@ -48,14 +61,8 @@ void	ft_cd(t_shell *shell, t_cmd *cmd)
 			shell->exit_status = 1;
 			return (ft_putstr_fd("cd: HOME not set\n", 2));
 		}
-		if (chdir(home) == -1)
-			perror("cd");
+		chang_dir(shell, home);
 	}
-	else if (chdir(args[1]) == -1)
-	{
-		shell->exit_status = 1;
-		perror("cd");
-		return ;
-	}
-	check_pwd(shell, args[1]);
+	else
+		chang_dir(shell, args[1]);
 }

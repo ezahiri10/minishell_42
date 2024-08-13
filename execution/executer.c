@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/11 21:46:05 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:29:57 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 {
 	char	*cmd_path;
-	int		len;
 
 	cmd_path = NULL;
-	len = ft_strlen(cmd->cmd) - 1;//
 	if (redirection_check(shell->cmd, cmd->redir) == FAIL)
 		exit(1);
 	apply_redirections(cmd, ends, shell->input, last);
@@ -29,8 +27,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 	}
 	if (cmd->cmd[0] == '\0')
 		print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
-	if ((cmd->cmd[0] == '/' || (cmd->cmd[0] == '.' && cmd->cmd[1] == '/') || 
-		cmd->cmd[len] == '/') && check_executable(shell->cmd, cmd->cmd) == SUCCESS)
+	if (check_executable(shell->cmd, cmd) == SUCCESS)
 		cmd_path = cmd->cmd;
 	else
 	{
@@ -83,7 +80,7 @@ void	exec_one_cmd(t_shell *shell, int *save)
 	pid = fork();
 	if (pid == -1)
 	{
- 		perror("minishell: fork");
+		perror("minishell: fork");
 		return ;
 	}
 	else if (pid == 0)
@@ -99,6 +96,7 @@ void	pipeline_loop(t_shell *shell)
 
 	shell->input[1] = dup(0);
 	cmd = shell->cmd;
+	child_exist(1, SET);
 	while (cmd)
 	{
 		last_id = exec_pipeline(shell, cmd, cmd->next);

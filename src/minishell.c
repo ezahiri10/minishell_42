@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/11 21:46:28 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:25:55 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,13 @@ void	interpreter(t_shell *shell, char *line)
 
 void	mini_shell(t_shell *shell)
 {
-	struct termios termios_p;
+	struct termios	termios_p;
 	char			*line;
 
-	if (tcgetattr(STDOUT_FILENO, &termios_p) != 0)
-		perror("tcgetattr");
+	tcgetattr(STDIN_FILENO, &termios_p);
 	shell->input[0] = dup(0);
 	while (1)
 	{
-		tcsetattr(STDOUT_FILENO, TCSANOW, &termios_p);
 		shell->stoped = 0;
 		line = readline("Minishell$ ");
 		stock_addr(line, 2);
@@ -64,6 +62,7 @@ void	mini_shell(t_shell *shell)
 			__ctrl_d(shell);
 		interpreter(shell, line);
 		ft_malloc(0, 0);
+		tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
 		shell->tokens = NULL;
 	}
 }
@@ -74,7 +73,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO) 
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)
 		|| !isatty(STDERR_FILENO))
 		return (perror("Minishell"), 1);
 	ft_signal();
@@ -83,6 +82,8 @@ int	main(int ac, char **av, char **env)
 	shell.input[1] = -1;
 	shell.env = env;
 	inisailise_env(env, &shell);
-	shell.old_pwd = get_env_key(shell.env_lst, "PWD");
+	shell.cpy_pwd = get_env_key(shell.env_lst, "PWD");
+	if (*env)
+		value_non_joinlble("OLDPWD", NULL, &shell, 1);
 	mini_shell(&shell);
 }

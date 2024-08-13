@@ -6,11 +6,9 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:42:18 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 18:06:24 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:09:51 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "minishell.h"
 
@@ -21,7 +19,7 @@ void	remove_env(char *s, t_env **env)
 
 	prev = *env;
 	tmp = *env;
-	if (!ft_strcmp(s, (*env)->var))
+	if (*env && !ft_strcmp(s, (*env)->var))
 	{
 		*env = (*env)->next;
 		return ;
@@ -56,7 +54,7 @@ void	ft_unset(t_shell *shell, t_cmd *cmd)
 		{
 			print_error(NULL, (char *[3]){NAVI, args[i], "unset: "}, -1);
 			shell->exit_status = 1;
-			return ;	
+			return ;
 		}
 		i++;
 	}
