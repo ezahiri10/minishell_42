@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_count.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 20:08:11 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/13 10:40:43 by ezahiri          ###   ########.fr       */
+/*   Created: 2024/08/13 10:42:47 by ezahiri           #+#    #+#             */
+/*   Updated: 2024/08/13 10:43:09 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strchr(const char *s, int c)
+int	ft_count(char *str, char c)
 {
-	size_t	counter;
-	size_t	len;
+	int	i;
+	int	count;
 
-	if (!s)
-		return (NULL);
-	counter = 0;
-	len = ft_strlen(s);
-	while (counter <= len)
+	i = 0;
+	count = 0;
+	while (str && str[i])
 	{
-		if (s[counter] == (char)c)
-		{
-			return ((char *)&s[counter]);
-		}
-		counter++;
+		if (str[i] == c)
+			count++;
+		i++;
 	}
-	return (NULL);
+	return (count);
 }

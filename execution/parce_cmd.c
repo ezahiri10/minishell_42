@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parce_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:53:08 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/12 17:13:11 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:52:49 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_error(t_cmd *head, char **err_msg, int exit_code)
+void	f_perror(t_cmd *head, char **err_msg, int exit_code)
 {
 	close_fd(NULL, head);
 	ft_putstr_fd("Minishell: ", 2);
@@ -62,12 +62,12 @@ bool	check_executable(t_cmd *head, t_cmd *cmd)
 		if (dirp != NULL)
 		{
 			closedir(dirp);
-			print_error(head, (char *[3]){ISDIR, cmd->cmd, ""}, 126);
+			f_perror(head, (char *[3]){ISDIR, cmd->cmd, ""}, 126);
 		}
 	}
 	else if (errno == ENOENT)
-		print_error(head, (char *[3]){strerror(errno), cmd->cmd, ""}, 127);
+		f_perror(head, (char *[3]){strerror(errno), cmd->cmd, ""}, 127);
 	else
-		print_error(head, (char *[3]){strerror(errno), cmd->cmd, ""}, 126);
+		f_perror(head, (char *[3]){strerror(errno), cmd->cmd, ""}, 126);
 	return (SUCCESS);
 }

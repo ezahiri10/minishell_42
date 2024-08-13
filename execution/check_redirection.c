@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:31:46 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/10 17:17:01 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:52:49 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ bool	redirection_check(t_cmd *cmd, t_redir *lst)
 	{
 		if (tmp->type == ERROR)
 		{
-			print_error(cmd, (char *[3]){AMBIGOUS, tmp->file, ""}, -1);
+			f_perror(cmd, (char *[3]){AMBIGOUS, tmp->file, ""}, -1);
 			return (FAIL);
 		}
 		else if (file_check(tmp, &err) == FAIL)
-			return (print_error(cmd, (char *[3]){err, tmp->file, ""}, -1), FAIL);
+			return (f_perror(cmd, (char *[3]){err, tmp->file, ""}, -1), FAIL);
 		if (is_exist(tmp->next, tmp->type) == true)
 		{
 			close(tmp->fd);

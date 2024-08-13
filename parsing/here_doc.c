@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/13 09:36:27 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:47:43 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ bool	here_doc(t_shell *shell, t_token *head, int input)
 		head = head->next;
 	}
 	if (catch_signal(0, GET) == SIGINT)
-		return (close_fd(shell->tokens, NULL), dup2(input, 0), close(input), FAIL);
+		return (close_fd(shell->tokens, NULL), dup2(input, 0), close(input), 1);
 	return (dup2(input, 0), close(input), SUCCESS);
 }

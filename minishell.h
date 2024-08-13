@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/12 18:36:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:52:49 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define SUCCESS 0
 # define FAIL 1
- 
+
 # define AMBIGOUS "ambiguous redirect"
 # define CNF "command not found"
 # define ISDIR "is a directory"
@@ -44,7 +44,6 @@
 # define READ "\033[1;31m"
 # define YEL "\033[32m"
 # define END "\033[0m"
-
 
 typedef enum e_type
 {
@@ -134,7 +133,6 @@ void	executer(t_shell *shell);
 
 void	close_fd(t_token *token, t_cmd *head);
 
-int		ft_count(char *str, char c);
 void	get_pipeline(t_shell *shell);
 int		builtin_exec(t_shell *shell, t_cmd *cmd, int *ends);
 void	cmd_type_def(t_shell *shell);
@@ -203,7 +201,7 @@ int		env_size(t_env *lst);
 void	print_env(t_shell *shell, t_env *env);
 void	ft_export_error(char *arg, t_shell *shell);
 char	*dup_env(char *s);
-void	print_error(t_cmd *head, char **err_msg, int exit_code);
+void	f_perror(t_cmd *head, char **err_msg, int exit_code);
 
 // printing functions
 void	print_sruct(t_shell *shell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/12 18:29:57 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:52:49 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 		exit (0);
 	}
 	if (cmd->cmd[0] == '\0')
-		print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
+		f_perror(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	if (check_executable(shell->cmd, cmd) == SUCCESS)
 		cmd_path = cmd->cmd;
 	else
 	{
 		cmd_path = check_cmd(get_env_key(shell->env_lst, "PATH"), cmd->cmd);
 		if (!cmd_path)
-			print_error(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
+			f_perror(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	}
 	if (execve(cmd_path, cmd->args, shell->env) == -1)
-		print_error(shell->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
+		f_perror(shell->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
 }
 
 int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)

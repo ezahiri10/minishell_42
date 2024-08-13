@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:42:18 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/12 19:09:51 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/13 10:52:49 by ezahiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_unset(t_shell *shell, t_cmd *cmd)
 			remove_env(args[i], &shell->env_lst);
 		else
 		{
-			print_error(NULL, (char *[3]){NAVI, args[i], "unset: "}, -1);
+			f_perror(NULL, (char *[3]){NAVI, args[i], "unset: "}, -1);
 			shell->exit_status = 1;
 			return ;
 		}
