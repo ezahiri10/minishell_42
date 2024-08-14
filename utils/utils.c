@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/14 10:46:39 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:38:13 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ char	*char_to_string(char c)
 	dest[0] = c;
 	dest[1] = '\0';
 	return (dest);
+}
+
+t_join	is_joinble(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\0'
+		|| c == '|' || c == '>' || c == '<')
+		return (NON_JOINBLE);
+	return (JOINBLE);
 }
 
 int	ft_count(char *str, char c)
@@ -36,12 +44,4 @@ int	ft_count(char *str, char c)
 		i++;
 	}
 	return (count);
-}
-
-t_join	is_joinble(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\0'
-		|| c == '|' || c == '>' || c == '<')
-		return (NON_JOINBLE);
-	return (JOINBLE);
 }
