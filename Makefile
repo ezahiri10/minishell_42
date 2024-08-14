@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC =  cc #-fsanitize=address -g
+CC =  cc -fsanitize=address -g
 
 RM = rm -f
 
@@ -14,7 +14,7 @@ SRC = 	expanding/expander.c expanding/heredoc_expansion.c env/env_lst.c env/set_
 		src/ft_signal.c parsing/tokenizer.c build_struct/get_pipeline.c execution/builtin_exec.c\
 		build_struct/create_cmd.c parsing/syntax_error.c build_struct/join_words.c \
 		env/sort_print_env.c built_in/cd.c built_in/echo.c built_in/env.c built_in/exit.c built_in/export.c \
-		built_in/pwd.c built_in/unset.c build_struct/check_ambiguous.c
+		built_in/pwd.c built_in/unset.c build_struct/check_ambiguous.c utils/edit_strings.c
 
 OBG = $(SRC:%.c= %.o)
 
@@ -29,7 +29,7 @@ $(NAME) : $(OBG)
 	$(CC) $(FLAGS) -lreadline $(OBG) $(LIBFT) -o $(NAME)
 
 %.o : %.c minishell.h
-	$(CC) $(FLAGS) -I. -c $< -o $@
+	$(CC) $(FLAGS) -I. -Ilibft -c $< -o $@
 
 clean :
 	@make -C  libft/ clean

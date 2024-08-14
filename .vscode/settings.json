@@ -65,6 +65,9 @@
     "string": "c",
     "history.h": "c",
     "typeinfo": "c",
-    "utility": "c"
+    "utility": "c",
+    "stdbool.h": "c",
+    "wait.h": "c",
+    "readline.h": "c"
   }
 }

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/13 21:24:47 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:32:05 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 	char	*line;
 
 	child_exist(2, SET);
+	close_fd(shell->tokens, NULL);
 	while (true)
 	{
 		line = readline("> ");

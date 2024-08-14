@@ -6,13 +6,13 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:34:30 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/07 19:42:30 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 11:06:57 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	inisailise_env(char **env, t_shell *shell)
+void	initialize_env(char **env, t_shell *shell)
 {
 	int		find;
 	char	*value;

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/12 17:05:39 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:54:40 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_cmd	*create_cmd(char *to_join, t_redir *redir)
 	args = ft_split(to_join, 127);
 	while (args && args[i])
 	{
-		args[i] = remove_char(ft_strtrim(args[i], char_to_string(4)));
+		args[i] = ft_strtrim(args[i], char_to_string(4));
+		args[i] = remove_char(args[i], 4);
 		i++;
 	}
 	cmd = new_cmd(args[0], redir, args);

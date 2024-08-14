@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/13 19:06:07 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:12:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	__ctrl_d(t_shell *shell)
 	close_fd(shell->tokens, NULL);
 	stock_addr(NULL, 0);
 	ft_malloc(0, 0);
-	printf("Minishell$ exit\n");
+	printf("\x1b[FMinishell$ exit\n");
 	exit(shell->exit_status);
 }
 
@@ -70,7 +70,7 @@ int	main(int ac, char **av, char **env)
 	ft_signal();
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.env = env;
-	inisailise_env(env, &shell);
+	initialize_env(env, &shell);
 	shell.cpy_pwd = get_env_key(shell.env_lst, "PWD");
 	if (*env)
 		value_non_joinlble("OLDPWD", NULL, &shell, 1);
