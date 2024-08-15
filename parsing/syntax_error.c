@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:02:07 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/13 19:11:56 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:25:19 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	syntax_error_check(t_shell *shell, t_token *limiter, int flag)
 			ft_here_doc(shell, shell->tokens);
 			display_syntax_error(shell);
 		}
+		if (catch_signal(0, GET) != SIGINT)
+			close_fd(shell->tokens, NULL);
 	}
 	else if (ft_here_doc(shell, shell->tokens) == FAIL)
 		shell->stoped = 1;

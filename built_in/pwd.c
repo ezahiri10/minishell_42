@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:13:58 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/10 22:43:20 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/14 15:52:59 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void	ft_pwd(t_shell *shell)
 		free(pwd);
 		return ;
 	}
+	shell->exit_status = 0;
 	free(pwd);
 }

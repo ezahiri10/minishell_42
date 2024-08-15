@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:42:18 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 12:39:42 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:57:36 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	ft_unset(t_shell *shell, t_cmd *cmd)
 	args = cmd->args;
 	args = cmd->args;
 	i = 1;
-	if (!args[i])
-		return ;
 	while (args[i])
 	{
 		if (is_valid(args[i]) == true)
@@ -58,4 +56,5 @@ void	ft_unset(t_shell *shell, t_cmd *cmd)
 		}
 		i++;
 	}
+	shell->exit_status = 0;
 }

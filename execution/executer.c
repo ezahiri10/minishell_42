@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/14 12:42:12 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:27:46 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,20 @@ int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)
 	return (close(ends[0]), close(ends[1]), pid);
 }
 
-void	exec_one_cmd(t_shell *shell, int *save)
+void	exec_one_cmd(t_shell *shell)
 {
 	pid_t	pid;
+	int		save[2];
 
 	if (shell->cmd->type == true)
 	{
+		save[0] = dup(0);
+		save[1] = dup(1);
 		builtin_exec(shell, shell->cmd, NULL);
 		dup2(save[0], 0);
 		dup2(save[1], 1);
+		close(save[0]);
+		close(save[1]);
 		return ;
 	}
 	pid = fork();
@@ -94,8 +99,10 @@ void	pipeline_loop(t_shell *shell)
 	t_cmd	*cmd;
 	pid_t	last_id;
 
-	shell->input = dup(0);
 	cmd = shell->cmd;
+	shell->input = dup(0);
+	// if (shell->input == -1)
+	// 	return (_p_err(cmd, (char *[3]){strerror(errno), "dup", ""}, -1));
 	child_exist(1, SET);
 	while (cmd)
 	{
@@ -115,20 +122,12 @@ void	pipeline_loop(t_shell *shell)
 
 void	executer(t_shell *shell)
 {
-	int		save[2];
-
 	if (shell->stoped)
 		return ;
-	save[0] = dup(0);
-	save[1] = dup(1);
 	if (cmd_lst_size(shell->cmd) == 1)
 	{
-		exec_one_cmd(shell, save);
-		close(save[0]);
-		close(save[1]);
+		exec_one_cmd(shell);
 		return ;
 	}
-	close(save[0]);
-	close(save[1]);
 	pipeline_loop(shell);
 }

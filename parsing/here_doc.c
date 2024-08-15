@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/14 13:34:06 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:32:15 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ void	heredoc_loop(t_shell *shell, char *limiter, int fd)
 	{
 		line = readline("> ");
 		if (!line || !ft_strcmp(line, limiter))
-		{
-			if (shell->exit_status != 258)
-				shell->exit_status = 0;
 			break ;
-		}
 		ft_putendl_fd(line, fd);
 		free(line);
 	}

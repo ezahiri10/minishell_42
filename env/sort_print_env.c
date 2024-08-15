@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:15:16 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/11 11:34:51 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:04:13 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	print_env(t_shell *shell, t_env *env)
 		}
 		exit(0);
 	}
-	else
-		waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, 0);
+	shell->exit_status = 0;
 }

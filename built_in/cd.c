@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:01:47 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/12 17:09:03 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:10:24 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	chang_dir(t_shell *shell, char *path)
 	check_pwd(shell, path);
 	value_non_joinlble("OLDPWD", shell->old_pwd, shell, 1);
 	value_non_joinlble("PWD", shell->cpy_pwd, shell, 1);
+	shell->exit_status = 0;
 }
 
 void	ft_cd(t_shell *shell, t_cmd *cmd)

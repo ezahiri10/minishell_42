@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:30:51 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 12:39:55 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:58:40 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	set_env(t_shell *shell, char *arg)
 			value_non_joinlble(name, value, shell, flag);
 		else if (flag == 2)
 			value_joinble(name, value, shell);
+		shell->exit_status = 0;
 	}
 	else
 	{
