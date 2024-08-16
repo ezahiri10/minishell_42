@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:29:31 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/14 19:21:44 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:09:40 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_exec(t_shell *shell, t_cmd *cmd, int *ends)
 {
 	if (redirection_check(shell->cmd, cmd->redir) == FAIL)
 		return (shell->exit_status = 1, FAIL);
-	apply_redirections(cmd, ends, shell->input, cmd->next);
+	apply_redirs(shell, cmd->redir, ends, cmd->next);
 	get_builtin_cmd(shell, cmd);
 	return (SUCCESS);
 }

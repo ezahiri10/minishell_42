@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/14 13:38:13 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:59:30 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,20 @@ int	ft_count(char *str, char c)
 		i++;
 	}
 	return (count);
+}
+
+void	close_and_perror(t_shell *shell, int *to_close, int exit)
+{
+	if (to_close)
+	{
+		if (to_close[0] > 2)
+			close (to_close[0]);
+		if (to_close[1] > 2)
+			close (to_close[1]);
+	}
+	if (shell)
+	{
+		shell->exit_status = 1;
+		_p_err(shell->cmd, (char *[3]){strerror(errno), "dup", ""}, exit);
+	}
 }

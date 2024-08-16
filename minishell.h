@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 12:40:53 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:09:32 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define NAVI ": not a valid identifier"
 # define NAR "numeric argument required"
 # define TMA "too many arguments"
-
 # define SUCCESS 0
 # define FAIL 1
 
@@ -142,7 +141,7 @@ bool	check_executable(t_cmd *head, t_cmd *cmd);
 bool	redirection_check(t_cmd *cmd, t_redir *lst);
 void	get_exit_status(t_shell *shell, pid_t last_cmd);
 int		builtin_exec(t_shell *shell, t_cmd *cmd, int *ends);
-void	apply_redirections(t_cmd *head, int *ends, int input, t_cmd *last);
+void	apply_redirs(t_shell *shell, t_redir *head, int *ends, t_cmd *last);
 void	value_non_joinlble(char *name, char *value, t_shell *shell, int flag);
 
 /***************** Building execution struct functions *************/
@@ -156,6 +155,7 @@ void	get_cmd_part(t_token **head, t_redir **redir, char **args);
 void	check_and_join(char **filename, t_token *token, bool empty_str);
 
 /********************** Expanding functions ************************/
+
 void	expander(t_shell *shell);
 char	*limiter(int *i, char *token);
 bool	check_is_double(t_token *tmp);
@@ -192,6 +192,7 @@ void	clean_up(t_shell *shell);
 bool	check_ambiguous(t_token *token);
 void	display_syntax_error(t_shell *shell);
 void	ft_export_error(char *arg, t_shell *shell);
+void	close_and_perror(t_shell *shell, int *to_close, int exit);
 void	_p_err(t_cmd *head, char **err_msg, int exit_code);
 void	syntax_error_check(t_shell *shell, t_token *limiter, int flag);
 

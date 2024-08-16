@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/15 17:27:46 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:09:14 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
 	cmd_path = NULL;
 	if (redirection_check(shell->cmd, cmd->redir) == FAIL)
 		exit(1);
-	apply_redirections(cmd, ends, shell->input, last);
+	apply_redirs(shell, cmd->redir, ends, last);
 	if (!cmd->cmd)
 	{
 		close_fd(NULL, shell->cmd);
@@ -62,7 +62,8 @@ int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)
 		else
 			exec_cmd(shell, cmd, ends, next_cmd);
 	}
-	dup2(ends[0], 0);
+	if (dup2(ends[0], 0) == -1)
+		return (close_and_perror(shell, (int [2]){ends[0], ends[1]}, -1), FAIL);
 	return (close(ends[0]), close(ends[1]), pid);
 }
 
@@ -75,19 +76,16 @@ void	exec_one_cmd(t_shell *shell)
 	{
 		save[0] = dup(0);
 		save[1] = dup(1);
+		if (save[0] == -1 || save[1] == -1)
+			return (close_and_perror(shell, (int [2]){save[0], save[1]}, -1));
 		builtin_exec(shell, shell->cmd, NULL);
-		dup2(save[0], 0);
-		dup2(save[1], 1);
-		close(save[0]);
-		close(save[1]);
-		return ;
+		if (dup2(save[0], 0) == -1 || dup2(save[1], 1) == -1)
+			return (close_and_perror(shell, (int [2]){save[0], save[1]}, -1));
+		return (close_and_perror(NULL, (int [2]){save[0], save[1]}, -1));
 	}
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("minishell: fork");
-		return ;
-	}
+		return (perror("minishell: fork"));
 	else if (pid == 0)
 		exec_cmd(shell, shell->cmd, NULL, shell->cmd->next);
 	get_exit_status(shell, pid);
@@ -101,8 +99,8 @@ void	pipeline_loop(t_shell *shell)
 
 	cmd = shell->cmd;
 	shell->input = dup(0);
-	// if (shell->input == -1)
-	// 	return (_p_err(cmd, (char *[3]){strerror(errno), "dup", ""}, -1));
+	if (shell->input == -1)
+		return (close_and_perror(shell, NULL, -1));
 	child_exist(1, SET);
 	while (cmd)
 	{
@@ -115,7 +113,8 @@ void	pipeline_loop(t_shell *shell)
 		cmd = cmd->next;
 	}
 	get_exit_status(shell, last_id);
-	dup2(shell->input, 0);
+	if (dup2(shell->input, 0) == -1)
+		return (close_and_perror(shell, (int [2]){shell->input, -1}, -1));
 	close(shell->input);
 	close_fd(NULL, shell->cmd);
 }

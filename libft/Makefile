@@ -18,17 +18,18 @@ SOBJECT = $(FUN:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 
 %.o: %.c $(HEADER)
-	@$(COMPILER) $(FLAGS) -c $<
+	$(COMPILER) $(FLAGS) -c $<
 
 all: $(NAME)
 
 $(NAME): $(SOBJECT)
-	@ar -rc $(NAME) $(SOBJECT) 
+	ar -rc $(NAME) $(SOBJECT) 
 
 clean:
-	@$(REMOVE) $(SOBJECT)
+	$(REMOVE) $(SOBJECT)
 
 fclean: clean
-	@$(REMOVE) $(NAME)
+	$(REMOVE) $(NAME)
 
 re:  fclean all
+

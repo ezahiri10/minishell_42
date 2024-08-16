@@ -6,19 +6,11 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:53:08 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/15 17:20:00 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/15 21:37:52 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_dup(t_shell *shell, int *dup_fds, int *close_fds)
-{
-	if (dup2(dup_fds[0], dup_fds[1]) == -1)
-		_p_err(shell->cmd, (char *[3]){strerror(errno), "dup2", ""}, -1);
-	close(close_fds[0]);
-	close(close_fds[1]);
-}
 
 void	_p_err(t_cmd *head, char **err_msg, int exit_code)
 {

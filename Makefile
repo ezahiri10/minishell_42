@@ -26,7 +26,7 @@ LIBFT = libft
 all : $(LIBFT) $(NAME) 
 
 $(LIBFT) : 
-	@make -C libft/
+	@make -sC libft/
 
 $(NAME) : $(OBG)
 	$(CC) $(FLAGS) $(LINKING_LIB) $(OBG) -o $(NAME)
