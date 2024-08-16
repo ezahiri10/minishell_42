@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/16 16:09:32 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:14:49 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,10 +179,10 @@ char	*dup_env(char *s);
 int		env_size(t_env *lst);
 char	*join_env(char *s1, char *s2);
 bool	exist_env(char *name, t_env *env);
-void	set_env(t_shell *shell, char *arg);
 char	*get_env_key(t_env *env, char *name);
 void	print_env(t_shell *shell, t_env *env);
 void	initialize_env(char **env, t_shell *shell);
+void	set_env(t_shell *shell, char *arg, int *err);
 void	*add_env(char *var, char *value, t_env **head);
 char	*subenv(char const *s, unsigned int start, size_t len);
 

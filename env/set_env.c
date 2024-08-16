@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:30:51 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 15:58:40 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:13:37 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ bool	check_type(char *arg, char **name, char **value, int *flag)
 	return (is_valid(*name));
 }
 
-void	set_env(t_shell *shell, char *arg)
+void	set_env(t_shell *shell, char *arg, int *err)
 {
 	char	*name;
 	char	*value;
@@ -126,12 +126,10 @@ void	set_env(t_shell *shell, char *arg)
 			value_non_joinlble(name, value, shell, flag);
 		else if (flag == 2)
 			value_joinble(name, value, shell);
-		shell->exit_status = 0;
 	}
 	else
 	{
 		_p_err(NULL, (char *[3]){NAVI, arg, "export: `"}, -1);
-		shell->exit_status = 1;
-		return ;
+		*err = 1;
 	}
 }
