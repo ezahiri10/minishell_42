@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/16 20:14:49 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:39:31 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,11 @@ void	opertor_delimiter(char *token, int *i, t_token **head, t_state state);
 void	executer(t_shell *shell);
 int		researcher(char *s, char c);
 void	close_rdir_fds(t_redir *head);
-char	*check_cmd(char *path, char *cmd);
-char	*check_cmd(char *path, char *cmd);
 void	close_fd(t_token *token, t_cmd *head);
 char	*set_value(char *__name, t_env *__env);
-bool	check_executable(t_cmd *head, t_cmd *cmd);
+bool	check_executable(t_cmd *head, char *cmd);
 bool	redirection_check(t_cmd *cmd, t_redir *lst);
+char	*check_cmd(t_shell *shell, char *path, char *cmd);
 void	get_exit_status(t_shell *shell, pid_t last_cmd);
 int		builtin_exec(t_shell *shell, t_cmd *cmd, int *ends);
 void	apply_redirs(t_shell *shell, t_redir *head, int *ends, t_cmd *last);
@@ -192,8 +191,8 @@ void	clean_up(t_shell *shell);
 bool	check_ambiguous(t_token *token);
 void	display_syntax_error(t_shell *shell);
 void	ft_export_error(char *arg, t_shell *shell);
-void	close_and_perror(t_shell *shell, int *to_close, int exit);
 void	_p_err(t_cmd *head, char **err_msg, int exit_code);
+void	close_and_perror(t_shell *shell, int *to_close, int exit);
 void	syntax_error_check(t_shell *shell, t_token *limiter, int flag);
 
 /********************** STRING utils functions *********************/

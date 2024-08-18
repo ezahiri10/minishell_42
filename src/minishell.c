@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/16 22:36:36 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:18:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(int ac, char **av, char **env)
 		return (perror("Minishell"), 1);
 	ft_signal();
 	ft_memset(&shell, 0, sizeof(t_shell));
+	shell.input = -1;
 	shell.env = env;
 	initialize_env(env, &shell);
 	shell.cpy_pwd = get_env_key(shell.env_lst, "PWD");

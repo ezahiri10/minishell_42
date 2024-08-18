@@ -6,37 +6,39 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/16 18:09:14 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:07:02 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_cmd(t_shell *shell, t_cmd *cmd, int *ends, t_cmd *last)
+void	exec_cmd(t_shell *sh, t_cmd *cmd, int *ends, t_cmd *last)
 {
 	char	*cmd_path;
+	char	*path;
 
+	path = get_env_key(sh->env_lst, "PATH");
 	cmd_path = NULL;
-	if (redirection_check(shell->cmd, cmd->redir) == FAIL)
+	if (redirection_check(sh->cmd, cmd->redir) == FAIL)
 		exit(1);
-	apply_redirs(shell, cmd->redir, ends, last);
+	apply_redirs(sh, cmd->redir, ends, last);
 	if (!cmd->cmd)
 	{
-		close_fd(NULL, shell->cmd);
+		close_fd(NULL, sh->cmd);
 		exit (0);
 	}
-	if (cmd->cmd[0] == '\0')
-		_p_err(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
-	if (check_executable(shell->cmd, cmd) == SUCCESS)
+	if (path && *path && (cmd->cmd[0] == '\0' || !ft_strcmp(cmd->cmd, "..")))
+		_p_err(sh->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
+	if (check_executable(sh->cmd, cmd->cmd) == SUCCESS)
 		cmd_path = cmd->cmd;
 	else
 	{
-		cmd_path = check_cmd(get_env_key(shell->env_lst, "PATH"), cmd->cmd);
+		cmd_path = check_cmd(sh, path, cmd->cmd);
 		if (!cmd_path)
-			_p_err(shell->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
+			_p_err(sh->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	}
-	if (execve(cmd_path, cmd->args, shell->env) == -1)
-		_p_err(shell->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
+	if (execve(cmd_path, cmd->args, sh->env) == -1)
+		_p_err(sh->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
 }
 
 int	exec_pipeline(t_shell *shell, t_cmd *cmd, t_cmd *next_cmd)
@@ -116,6 +118,7 @@ void	pipeline_loop(t_shell *shell)
 	if (dup2(shell->input, 0) == -1)
 		return (close_and_perror(shell, (int [2]){shell->input, -1}, -1));
 	close(shell->input);
+	shell->input = -1;
 	close_fd(NULL, shell->cmd);
 }
 
