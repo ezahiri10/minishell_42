@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:05:36 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/17 00:02:01 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:22:18 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ int	get_redirection_fds(t_redir *redir, t_type type)
 {
 	t_type	second_type;
 
-	if (type == IN)
-		second_type = HERE;
-	else
-		second_type = APPEND;
+	second_type = (type + 2) % 4;
 	while (redir)
 	{
 		if ((redir->type == type || redir->type == second_type)

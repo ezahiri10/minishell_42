@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:26:31 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/18 19:46:20 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:00:56 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_exit(t_shell *shell, t_cmd *cmd)
 	while (cmd->args[len])
 		len++;
 	if (child_exist(0, GET) == false)
-		printf("exit\n");
+		ft_putendl_fd("exit", 1);
 	if (len == 1)
 		exit(shell->exit_status);
 	if (check_argument(cmd->args[1]) == true && len > 2)
@@ -60,6 +60,6 @@ void	ft_exit(t_shell *shell, t_cmd *cmd)
 		_p_err(NULL, (char *[3]){NAR, "exit", ""}, -1);
 		exit(255);
 	}
-	else if (check_argument(cmd->args[1]) == true && len >= 2)
+	else if (check_argument(cmd->args[1]) == true)
 		exit(ft_atoi(cmd->args[1]));
 }

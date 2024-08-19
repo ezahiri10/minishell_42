@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/19 00:58:09 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:09:49 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define NAVI ": not a valid identifier"
 # define NAR "numeric argument required"
 # define TMA "too many arguments"
+
 # define SUCCESS 0
 # define FAIL 1
 
@@ -137,8 +138,8 @@ void	close_fd(t_token *token, t_cmd *head);
 char	*set_value(char *__name, t_env *__env);
 bool	check_executable(t_cmd *head, char *cmd);
 bool	redirection_check(t_cmd *cmd, t_redir *lst);
-char	*check_cmd(t_shell *shell, char *path, char *cmd);
 void	get_exit_status(t_shell *shell, pid_t last_cmd);
+char	*check_cmd(t_shell *shell, char *path, char *cmd);
 int		builtin_exec(t_shell *shell, t_cmd *cmd, int *ends);
 void	apply_redirs(t_shell *shell, t_redir *head, int *ends, t_cmd *last);
 void	value_non_joinlble(char *name, char *value, t_shell *shell, int flag);

@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:01:47 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 16:10:24 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 19:27:22 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	chang_dir(t_shell *shell, char *path)
 	if (chdir(path) == -1)
 	{
 		shell->exit_status = 1;
-		perror("cd");
+		perror("Minishell: cd");
 		return ;
 	}
 	check_pwd(shell, path);
@@ -50,11 +50,9 @@ void	chang_dir(t_shell *shell, char *path)
 
 void	ft_cd(t_shell *shell, t_cmd *cmd)
 {
-	char	**args;
 	char	*home;
 
-	args = cmd->args;
-	if (!args[1])
+	if (!cmd->args[1])
 	{
 		home = get_env_key(shell->env_lst, "HOME");
 		if (!home)
@@ -65,5 +63,5 @@ void	ft_cd(t_shell *shell, t_cmd *cmd)
 		chang_dir(shell, home);
 	}
 	else
-		chang_dir(shell, args[1]);
+		chang_dir(shell, cmd->args[1]);
 }

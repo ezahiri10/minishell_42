@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC =  cc  -fsanitize=address -g
+CC =  cc #ß -fsanitize=address -g
 
 RM = rm -f
 

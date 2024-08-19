@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 15:18:23 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/16 22:13:41 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:08:03 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_export(t_shell *shell, t_cmd *cmd)
 	error = 0;
 	args = cmd->args;
 	if (!args[1])
-		print_env(shell, shell->env_lst);
+		return (print_env(shell, shell->env_lst));
 	while (args[i])
 	{
 		set_env(shell, args[i], &error);

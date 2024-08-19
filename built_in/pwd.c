@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:13:58 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 15:52:59 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:46:14 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_pwd(t_shell *shell)
 		printf ("%s\n", shell->cpy_pwd);
 	else
 	{
-		perror("pwd");
+		perror("Minishell: pwd");
 		shell->exit_status = 1;
 		free(pwd);
 		return ;
