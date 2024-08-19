@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stock_addr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 11:22:48 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/03 11:57:56 by ezahiri          ###   ########.fr       */
+/*   Updated: 2024/08/18 21:49:56 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	stock_addr(void *addr, int mode)
 	{
 		new = ft_lstnew(addr);
 		if (!new)
-			handle_error("Malloc failed\n", addr);
+			handle_error(addr);
 		ft_lstadd_back(&buffer, new);
 	}
 	else if (mode == 2)

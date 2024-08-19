@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:54:49 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/17 15:19:33 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/18 20:55:37 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	new_prompt(int s)
 {
 	if (child_exist(0, GET) == false)
 	{
-		printf("\n");
 		catch_signal(s, SET);
-		rl_replace_line("", 0);
+		printf("\n");
 		rl_on_new_line();
+		rl_replace_line("", 1);
 		rl_redisplay();
 	}
 	else if (child_exist(0, GET) == 2)

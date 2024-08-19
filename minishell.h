@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/18 15:39:31 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 00:58:09 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ void	ft_export(t_shell *shell, t_cmd *cmd);
 char	*dup_env(char *s);
 int		env_size(t_env *lst);
 char	*join_env(char *s1, char *s2);
-bool	exist_env(char *name, t_env *env);
 char	*get_env_key(t_env *env, char *name);
 void	print_env(t_shell *shell, t_env *env);
 void	initialize_env(char **env, t_shell *shell);
@@ -213,7 +212,6 @@ int		child_exist(int is_exist, bool mode);
 
 /********************** Lists functions ****************************/
 
-int		cmd_lst_size(t_cmd *lst);
 t_cmd	*new_cmd(char *cmd, t_redir *redir, char **args);
 void	add_redir(t_redir **lst, char *file, t_type type, int fd);
 void	add_lst(char *content, t_token **lst, t_state state, t_join join);

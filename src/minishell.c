@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/18 16:18:17 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:29:55 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	__ctrl_d(t_shell *shell)
 {
-	close_fd(shell->tokens, NULL);
 	stock_addr(NULL, 0);
 	ft_malloc(0, 0);
 	printf("\x1b[FMinishell$ exit\n");
@@ -43,7 +42,8 @@ void	mini_shell(t_shell *shell)
 	struct termios	termios_p;
 	char			*line;
 
-	tcgetattr(STDIN_FILENO, &termios_p);
+	if (tcgetattr(STDOUT_FILENO, &termios_p) != 0)
+		perror("tcgetattr");
 	while (1)
 	{
 		shell->stoped = 0;
@@ -54,7 +54,8 @@ void	mini_shell(t_shell *shell)
 		interpreter(shell, line);
 		ft_malloc(0, 0);
 		shell->tokens = NULL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &termios_p);
+		if (tcsetattr(STDOUT_FILENO, TCSANOW, &termios_p) != 0)
+			perror("tcsetattr");
 	}
 }
 
@@ -69,7 +70,6 @@ int	main(int ac, char **av, char **env)
 		return (perror("Minishell"), 1);
 	ft_signal();
 	ft_memset(&shell, 0, sizeof(t_shell));
-	shell.input = -1;
 	shell.env = env;
 	initialize_env(env, &shell);
 	shell.cpy_pwd = get_env_key(shell.env_lst, "PWD");

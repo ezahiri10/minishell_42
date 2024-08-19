@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 11:26:31 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 12:39:26 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:46:20 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ bool	check_argument(char *arg)
 void	ft_exit(t_shell *shell, t_cmd *cmd)
 {
 	int		len;
-	int		i;
 
-	i = 1;
 	len = 1;
 	while (cmd->args[len])
 		len++;

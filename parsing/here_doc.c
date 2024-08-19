@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 19:35:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/14 18:32:15 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:57:56 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ char	*join_limiter(t_token *nodes)
 {
 	char	*to_join;
 
-	while (nodes->join == JOINBLE)
+	to_join = NULL;
+	while (nodes && nodes->join == JOINBLE)
 	{
 		to_join = ft_strjoin(to_join, nodes->data.content);
 		nodes = nodes->next;
@@ -90,13 +91,13 @@ bool	ft_here_doc(t_shell *shell, t_token *head)
 	{
 		if (head->type == ERROR)
 			return (FAIL);
-		if (head->type == HERE && !ft_strcmp(head->data.content, "<<"))
+		if (head->type == HERE)
 		{
 			limiter = join_limiter(head->next);
 			if (open_here_doc(shell, head, limiter) == FAIL)
 				return (close_fd (shell->tokens, NULL), FAIL);
-			limiter = NULL;
 		}
+		limiter = NULL;
 		head = head->next;
 	}
 	if (catch_signal(0, GET) == SIGINT)

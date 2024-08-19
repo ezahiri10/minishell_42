@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/18 15:07:02 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:26:21 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	executer(t_shell *shell)
 {
 	if (shell->stoped)
 		return ;
-	if (cmd_lst_size(shell->cmd) == 1)
+	if (shell->cmd && !shell->cmd->next)
 	{
 		exec_one_cmd(shell);
 		return ;

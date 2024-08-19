@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:49:05 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/16 16:35:48 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/18 21:49:26 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 void	ft_swap(char **a, char **b);
-void	handle_error(char *str, void *to_free);
+void	handle_error(void *to_free);
 void	stock_addr(void *addr, int mode);
 void	*ft_malloc(size_t size, int mod);
 int		ft_strcmp(char *s1, char *s2);
