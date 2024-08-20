@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 09:34:35 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/14 10:54:40 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/20 00:17:48 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	set_filename(char **filename, t_token **start, t_type *type)
 	char	*save;
 
 	save = NULL;
-	if (check_ambiguous(*start) == false)
+	if (*type != HERE && check_ambiguous(*start) == false)
 		*type = ERROR;
 	while (*start && (*start)->join == JOINBLE)
 	{

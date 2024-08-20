@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:30:51 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/19 18:29:52 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/20 00:28:11 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	value_non_joinlble(char *name, char *value, t_shell *shell, int flag)
 	t_env	*tmp;
 
 	tmp = shell->env_lst;
-	if (get_env_key(shell->env_lst, name) != NULL)
+	if (exist_env(name, shell->env_lst) == true)
 	{
 		if (flag == 0)
 			return ;
@@ -62,7 +62,7 @@ void	value_joinble(char *name, char *value, t_shell *shell)
 	t_env	*tmp;
 
 	tmp = shell->env_lst;
-	if (get_env_key(shell->env_lst, name) != NULL)
+	if (exist_env(name, shell->env_lst) == true)
 	{
 		while (tmp)
 		{

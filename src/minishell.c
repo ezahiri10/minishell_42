@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 08:20:24 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/19 15:29:55 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/20 22:39:17 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	__ctrl_d(t_shell *shell)
 	stock_addr(NULL, 0);
 	ft_malloc(0, 0);
 	printf("\x1b[FMinishell$ exit\n");
+	if (catch_signal(0, GET) == SIGINT)
+		exit(1);
 	exit(shell->exit_status);
 }
 
@@ -47,7 +49,7 @@ void	mini_shell(t_shell *shell)
 	while (1)
 	{
 		shell->stoped = 0;
-		line = readline("Minishell$ ");
+		line = readline("Minishell-1.0$ ");
 		stock_addr(line, 2);
 		if (!line)
 			__ctrl_d(shell);

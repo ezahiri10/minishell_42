@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC =  cc #ß -fsanitize=address -g
+CC =  cc
 
 RM = rm -f
 
@@ -28,7 +28,7 @@ all : $(LIBFT) $(NAME)
 $(LIBFT) : 
 	@make -sC libft/
 
-$(NAME) : $(OBG)
+$(NAME) : $(OBG) $(LIBFT)/libft.a
 	$(CC) $(FLAGS) $(LINKING_LIB) $(OBG) -o $(NAME)
 
 %.o : %.c minishell.h
@@ -44,4 +44,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: libft
+.PHONY: clean libft

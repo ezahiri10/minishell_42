@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/19 20:09:49 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/20 00:32:06 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ void	ft_export(t_shell *shell, t_cmd *cmd);
 char	*dup_env(char *s);
 int		env_size(t_env *lst);
 char	*join_env(char *s1, char *s2);
+bool	exist_env(char *name, t_env *env);
 char	*get_env_key(t_env *env, char *name);
 void	print_env(t_shell *shell, t_env *env);
 void	initialize_env(char **env, t_shell *shell);
