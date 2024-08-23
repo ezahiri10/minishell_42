@@ -6,11 +6,29 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:34:55 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/16 16:59:30 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/23 19:09:31 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**lst_to_arr(t_env *env)
+{
+	int		i;
+	char	**new_env;
+
+	i = 0;
+	new_env = ft_malloc((env_size(env) + 1) * sizeof(char *), 1);
+	while (env)
+	{
+		new_env[i] = ft_strjoin(env->var, "=");
+		new_env[i] = ft_strjoin(new_env[i], env->value);
+		env = env -> next;
+		i++;
+	}
+	new_env[i] = NULL;
+	return (new_env);
+}
 
 char	*char_to_string(char c)
 {

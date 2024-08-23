@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 10:45:28 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/14 10:47:58 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/23 19:03:31 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	space_to_127(t_token *token, t_state check_with)
 	int	i;
 
 	i = 0;
-	if (token->state == DOLLAR && check_with == DOLLAR)
+	if (token->state == DOLLAR && (check_with != DEFAULT))
 	{
 		while (token->data.content && token->data.content[i])
 		{

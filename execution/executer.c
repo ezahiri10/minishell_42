@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:23:41 by alafdili          #+#    #+#             */
-/*   Updated: 2024/08/20 01:15:18 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:30:23 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exec_cmd(t_shell *sh, t_cmd *cmd, int *ends, t_cmd *last)
 		if (!cmd_path)
 			_p_err(sh->cmd, (char *[3]){CNF, cmd->cmd, ""}, 127);
 	}
-	if (execve(cmd_path, cmd->args, sh->env) == -1)
+	if (execve(cmd_path, cmd->args, lst_to_arr(sh->env_lst)) == -1)
 		_p_err(sh->cmd, (char *[3]){strerror(errno), "execve", ""}, errno);
 }
 
