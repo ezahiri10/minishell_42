@@ -6,7 +6,7 @@
 /*   By: alafdili <alafdili@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 07:48:29 by ezahiri           #+#    #+#             */
-/*   Updated: 2024/08/20 00:32:06 by alafdili         ###   ########.fr       */
+/*   Updated: 2024/08/23 19:07:06 by alafdili         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	_p_err(t_cmd *head, char **err_msg, int exit_code);
 void	close_and_perror(t_shell *shell, int *to_close, int exit);
 void	syntax_error_check(t_shell *shell, t_token *limiter, int flag);
 
-/********************** STRING utils functions *********************/
+/********************** utils functions *********************/
 
 bool	is_valid(char *arg);
 char	*char_to_string(char c);
@@ -205,6 +205,7 @@ char	*space_tab_trimer(char *str);
 char	*remove_char(char *str, char c);
 void	join_word(char **to_join, t_token **start);
 void	space_to_127(t_token *token, t_state check_with);
+char	**lst_to_arr(t_env *env);
 
 /********************** Signals functions **************************/
 
